@@ -1,0 +1,163 @@
+<div *ngIf="disableBoxes" fxFlex="50" class="pr-1">
+  <a mat-list-avatar
+     class="app-user-photo"
+     [ngClass]="{online: true}">
+    <img src="assets/images/user.png" alt="">
+  </a>
+</div>
+<h1 matDialogTitle *ngIf="!disableBoxes">{{data.title}}</h1>
+<form [formGroup]="itemForm" (ngSubmit)="submit()">
+  <input
+    name="id"
+    [formControl]="itemForm.controls['id']"
+    type="hidden"
+    placeholder="id">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          name="name"
+          [formControl]="itemForm.controls['name']"
+          placeholder="{{'NAME' | translate}}">
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['name'].hasError('required') && itemForm.controls['name'].touched"
+        class="form-error-msg"> {{'NAMEREQUIRED' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['name'].hasError('serverValidation') && itemForm.controls['name'].touched"
+        class="form-error-msg"> {{itemForm.controls['name'].errors.serverValidation}}
+      </small>
+    </div>
+
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          type="email"
+          name="email"
+          [formControl]="itemForm.controls['email']"
+          placeholder="{{'EMAIL' | translate}}">
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['email'].hasError('required') && itemForm.controls['email'].touched"
+        class="form-error-msg"> {{'EMAILREQUIRED' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['email'].hasError('email') && itemForm.controls['email'].touched && !itemForm.controls['email'].hasError('required')"
+        class="form-error-msg"> {{'EMAILNOTWELLFORMATED' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['email'].hasError('serverValidation') && itemForm.controls['email'].touched"
+        class="form-error-msg"> {{itemForm.controls['email'].errors.serverValidation}}
+      </small>
+    </div>
+
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          name="jobTitle"
+          [formControl]="itemForm.controls['jobTitle']"
+          placeholder="{{'JOBTITLE' | translate}}">
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['jobTitle'].hasError('required') && itemForm.controls['jobTitle'].touched"
+        class="form-error-msg"> {{'JOBTITLEREQUIRED' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['jobTitle'].hasError('serverValidation') && itemForm.controls['jobTitle'].touched"
+        class="form-error-msg"> {{itemForm.controls['jobTitle'].errors.serverValidation}}
+      </small>
+    </div>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          name="mobileNumber"
+          [formControl]="itemForm.controls['mobileNumber']"
+          placeholder="{{'PHONE' | translate}}">
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['mobileNumber'].hasError('required') && itemForm.controls['mobileNumber'].touched"
+        class="form-error-msg"> {{'PHONEEREQUIRED' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['mobileNumber'].hasError('serverValidation') && itemForm.controls['mobileNumber'].touched"
+        class="form-error-msg"> {{itemForm.controls['mobileNumber'].errors.serverValidation}}
+      </small>
+    </div>
+    <div *ngIf="data.isNew" fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          name="newPassword"
+          [formControl]="itemForm.controls['newPassword']"
+          placeholder="{{'PASSWORD' | translate}}">
+        <mat-icon matSuffix (click)="hidePassword = !hidePassword" style="cursor: pointer">{{hidePassword ? 'visibility'
+          : 'visibility_off'}}
+        </mat-icon>
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['newPassword'].hasError('required') && itemForm.controls['newPassword'].touched"
+        class="form-error-msg"> {{'PASSWORDREQUIRED' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['newPassword'].hasError('serverValidation') && itemForm.controls['newPassword'].touched"
+        class="form-error-msg"> {{itemForm.controls['newPassword'].errors.serverValidation}}
+      </small>
+    </div>
+    <div *ngIf="data.isNew" fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [type]="hideConfirmPassword ? 'password' : 'text'"
+          name="confirmPassword"
+          [formControl]="itemForm.controls['confirmPassword']"
+          placeholder="{{'CONFIRMPASSWORD' | translate}}">
+        <mat-icon matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" style="cursor: pointer">
+          {{hideConfirmPassword ? 'visibility' :
+          'visibility_off'}}
+        </mat-icon>
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['confirmPassword'].hasError('required') && itemForm.controls['confirmPassword'].touched"
+        class="form-error-msg"> {{'CONFIRMPASSWORDREQUIRED' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['confirmPassword'].hasError('serverValidation') && itemForm.controls['confirmPassword'].touched"
+        class="form-error-msg"> {{itemForm.controls['confirmPassword'].errors.serverValidation}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['confirmPassword'].hasError('equalTo') && itemForm.controls['confirmPassword'].touched && !itemForm.controls['confirmPassword'].hasError('required')"
+        class="form-error-msg"> {{'CONFIRMPASSWORDSAMEASPASSWORD' | translate}}
+      </small>
+    </div>
+    <div fxFlex="50" class="pt-1 pr-1">
+      <mat-slide-toggle [disabled]="disableBoxes" [formControl]="itemForm.controls['enabled']">
+        <span *ngIf="!disableBoxes || data.payload.enabled">
+          {{'ENABLEDUSER' | translate}}
+        </span>
+        <span *ngIf="disableBoxes && !data.payload.enabled">
+          {{'DISABLEDUSER' | translate}}
+        </span>
+      </mat-slide-toggle>
+    </div>
+    <div fxFlex="100" class="mt-1">
+      <button mat-raised-button *ngIf="!disableBoxes" color="primary" [disabled]="itemForm.invalid || disableButton">
+        {{'SAVE' | translate}}
+      </button>
+      <span fxFlex></span>
+      <button mat-button color="warn" type="button" (click)="closeDialog()">
+        <span *ngIf="!disableBoxes">
+          {{'CANCEL' | translate}}
+        </span>
+        <span *ngIf="disableBoxes">
+          {{'CLOSE' | translate}}
+        </span>
+      </button>
+    </div>
+  </div>
+</form>
