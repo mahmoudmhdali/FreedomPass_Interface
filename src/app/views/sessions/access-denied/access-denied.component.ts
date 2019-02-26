@@ -17,4 +17,8 @@ export class AccessDeniedComponent implements OnInit {
     this.authService.navigationBasedOnRoles();
   }
 
+  signOut() {
+    this.authService.signOut();
+  }
+
 }

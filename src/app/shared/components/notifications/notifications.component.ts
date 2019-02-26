@@ -22,7 +22,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   notificationRefreshRate: number;
   refreshNotificationSubscription: Subscription;
   loadedNotificationsSubscription: Subscription;
-  fetchNotificationsSubscription: Subscription;
+  // fetchNotificationsSubscription: Subscription;
 
 
   constructor(private router: Router, public webNotificationsService: WebNotificationsService,
@@ -35,7 +35,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getCountWebNotifications();
+    // this.getCountWebNotifications();
     this.router.events.subscribe((routeChange) => {
       if (routeChange instanceof NavigationEnd) {
         this.notificPanel.close();
@@ -50,10 +50,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.fetchNotificationsSubscription = this.webNotificationsService.getFetchNotifications().subscribe((value: Date) => {
-        this.getCountWebNotifications();
-      }
-    );
+    // this.fetchNotificationsSubscription = this.webNotificationsService.getFetchNotifications().subscribe((value: Date) => {
+    //     // this.getCountWebNotifications();
+    //   }
+    // );
 
     this.refreshNotificationSubscription = Observable.interval(this.notificationRefreshRate).subscribe(x => {
       this.webNotificationsService.setFetchNotifications();
@@ -99,16 +99,16 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     });
   }
 
-  getCountWebNotifications() {
-    this.webNotificationsService.getCountWebNotifications().subscribe(res => {
-        this.webNotificationsService.notificationsCount = res.data.notifications;
-      }
-    );
-  }
+  // getCountWebNotifications() {
+  //   this.webNotificationsService.getCountWebNotifications().subscribe(res => {
+  //       this.webNotificationsService.notificationsCount = res.data.notifications;
+  //     }
+  //   );
+  // }
 
   ngOnDestroy() {
     this.refreshNotificationSubscription.unsubscribe();
-    this.fetchNotificationsSubscription.unsubscribe();
+    // this.fetchNotificationsSubscription.unsubscribe();
     this.loadedNotificationsSubscription.unsubscribe();
   }
 

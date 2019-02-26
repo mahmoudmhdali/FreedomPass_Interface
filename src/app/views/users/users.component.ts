@@ -11,6 +11,7 @@ import {AppLoaderService} from '../../shared/services/app-loader/app-loader.serv
 import {animate, group, state, style, transition, trigger} from '@angular/animations';
 import {LogsService} from '../../shared/services/logs.service';
 import {TranslatePipe} from '@ngx-translate/core';
+import {NgxPermissionsService} from 'ngx-permissions';
 
 @Component({
   selector: 'app-users',
@@ -51,6 +52,8 @@ export class AppUsersComponent implements OnInit {
   apiConfig;
   modelLoaded = 0;
   currentPage = 1;
+  itemsPerPage = 9;
+  totalItems = 0;
 
   constructor(private dialog: MatDialog,
               private userService: UserService,
@@ -58,17 +61,20 @@ export class AppUsersComponent implements OnInit {
               private translatePipe: TranslatePipe,
               private logsService: LogsService,
               public confirmService: AppConfirmService,
+              private ngxPermissionsService: NgxPermissionsService,
               private loader: AppLoaderService,
               private svcGlobal: GlobalService) {
     this.apiConfig = this.svcGlobal.getSession('RESPONSE_CODE');
   }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(
+    console.log(this.ngxPermissionsService.getPermissions());
+    this.userService.getUsersPagination(1, this.itemsPerPage).subscribe(
       (responseBuilder) => {
         this.logsService.setLog('AppUsersComponent', 'ngOnInit(getUsers)', responseBuilder);
         if (responseBuilder.code === +this.apiConfig.SUCCESS) {
-          this.users = responseBuilder.data.users;
+          this.users = responseBuilder.data.users.userProfiles;
+          this.totalItems = responseBuilder.data.users.totalResults;
           this.modelLoaded++;
         }
       }
@@ -131,14 +137,13 @@ export class AppUsersComponent implements OnInit {
 
   setPage(event) {
     this.modelLoaded--;
-    this.userService.getUsers().subscribe(
+    this.userService.getUsersPagination(event, this.itemsPerPage).subscribe(
       (responseBuilder) => {
         this.logsService.setLog('AppUsersComponent', 'ngOnInit(getUsers)', responseBuilder);
         if (responseBuilder.code === +this.apiConfig.SUCCESS) {
           this.currentPage = event;
-          this.users = [];
-          this.users.push(responseBuilder.data.users[this.currentPage - 1]);
-          // this.users = responseBuilder.data.users;
+          this.users = responseBuilder.data.users.userProfiles;
+          this.totalItems = responseBuilder.data.users.totalResults;
           this.modelLoaded++;
         }
       }

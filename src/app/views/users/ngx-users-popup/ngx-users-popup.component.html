@@ -19,18 +19,34 @@
           matInput
           name="name"
           [formControl]="itemForm.controls['name']"
-          placeholder="{{'NAME' | translate}}">
+          placeholder="{{'First Name' | translate}}">
       </mat-form-field>
       <small
         *ngIf="itemForm.controls['name'].hasError('required') && itemForm.controls['name'].touched"
-        class="form-error-msg"> {{'NAMEREQUIRED' | translate}}
+        class="form-error-msg"> {{'First name is required' | translate}}
       </small>
       <small
         *ngIf="itemForm.controls['name'].hasError('serverValidation') && itemForm.controls['name'].touched"
         class="form-error-msg"> {{itemForm.controls['name'].errors.serverValidation}}
       </small>
     </div>
-
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          name="lastName"
+          [formControl]="itemForm.controls['lastName']"
+          placeholder="{{'Last Name' | translate}}">
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['lastName'].hasError('required') && itemForm.controls['lastName'].touched"
+        class="form-error-msg"> {{'Last Name is required' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['lastName'].hasError('serverValidation') && itemForm.controls['lastName'].touched"
+        class="form-error-msg"> {{itemForm.controls['lastName'].errors.serverValidation}}
+      </small>
+    </div>
     <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
         <input
@@ -88,6 +104,23 @@
         class="form-error-msg"> {{itemForm.controls['mobileNumber'].errors.serverValidation}}
       </small>
     </div>
+    <div fxFlex="50" class="pr-1" *ngxPermissionsOnly="['SYSTEM']">
+      <mat-form-field class="full-width">
+        <mat-select matInput [formControl]="itemForm.controls['type']" placeholder="{{'Type' | translate}}" class="full-widthmb-1">
+          <mat-option *ngFor="let type of types" [value]="type.value" ngDefaultControl>
+            {{type.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['type'].hasError('required') && itemForm.controls['type'].touched"
+        class="form-error-msg"> {{'Type is required' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['type'].hasError('serverValidation') && itemForm.controls['type'].touched"
+        class="form-error-msg"> {{itemForm.controls['mobileNumber'].errors.serverValidation}}
+      </small>
+    </div>
     <div *ngIf="data.isNew" fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
         <input
@@ -135,16 +168,28 @@
         class="form-error-msg"> {{'CONFIRMPASSWORDSAMEASPASSWORD' | translate}}
       </small>
     </div>
-    <div fxFlex="50" class="pt-1 pr-1">
-      <mat-slide-toggle [disabled]="disableBoxes" [formControl]="itemForm.controls['enabled']">
-        <span *ngIf="!disableBoxes || data.payload.enabled">
-          {{'ENABLEDUSER' | translate}}
-        </span>
-        <span *ngIf="disableBoxes && !data.payload.enabled">
-          {{'DISABLEDUSER' | translate}}
-        </span>
-      </mat-slide-toggle>
+
+
+
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          name="info"
+          [formControl]="itemForm.controls['info']"
+          placeholder="{{'PHONE' | translate}}">
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['info'].hasError('required') && itemForm.controls['info'].touched"
+        class="form-error-msg"> {{'Info is required' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['info'].hasError('serverValidation') && itemForm.controls['info'].info"
+        class="form-error-msg"> {{itemForm.controls['info'].errors.serverValidation}}
+      </small>
     </div>
+
+
     <div fxFlex="100" class="mt-1">
       <button mat-raised-button *ngIf="!disableBoxes" color="primary" [disabled]="itemForm.invalid || disableButton">
         {{'SAVE' | translate}}

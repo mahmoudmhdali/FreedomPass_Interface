@@ -18,7 +18,7 @@
 <div fxLayout="row wrap" class="product-container" style="min-height: 0 !important;" *ngIf="modelLoaded == 1 && users.length > 0">
   <div
     [@user1]
-    *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: currentPage, totalItems: 50 }"
+    *ngFor="let user of users | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }"
     fxFlex="100"
     fxFlex.gt-sm="33"
     fxFlex.sm="50">
@@ -35,9 +35,9 @@
           <mat-menu #userMenu="matMenu">
             <button (click)="openPopUp(user, false, true)" mat-menu-item>{{'VIEW' | translate}}
             </button>
-            <button (click)="openPopUp(user, false, false)" *ngxPermissionsOnly="['EDIT_USERS']" mat-menu-item>{{'EDIT' | translate}}
+            <button (click)="openPopUp(user, false, false)" *ngxPermissionsOnly="['EDIT_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']" mat-menu-item>{{'EDIT' | translate}}
             </button>
-            <button (click)="removeUser(user)" *ngxPermissionsOnly="['DELETE_USERS']" mat-menu-item>{{'DELETE' | translate}}
+            <button (click)="removeUser(user)" *ngxPermissionsOnly="['DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']" mat-menu-item>{{'DELETE' | translate}}
             </button>
           </mat-menu>
         </div>
@@ -69,6 +69,7 @@
   <div fxFlex="100"
        fxFlex.gt-sm="100"
        fxFlex.sm="100"
+       *ngIf="modelLoaded == 1 && users.length > 0 && totalItems > users.length"
        class="products-pagination">
     <pagination-controls (pageChange)="setPage($event)"></pagination-controls>
   </div>

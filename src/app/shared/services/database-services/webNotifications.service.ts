@@ -26,9 +26,9 @@ export class WebNotificationsService {
     this.loadedNotifications.next(newValue);
   }
 
-  getFetchNotifications(): Observable<Date> {
-    return this.fetchNotifications.asObservable();
-  }
+  // getFetchNotifications(): Observable<Date> {
+  //   return this.fetchNotifications.asObservable();
+  // }
 
   setFetchNotifications(): void {
     this.fetchNotifications.next(new Date);
@@ -48,11 +48,11 @@ export class WebNotificationsService {
       + this.apiConfig.API_PATH + '/webNotifications/update', null);
   }
 
-  getCountWebNotifications() {
-    return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
-      this.apiConfig.API_IP
-      + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/webNotifications/getCountWebNotifications');
-  }
+  // getCountWebNotifications() {
+  //   return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
+  //     this.apiConfig.API_IP
+  //     + ':' + this.apiConfig.API_PORT + '/'
+  //     + this.apiConfig.API_PATH + '/webNotifications/getCountWebNotifications');
+  // }
 
 }

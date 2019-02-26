@@ -114,7 +114,9 @@ export const rootRouterConfig: Routes = [
       {
         path: 'icons',
         loadChildren: './views/mat-icons/mat-icons.module#MatIconsModule',
-        data: {title: 'Icons', breadcrumb: 'MATICONS'}
+        data: {
+          title: 'Icons', breadcrumb: 'MATICONS'
+        }
       },
       {
         path: 'users',

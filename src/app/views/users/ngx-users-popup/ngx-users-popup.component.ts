@@ -7,6 +7,7 @@ import {ResponseBuilderModel} from '../../../shared/models/ResponseBuilder.model
 import {CustomValidators} from 'ng2-validation';
 import {LogsService} from '../../../shared/services/logs.service';
 import {TranslatePipe} from '@ngx-translate/core';
+import {NgxPermissionsService} from 'ngx-permissions';
 
 @Component({
   selector: 'app-ngx-users-popup',
@@ -21,11 +22,18 @@ export class NgxUsersPopupComponent implements OnInit {
   hidePassword = true;
   hideConfirmPassword = true;
   formIsSubmitted = false;
+  types = [
+    {value: '0', viewValue: 'Admin'},
+    {value: '1', viewValue: 'Company'},
+    {value: '2', viewValue: 'Outlet'}
+  ];
+  typeSelected = -1;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<NgxUsersPopupComponent>,
               private userService: UserService,
               private logsService: LogsService,
+              private ngxPermissionsService: NgxPermissionsService,
               private svcGlobal: GlobalService,
               private snack: MatSnackBar,
               private translatePipe: TranslatePipe,
@@ -44,11 +52,15 @@ export class NgxUsersPopupComponent implements OnInit {
     this.itemForm = this.fb.group({
       id: [item.id || ''],
       name: [item.name || '', Validators.required],
+      lastName: [item.lastName || '', Validators.required],
       email: [item.email || '', [Validators.email, Validators.required]],
       jobTitle: [item.jobTitle || '', Validators.required],
-      mobileNumber: [item.mobileNumber || '', Validators.required],
-      enabled: [item.enabled || false]
+      mobileNumber: [item.mobileNumber || '', Validators.required]
     });
+    if (typeof this.ngxPermissionsService.getPermission('SYSTEM') !== 'undefined') {
+      this.itemForm.addControl('type', new FormControl(item.type || '', Validators.required));
+      this.itemForm.addControl('info', new FormControl('', Validators.required));
+    }
     if (typeof this.data.viewOnly !== 'undefined' && this.data.viewOnly) {
       this.itemForm.disable();
     }
@@ -63,6 +75,7 @@ export class NgxUsersPopupComponent implements OnInit {
   submit() {
     this.disableButton = true;
     const data = this.itemForm.value;
+    console.log(data);
     if (this.data.isNew) {
       this.userService.addUser(data).subscribe(
         (responseBuilder: ResponseBuilderModel) => {

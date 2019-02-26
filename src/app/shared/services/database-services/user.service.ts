@@ -18,6 +18,13 @@ export class UserService {
       + this.apiConfig.API_PATH + '/users');
   }
 
+  getUsersPagination(pageNumber, maxResult) {
+    return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/users/' + pageNumber + '/' +  maxResult);
+  }
+
   addUser(user) {
     // if we need the full response we should add {headers, observe: 'response'}
     const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
