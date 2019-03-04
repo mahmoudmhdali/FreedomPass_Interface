@@ -15,10 +15,15 @@ export class UserOutletOfferModel {
   public createdDate: Date;
   public updatedDate: Date;
   public deletedDate: Date;
+  public userOutletID: number;
+  public userOutletName: string;
+  public name: string;
+  public info: string;
 
-  constructor(id: number, numberOfUsage: number, validity: number, typeOfUsage: number, userOutletInfo: UserOutletInfoModel,
-              outletOfferType: OutletOfferTypeModel, userOutletOfferPurchased: UserOutletOfferPurchasedModel[],
-              adminPassesCollection: AdminPassesModel[], createdDate: Date, updatedDate: Date, deletedDate: Date) {
+  constructor (id: number, numberOfUsage: number, validity: number, typeOfUsage: number, userOutletInfo: UserOutletInfoModel,
+               outletOfferType: OutletOfferTypeModel, userOutletOfferPurchased: UserOutletOfferPurchasedModel[],
+               adminPassesCollection: AdminPassesModel[], createdDate: Date, updatedDate: Date, deletedDate: Date,
+               userOutletID: number, userOutletName: string, name: string, info: string) {
     this.id = id;
     this.numberOfUsage = numberOfUsage;
     this.validity = validity;
@@ -30,5 +35,9 @@ export class UserOutletOfferModel {
     this.updatedDate = updatedDate;
     this.createdDate = createdDate;
     this.deletedDate = deletedDate;
+    this.info = info;
+    this.name = name;
+    this.userOutletName = userOutletName;
+    this.userOutletID = userOutletID;
   }
 }

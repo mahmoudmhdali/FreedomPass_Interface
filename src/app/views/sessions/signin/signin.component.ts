@@ -67,7 +67,7 @@ export class SigninComponent implements OnInit {
         this.snack.dismiss();
         const that = this;
         setTimeout(function () {
-          that.logsService.setLog('SigninComponent', 'signin', response);
+          that.logsService.setLog('ChangePasswordComponent', 'signin', response);
           if (response.code === +that.responseCodeConfig.SUCCESS) {
             const loggedInUser: UserProfileModel = response.data.user;
             that.svcGlobal.setSession('loggedInUser', loggedInUser);

@@ -130,6 +130,17 @@ export const rootRouterConfig: Routes = [
         }
       },
       {
+        path: 'offers',
+        canActivate: [NgxPermissionsGuard],
+        loadChildren: './views/offers/offers.module#OffersModule',
+        data: {
+          title: 'Offers', breadcrumb: 'Offers', permissions: {
+            only: ['SYSTEM', 'OUR_SYSTEM_USER'],
+            redirectTo: '/sessions/accessDenied'
+          }
+        }
+      },
+      {
         path: 'manageReports',
         canActivate: [NgxPermissionsGuard],
         loadChildren: './views/manage-reports/manage-report.module#ManageReportModule',

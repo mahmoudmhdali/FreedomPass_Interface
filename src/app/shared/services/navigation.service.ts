@@ -55,14 +55,13 @@ export class NavigationService {
       icon: 'account_box',
       state: 'users',
       roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']
-    },
-    {
-      name: 'USERGROUPS',
+    }, {
+      name: 'Offers',
       type: 'link',
-      tooltip: 'user groups',
-      icon: 'group',
-      state: 'groups',
-      roles: ['VIEW_GROUPS', 'ADD_GROUPS', 'EDIT_GROUPS', 'DELETE_GROUPS']
+      tooltip: 'Offers',
+      icon: 'account_box',
+      state: 'offers',
+      roles: ['SYSTEM', 'OUR_SYSTEM_USER']
     },
     {
       name: 'DASHBOARD',
@@ -279,14 +278,13 @@ export class NavigationService {
       icon: 'account_box',
       state: 'users',
       roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']
-    },
-    {
-      name: 'USERGROUPS',
+    }, {
+      name: 'Offers',
       type: 'link',
-      tooltip: 'user groups',
-      icon: 'group',
-      state: 'groups',
-      roles: ['VIEW_GROUPS', 'ADD_GROUPS', 'EDIT_GROUPS', 'DELETE_GROUPS']
+      tooltip: 'Offers',
+      icon: 'account_box',
+      state: 'offers',
+      roles: ['SYSTEM', 'OUR_SYSTEM_USER']
     },
     {
       type: 'separator',
@@ -511,14 +509,13 @@ export class NavigationService {
       icon: 'account_box',
       state: 'users',
       roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']
-    },
-    {
-      name: 'USERGROUPS',
+    }, {
+      name: 'Offers',
       type: 'link',
-      tooltip: 'user groups',
-      icon: 'group',
-      state: 'groups',
-      roles: ['VIEW_GROUPS', 'ADD_GROUPS', 'EDIT_GROUPS', 'DELETE_GROUPS']
+      tooltip: 'Offers',
+      icon: 'account_box',
+      state: 'offers',
+      roles: ['SYSTEM', 'OUR_SYSTEM_USER']
     },
     {
       name: 'HOME',
@@ -738,9 +735,9 @@ export class NavigationService {
       sub: [
         {
           name: 'Level Two', type: 'dropDown', state: 'fake-1', sub: [
-          {name: 'Level Three', state: 'fake-2'},
-          {name: 'Level Three', state: 'fake-3'}
-        ]
+            {name: 'Level Three', state: 'fake-2'},
+            {name: 'Level Three', state: 'fake-3'}
+          ]
         },
         {name: 'Level Two', state: 'fake-4'},
         {name: 'Level Two', state: 'fake-5'}
@@ -762,16 +759,16 @@ export class NavigationService {
   // This title will appear if any icon type item is present in menu.
   iconTypeMenuTitle = 'Frequently Accessed';
 
-  constructor(private ngxPermissionsService: NgxPermissionsService) {
+  constructor (private ngxPermissionsService: NgxPermissionsService) {
   }
 
-  getMenuItems(): Observable<IMenuItem[]> {
+  getMenuItems (): Observable<IMenuItem[]> {
     return this.menuItems$;
   }
 
-  setMenuItems(): void {
+  setMenuItems (): void {
     this.menuItems.next(this.separatorMenu);
-    for (let i = 0; i < this.separatorMenu.length; i++) {
+    for (let i = 0; i < this.separatorMenu.length; i ++) {
       let disabled = true;
       if (this.separatorMenu[i].roles !== undefined) {
         for (const role of this.separatorMenu[i].roles) {
@@ -782,7 +779,7 @@ export class NavigationService {
         this.separatorMenu[i].disabled = disabled;
       }
       if (this.separatorMenu[i].sub !== undefined) {
-        for (let j = 0; j < this.separatorMenu[i].sub.length; j++) {
+        for (let j = 0; j < this.separatorMenu[i].sub.length; j ++) {
           disabled = true;
           if (this.separatorMenu[i].sub[j].roles !== undefined) {
             for (const role of this.separatorMenu[i].sub[j].roles) {
@@ -796,12 +793,13 @@ export class NavigationService {
       }
     }
   }
+
   // Customizer component uses this method to change menu.
   // You can remove this method and customizer component.
   // Or you can customize this method to supply different menu for
 
   // different user type.
-  publishNavigationChange(menuType: string) {
+  publishNavigationChange (menuType: string) {
     switch (menuType) {
       case 'separator-menu':
         this.menuItems.next(this.separatorMenu);

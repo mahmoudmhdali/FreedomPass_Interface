@@ -68,7 +68,6 @@ export class AppUsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.ngxPermissionsService.getPermissions());
     this.userService.getUsersPagination(1, this.itemsPerPage).subscribe(
       (responseBuilder) => {
         this.logsService.setLog('AppUsersComponent', 'ngOnInit(getUsers)', responseBuilder);

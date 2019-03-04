@@ -7,25 +7,25 @@ import {ResponseBuilderModel} from '../../models/ResponseBuilder.model';
 export class UserService {
   apiConfig;
 
-  constructor(private svcGlobal: GlobalService, private httpClient: HttpClient) {
+  constructor (private svcGlobal: GlobalService, private httpClient: HttpClient) {
     this.apiConfig = this.svcGlobal.getSession('API_CONFIG');
   }
 
-  getUsers() {
+  getUsers () {
     return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
       + this.apiConfig.API_PATH + '/users');
   }
 
-  getUsersPagination(pageNumber, maxResult) {
+  getUsersPagination (pageNumber, maxResult) {
     return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/users/' + pageNumber + '/' +  maxResult);
+      + this.apiConfig.API_PATH + '/users/' + pageNumber + '/' + maxResult);
   }
 
-  addUser(user) {
+  addUser (user) {
     // if we need the full response we should add {headers, observe: 'response'}
     const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
     return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
@@ -34,7 +34,7 @@ export class UserService {
       + this.apiConfig.API_PATH + '/users/add', this.svcGlobal.getFormUrlEncoded(user), {headers});
   }
 
-  updateUser(user) {
+  updateUser (user) {
     // if we need the full response we should add {headers, observe: 'response'}
     const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
     return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
@@ -43,7 +43,7 @@ export class UserService {
       + this.apiConfig.API_PATH + '/users/update', this.svcGlobal.getFormUrlEncoded(user), {headers});
   }
 
-  removeUser(user) {
+  removeUser (user) {
     // if we need the full response we should add {headers, observe: 'response'}
     return this.httpClient.delete(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
@@ -51,14 +51,39 @@ export class UserService {
       + this.apiConfig.API_PATH + '/users/delete/' + user.id);
   }
 
-  getUserById(id) {
+  getUserById (id) {
     return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
       + this.apiConfig.API_PATH + '/users/' + id);
   }
 
-  getUsersNotifications() {
+  getUserByToken (token) {
+    return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/guest/auth/token/' + token);
+  }
+
+  changePasswordByToken (token, pass) {
+    // if we need the full response we should add {headers, observe: 'response'}
+    const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
+    return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/guest/updatePassword/' + token, this.svcGlobal.getFormUrlEncoded(pass), {headers});
+  }
+
+  resetPassword (email) {
+    // if we need the full response we should add {headers, observe: 'response'}
+    const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
+    return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/guest/resetPassword', this.svcGlobal.getFormUrlEncoded(email), {headers});
+  }
+
+  getUsersNotifications () {
     return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'

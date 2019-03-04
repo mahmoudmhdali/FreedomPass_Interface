@@ -21,6 +21,7 @@ import {SessionsRoutes} from './sessions.routing';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {ErrorComponent} from './error/error.component';
 import {AccessDeniedComponent} from './access-denied/access-denied.component';
+import {ChangePasswordComponent} from './change-password/change-password.component';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import {AccessDeniedComponent} from './access-denied/access-denied.component';
     CountdownSnackbarComponent
   ],
   declarations: [ForgotPasswordComponent, LockscreenComponent, SigninComponent, SignupComponent,
-    NotFoundComponent, ErrorComponent, AccessDeniedComponent, CountdownSnackbarComponent]
+    NotFoundComponent, ErrorComponent, AccessDeniedComponent, CountdownSnackbarComponent,
+  ChangePasswordComponent]
 })
 export class SessionsModule {
 }

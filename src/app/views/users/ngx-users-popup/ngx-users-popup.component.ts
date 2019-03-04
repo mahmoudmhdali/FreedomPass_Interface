@@ -19,15 +19,13 @@ export class NgxUsersPopupComponent implements OnInit {
   apiConfig;
   disableButton = false;
   disableBoxes = false;
-  hidePassword = true;
-  hideConfirmPassword = true;
   formIsSubmitted = false;
   types = [
     {value: '0', viewValue: 'Admin'},
     {value: '1', viewValue: 'Company'},
     {value: '2', viewValue: 'Outlet'}
   ];
-  typeSelected = -1;
+  typeSelected = '0';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<NgxUsersPopupComponent>,
@@ -54,21 +52,45 @@ export class NgxUsersPopupComponent implements OnInit {
       name: [item.name || '', Validators.required],
       lastName: [item.lastName || '', Validators.required],
       email: [item.email || '', [Validators.email, Validators.required]],
-      jobTitle: [item.jobTitle || '', Validators.required],
       mobileNumber: [item.mobileNumber || '', Validators.required]
     });
-    if (typeof this.ngxPermissionsService.getPermission('SYSTEM') !== 'undefined') {
-      this.itemForm.addControl('type', new FormControl(item.type || '', Validators.required));
-      this.itemForm.addControl('info', new FormControl('', Validators.required));
-    }
     if (typeof this.data.viewOnly !== 'undefined' && this.data.viewOnly) {
+      let info = '';
+      if (item.type.toString() === '1') {
+        info = item.userCompanyInfo.info;
+      } else if (item.type.toString() === '2') {
+        info = item.userOutletInfo.info;
+      }
+      this.typeChange(item.type.toString(), info);
+      if (typeof this.ngxPermissionsService.getPermission('SYSTEM') !== 'undefined') {
+        this.itemForm.addControl('type', new FormControl(item.type.toString() || '', Validators.required));
+      }
       this.itemForm.disable();
     }
     if (this.data.isNew) {
-      const newPassword = new FormControl(item.newPassword, Validators.required);
-      const confirmPassword = new FormControl(item.confirmPassword, [Validators.required, CustomValidators.equalTo(newPassword)]);
-      this.itemForm.addControl('newPassword', newPassword);
-      this.itemForm.addControl('confirmPassword', confirmPassword);
+      if (typeof this.ngxPermissionsService.getPermission('SYSTEM') !== 'undefined') {
+        this.itemForm.addControl('type', new FormControl('0', Validators.required));
+      }
+    } else {
+      let info = '';
+      if (item && item.type) {
+        if (item.type.toString() === '1') {
+          info = item.userCompanyInfo.info;
+          this.typeChange(item.type.toString(), info);
+        } else if (item.type.toString() === '2') {
+          info = item.userOutletInfo.info;
+          this.typeChange(item.type.toString(), info);
+        }
+      }
+    }
+  }
+
+  typeChange(type, info) {
+    this.typeSelected = type;
+    if (type === '0') {
+      this.itemForm.removeControl('info');
+    } else if (type === '1' || type === '2') {
+      this.itemForm.addControl('info', new FormControl(info, Validators.required));
     }
   }
 

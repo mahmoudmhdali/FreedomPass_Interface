@@ -1,0 +1,146 @@
+<h1 matDialogTitle>{{data.title}}</h1>
+<form [formGroup]="itemForm" (ngSubmit)="submit()">
+
+  <input
+    name="id"
+    [formControl]="itemForm.controls['id']"
+    type="hidden"
+    placeholder="id">
+
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['name']"
+          placeholder="Name">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['numberOfUsage']"
+          placeholder="Number Of Usage">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['typeOfUsage']"
+          placeholder="Type Of Usage">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['outletOfferType']"
+          placeholder="Offer Type">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['userOutletInfo']"
+          placeholder="Outlet">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['validity']"
+          placeholder="Validity">
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" class="pr-1">
+      <mat-form-field class="full-width">
+        <textarea rows="3"
+                  matInput
+                  style="resize: none;"
+                  [formControl]="itemForm.controls['info']"
+                  placeholder="Info"></textarea>
+      </mat-form-field>
+    </div>
+    <div fxFlex="40" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['imageName1']"
+          [readonly]="true"
+          placeholder="Image Index 1" READONLY/>
+      </mat-form-field>
+    </div>
+    <div fxFlex="1">
+    </div>
+    <div fxFlex="9">
+      <button mat-mini-fab color="primary" type="button" (click)="fileInput1.click()">
+        <mat-icon>file_upload</mat-icon>
+      </button>
+    </div>
+    <input type="file" style="display: none" class="form-control" name="batchInput"
+           (change)="image1FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput1>
+    <div fxFlex="40" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['imageName2']"
+          [readonly]="true"
+          placeholder="Image Index 2" READONLY/>
+      </mat-form-field>
+    </div>
+    <div fxFlex="1">
+    </div>
+    <div fxFlex="9">
+      <button mat-mini-fab color="primary" type="button" (click)="fileInput2.click()">
+        <mat-icon>file_upload</mat-icon>
+      </button>
+    </div>
+    <input type="file" style="display: none" class="form-control" name="batchInput"
+           (change)="image2FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput2>
+    <div fxFlex="40" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['imageName3']"
+          [readonly]="true"
+          placeholder="Image Index 3" READONLY/>
+      </mat-form-field>
+    </div>
+    <div fxFlex="1">
+    </div>
+    <div fxFlex="9">
+      <button mat-mini-fab color="primary" type="button" (click)="fileInput3.click()">
+        <mat-icon>file_upload</mat-icon>
+      </button>
+    </div>
+    <input type="file" style="display: none" class="form-control" name="batchInput"
+           (change)="image3FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput3>
+    <div fxFlex="40" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['imageName4']"
+          [readonly]="true"
+          placeholder="Image Index 4" READONLY/>
+      </mat-form-field>
+    </div>
+    <div fxFlex="1">
+    </div>
+    <div fxFlex="9">
+      <button mat-mini-fab color="primary" type="button" (click)="fileInput4.click()">
+        <mat-icon>file_upload</mat-icon>
+      </button>
+    </div>
+    <input type="file" style="display: none" class="form-control" name="batchInput"
+           (change)="image4FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput4>
+    <div fxFlex="100" class="mt-1">
+      <button mat-raised-button color="primary" [disabled]="itemForm.invalid || disableButton">Save</button>
+      <span fxFlex></span>
+      <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+    </div>
+  </div>
+</form>
