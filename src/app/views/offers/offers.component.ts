@@ -42,7 +42,7 @@ export class OffersComponent implements OnInit, OnDestroy {
     this.getOffers();
   }
 
-  getOffers() {
+  getOffers () {
     this.loadingIndicator = true;
     this.userOutletOffersService.getAllOffersPaging(this.currentPage, this.itemsPerPage).subscribe(
       (responseBuilder) => {
@@ -63,10 +63,17 @@ export class OffersComponent implements OnInit, OnDestroy {
   }
 
   handlePageChange (event) {
-    console.log(event.offset);
-    this.currentPage = event.offset;
+    this.currentPage = event.offset + 1;
     this.loadingIndicator = true;
-    this.loadingIndicator = false;
+    this.userOutletOffersService.getAllOffersPaging(this.currentPage, this.itemsPerPage).subscribe(
+      (responseBuilder) => {
+        if (responseBuilder.code === + this.apiConfig.SUCCESS) {
+          this.items = responseBuilder.data.offers.offers;
+          this.totalItems = responseBuilder.data.offers.totalResults;
+          this.loadingIndicator = false;
+        }
+      }
+    );
   }
 
   openPopUp (data: any = {}, isNew?) {
@@ -79,7 +86,7 @@ export class OffersComponent implements OnInit, OnDestroy {
           offerTypes = responses[0].data.outletOfferTypes;
         }
         if (responses[1].code === + this.apiConfig.SUCCESS) {
-          outlets = responses[1].data.userOutletInfos;
+          outlets = responses[1].data.users;
         }
         if (responses[0].code === + this.apiConfig.SUCCESS && responses[1].code === + this.apiConfig.SUCCESS) {
           console.log(offerTypes);
@@ -89,7 +96,7 @@ export class OffersComponent implements OnInit, OnDestroy {
           const dialogRef: MatDialogRef<any> = this.dialog.open(NgxOffersPopupComponent, {
             width: '720px',
             disableClose: true,
-            data: {title: title, payload: data}
+            data: {title: title, payload: data, outlets: outlets, offerTypes: offerTypes, isNew: isNew}
           });
           dialogRef.afterClosed()
             .subscribe(res => {
@@ -98,22 +105,6 @@ export class OffersComponent implements OnInit, OnDestroy {
                 return;
               }
               this.getOffers();
-              // this.loader.open();
-              // if (isNew) {
-              //   this.crudService.addItem(res)
-              //     .subscribe(data1 => {
-              //       this.items = data1;
-              //       this.loader.close();
-              //       this.snack.open('Member Added!', 'OK', {duration: 4000});
-              //     });
-              // } else {
-              //   this.crudService.updateItem(data._id, res)
-              //     .subscribe(data1 => {
-              //       this.items = data1;
-              //       this.loader.close();
-              //       this.snack.open('Member Updated!', 'OK', {duration: 4000});
-              //     });
-              // }
             });
         }
       });

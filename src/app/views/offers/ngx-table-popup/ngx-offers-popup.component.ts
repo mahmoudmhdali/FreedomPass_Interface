@@ -14,6 +14,13 @@ export class NgxOffersPopupComponent implements OnInit {
   disableButton = false;
   apiConfig;
   formIsSubmitted = false;
+  types = [];
+  usageTypes = [
+    {value: '1', viewValue: 'Weekly'},
+    {value: '2', viewValue: 'Monthly'},
+    {value: '3', viewValue: 'Yearly'}
+  ];
+  outlets = [];
   fileList1 = [];
   fileList2 = [];
   fileList3 = [];
@@ -35,21 +42,26 @@ export class NgxOffersPopupComponent implements OnInit {
 
   ngOnInit () {
     this.buildItemForm(this.data.payload);
+    for (const type of this.data.offerTypes) {
+      this.types.push({value: type.id.toString(), viewValue: type.name});
+    }
+    for (const outlet of this.data.outlets) {
+      this.outlets.push({value: outlet.userOutletInfo.id.toString(), viewValue: outlet.name});
+    }
+    console.log(this.data.isNew);
   }
 
   buildItemForm (item) {
-    console.log(item);
     this.itemForm = this.fb.group({
       id: [item.id || ''],
       name: [item.name || '', Validators.required],
       numberOfUsage: [item.numberOfUsage || '', Validators.required],
-      typeOfUsage: [item.typeOfUsage || '', Validators.required],
-      outletOfferType: [item.outletOfferType ? item.outletOfferType.id : '' || '', Validators.required],
-      userOutletInfo: [item.userOutletID || '', Validators.required],
-      validity: [item.validity || '', Validators.required],
+      typeOfUsage: [item.typeOfUsage ? item.typeOfUsage.toString() : '1' || '1', Validators.required],
+      outletOfferType: [item.outletOfferType ? item.outletOfferType.id.toString() : '1' || '1', Validators.required],
+      userOutletInfo: [item.userOutletID ? item.userOutletID.toString() : '' || '', Validators.required],
+      // validity: [item.validity || '', Validators.required],
       info: [item.info || '', Validators.required]
     });
-    console.log(item.userOutletOfferImagesCollection)
     const index1: number = item.userOutletOfferImagesCollection !== undefined ? item.userOutletOfferImagesCollection.indexOf(
       item.userOutletOfferImagesCollection.find(image => image.imageIndex === 1)) : - 1;
     this.itemForm.addControl('imageName1', new FormControl(index1 < 0 ?
@@ -97,24 +109,45 @@ export class NgxOffersPopupComponent implements OnInit {
     console.log(data);
     formData.append('info', new Blob([JSON.stringify(data)], {type: 'application/json'}));
     formData.append('outlet', new Blob([JSON.stringify(data.userOutletInfo)], {type: 'application/json'}));
-    this.userOutletOfferService.addOffer(formData).subscribe(
-      (responseBuilder: ResponseBuilderModel) => {
-        this.disableButton = false;
-        if (responseBuilder.code === + this.apiConfig.SUCCESS) {
-          this.formIsSubmitted = true;
-          this.dialogRef.close(responseBuilder.data.offer);
-          this.snack.open('Offer Added Successfully', 'OK', {duration: 4000});
-        } else if (responseBuilder.code === + this.apiConfig.PARAMETERS_VALIDATION_ERROR) {
-          data.outletOfferType = offerType;
-          data.userOutletInfo = userOutlet;
-          this.svcGlobal.checkValidationResults(this.itemForm, responseBuilder.data);
-        } else {
-          data.outletOfferType = offerType;
-          data.userOutletInfo = userOutlet;
-          this.snack.open('Error', 'OK', {duration: 4000});
+    if (this.data.isNew) {
+      this.userOutletOfferService.addOffer(formData).subscribe(
+        (responseBuilder: ResponseBuilderModel) => {
+          this.disableButton = false;
+          if (responseBuilder.code === + this.apiConfig.SUCCESS) {
+            this.formIsSubmitted = true;
+            this.dialogRef.close(responseBuilder.data.offer);
+            this.snack.open('Offer Added Successfully', 'OK', {duration: 4000});
+          } else if (responseBuilder.code === + this.apiConfig.PARAMETERS_VALIDATION_ERROR) {
+            data.outletOfferType = offerType;
+            data.userOutletInfo = userOutlet;
+            this.svcGlobal.checkValidationResults(this.itemForm, responseBuilder.data);
+          } else {
+            data.outletOfferType = offerType;
+            data.userOutletInfo = userOutlet;
+            this.snack.open('Error', 'OK', {duration: 4000});
+          }
         }
-      }
-    );
+      );
+    } else {
+      this.userOutletOfferService.editOffer(formData).subscribe(
+        (responseBuilder: ResponseBuilderModel) => {
+          this.disableButton = false;
+          if (responseBuilder.code === + this.apiConfig.SUCCESS) {
+            this.formIsSubmitted = true;
+            this.dialogRef.close(responseBuilder.data.offer);
+            this.snack.open('Offer Updated Successfully', 'OK', {duration: 4000});
+          } else if (responseBuilder.code === + this.apiConfig.PARAMETERS_VALIDATION_ERROR) {
+            data.outletOfferType = offerType;
+            data.userOutletInfo = userOutlet;
+            this.svcGlobal.checkValidationResults(this.itemForm, responseBuilder.data);
+          } else {
+            data.outletOfferType = offerType;
+            data.userOutletInfo = userOutlet;
+            this.snack.open('Error', 'OK', {duration: 4000});
+          }
+        }
+      );
+    }
   }
 
   image1FileChange (e) {

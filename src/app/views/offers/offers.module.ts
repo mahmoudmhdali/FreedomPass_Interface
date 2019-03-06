@@ -10,7 +10,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatMenuModule,
+  MatMenuModule, MatSelectModule,
   MatSlideToggleModule,
   MatSnackBarModule,
   MatTooltipModule
@@ -40,6 +40,7 @@ import {OffersRoutes} from './offers.routing';
     MatTooltipModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatSelectModule,
     MatSlideToggleModule,
     SharedModule,
     RouterModule.forChild(OffersRoutes)

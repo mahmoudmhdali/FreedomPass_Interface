@@ -1,4 +1,4 @@
-<div fxFlex="100" fxLayout="row wrap" *ngIf="modelLoaded == 3">
+<div fxFlex="100" fxLayout="row wrap" *ngIf="modelLoaded == 1">
   <div fxFlex="100" fxFlex.gt-md="300px" fxFlex.gt-sm="50">
     <mat-card class="profile-sidebar mb-1 pb-0">
       <div class="propic text-center">
@@ -6,7 +6,6 @@
       </div>
       <div class="profile-title text-center mb-1">
         <div class="main-title">{{user.name}}</div>
-        <div class="subtitle mb-05">{{user.jobTitle}}</div>
       </div>
     </mat-card>
     <!-- Contact Information -->
@@ -21,10 +20,6 @@
           <mat-list-item>
             <mat-icon class="mr-1">phone</mat-icon>
             {{user.mobileNumber}}
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon class="mr-1">public</mat-icon>
-            {{user.language.languagename}}
           </mat-list-item>
           <mat-list-item>
             <mat-icon class="mr-1">access_time</mat-icon>
@@ -54,14 +49,6 @@
                   <mat-form-field class="full-width">
                     <input
                       matInput
-                      [formControl]="itemForm.controls['jobTitle']"
-                      placeholder="{{'JOBTITLE' | translate}}">
-                  </mat-form-field>
-                </div>
-                <div fxFlex="100" class="pr-1">
-                  <mat-form-field class="full-width">
-                    <input
-                      matInput
                       [formControl]="itemForm.controls['mobileNumber']"
                       placeholder="{{'PHONE' | translate}}">
                   </mat-form-field>
@@ -79,7 +66,7 @@
                     <input
                       matInput
                       [formControl]="itemForm.controls['name']"
-                      placeholder="{{'NAME' | translate}}">
+                      placeholder="{{'First Name' | translate}}">
                   </mat-form-field>
                   <small
                     *ngIf="itemForm.controls['name'].hasError('required') && itemForm.controls['name'].touched"
@@ -92,21 +79,18 @@
                 </div>
                 <div fxFlex="100" class="pr-1">
                   <mat-form-field class="full-width">
-                    <mat-select placeholder="{{'LANGUAGE' | translate}}" [(ngModel)]="selectedLanguageValue"
-                                name="language"
-                                [formControl]="itemForm.controls['language']">
-                      <mat-option *ngFor="let language of languages" [value]="language.id" ngDefaultControl>
-                        {{language.languagename}}
-                      </mat-option>
-                    </mat-select>
+                    <input
+                      matInput
+                      [formControl]="itemForm.controls['lastName']"
+                      placeholder="{{'Last Name' | translate}}">
                   </mat-form-field>
                   <small
-                    *ngIf="itemForm.controls['language'].hasError('required') && itemForm.controls['language'].touched"
-                    class="form-error-msg"> {{'LANGUAGEREQUIRED' | translate}}
+                    *ngIf="itemForm.controls['lastName'].hasError('required') && itemForm.controls['lastName'].touched"
+                    class="form-error-msg"> {{'NAMEREQUIRED' | translate}}
                   </small>
                   <small
-                    *ngIf="itemForm.controls['language'].hasError('serverValidation') && itemForm.controls['language'].touched"
-                    class="form-error-msg"> {{itemForm.controls['language'].errors.serverValidation}}
+                    *ngIf="itemForm.controls['lastName'].hasError('serverValidation') && itemForm.controls['lastName'].touched"
+                    class="form-error-msg"> {{itemForm.controls['lastName'].errors.serverValidation}}
                   </small>
                 </div>
                 <div fxFlex="100" class="mt-1">
@@ -208,37 +192,12 @@
             </form>
           </mat-card-content>
         </mat-tab>
-        <mat-tab *ngIf="userNotificationEvents.length > 0" label="{{'NOTIFICATIONS' | translate}}">
-          <mat-card-content class="mt-1">
-            <form #form="ngForm" [formGroup]="notificationForm" (ngSubmit)="submitNotifications()">
-              <div fxLayout="row wrap" fxLayout.lt-sm="column">
-                <div fxFlex="50" class="mb-1 mt-1"
-                     *ngFor="let userNotificationEvent of userNotificationEvents; let i = index"
-                     formArrayName="userNotification">
-                  <div [formGroupName]="i">
-                    <input
-                      name="id"
-                      type="hidden"
-                      formControlName="id">
-                    <mat-checkbox formControlName="enabled">
-                      {{userNotificationEvent.name}}
-                    </mat-checkbox>
-                  </div>
-                </div>
-              </div>
-              <button mat-raised-button color="primary"
-                      [disabled]="notificationForm.invalid || disableButton || !notificationForm.dirty">
-                {{'SAVE' | translate}}
-              </button>
-            </form>
-          </mat-card-content>
-        </mat-tab>
       </mat-tab-group>
     </mat-card>
   </div>
 </div>
 
-<div fxFlex="100" *ngIf="modelLoaded != 3">
+<div fxFlex="100" *ngIf="modelLoaded != 1">
   <div class="pb-1 text-center">
     <p class="text-muted pt-1">{{'FETCHUSER' | translate}}</p>
     <mat-progress-spinner

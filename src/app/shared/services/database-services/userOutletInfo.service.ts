@@ -16,7 +16,7 @@ export class UserOutletInfoService {
     return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/userOutletInfo');
+      + this.apiConfig.API_PATH + '/userOutletInfo/userProfile');
   }
 
 }

@@ -41,4 +41,13 @@ export class UserOutletOffersService {
 
   }
 
+  editOffer (formData) {
+    const headers = new HttpHeaders({'Accept': 'application/json'});
+    return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/userOutletOffer/edit', formData, {headers});
+
+  }
+
 }

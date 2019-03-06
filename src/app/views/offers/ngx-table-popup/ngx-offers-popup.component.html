@@ -1,12 +1,10 @@
 <h1 matDialogTitle>{{data.title}}</h1>
 <form [formGroup]="itemForm" (ngSubmit)="submit()">
-
   <input
     name="id"
     [formControl]="itemForm.controls['id']"
     type="hidden"
     placeholder="id">
-
   <div fxLayout="row wrap" fxLayout.lt-sm="column">
     <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
@@ -15,6 +13,14 @@
           [formControl]="itemForm.controls['name']"
           placeholder="Name">
       </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['name'].hasError('required') && itemForm.controls['name'].touched"
+        class="form-error-msg"> Name is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['name'].hasError('serverValidation') && itemForm.controls['name'].touched"
+        class="form-error-msg"> {{itemForm.controls['name'].errors.serverValidation}}
+      </small>
     </div>
     <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
@@ -23,39 +29,85 @@
           [formControl]="itemForm.controls['numberOfUsage']"
           placeholder="Number Of Usage">
       </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['numberOfUsage'].hasError('required') && itemForm.controls['numberOfUsage'].touched"
+        class="form-error-msg"> Number Of Usage is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['numberOfUsage'].hasError('serverValidation') && itemForm.controls['numberOfUsage'].touched"
+        class="form-error-msg"> {{itemForm.controls['numberOfUsage'].errors.serverValidation}}
+      </small>
     </div>
     <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
-        <input
-          matInput
-          [formControl]="itemForm.controls['typeOfUsage']"
-          placeholder="Type Of Usage">
+        <mat-select matInput [formControl]="itemForm.controls['typeOfUsage']"
+                    placeholder="Type Of Usage" class="full-widthmb-1">
+          <mat-option *ngFor="let type of usageTypes" [value]="type.value" ngDefaultControl>
+            {{type.viewValue}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['typeOfUsage'].hasError('required') && itemForm.controls['typeOfUsage'].touched"
+        class="form-error-msg"> Type Of Usage is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['typeOfUsage'].hasError('serverValidation') && itemForm.controls['typeOfUsage'].touched"
+        class="form-error-msg"> {{itemForm.controls['typeOfUsage'].errors.serverValidation}}
+      </small>
     </div>
     <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
-        <input
-          matInput
-          [formControl]="itemForm.controls['outletOfferType']"
-          placeholder="Offer Type">
+        <mat-select matInput [formControl]="itemForm.controls['outletOfferType']"
+                    placeholder="Type" class="full-widthmb-1">
+          <mat-option *ngFor="let type of types" [value]="type.value" ngDefaultControl>
+            {{type.viewValue}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['outletOfferType'].hasError('required') && itemForm.controls['outletOfferType'].touched"
+        class="form-error-msg"> Type is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['outletOfferType'].hasError('serverValidation') && itemForm.controls['outletOfferType'].touched"
+        class="form-error-msg"> {{itemForm.controls['outletOfferType'].errors.serverValidation}}
+      </small>
     </div>
     <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
-        <input
-          matInput
-          [formControl]="itemForm.controls['userOutletInfo']"
-          placeholder="Outlet">
+        <mat-select matInput [formControl]="itemForm.controls['userOutletInfo']"
+                    placeholder="Outlet" class="full-widthmb-1">
+          <mat-option *ngFor="let outlet of outlets" [value]="outlet.value" ngDefaultControl>
+            {{outlet.viewValue}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['userOutletInfo'].hasError('required') && itemForm.controls['userOutletInfo'].touched"
+        class="form-error-msg"> Outlet is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['userOutletInfo'].hasError('serverValidation') && itemForm.controls['userOutletInfo'].touched"
+        class="form-error-msg"> {{itemForm.controls['userOutletInfo'].errors.serverValidation}}
+      </small>
     </div>
-    <div fxFlex="50" class="pr-1">
-      <mat-form-field class="full-width">
-        <input
-          matInput
-          [formControl]="itemForm.controls['validity']"
-          placeholder="Validity">
-      </mat-form-field>
-    </div>
+    <!--<div fxFlex="50" class="pr-1">-->
+      <!--<mat-form-field class="full-width">-->
+        <!--<input-->
+          <!--matInput-->
+          <!--[formControl]="itemForm.controls['validity']"-->
+          <!--placeholder="Validity">-->
+      <!--</mat-form-field>-->
+      <!--<small-->
+        <!--*ngIf="itemForm.controls['validity'].hasError('required') && itemForm.controls['validity'].touched"-->
+        <!--class="form-error-msg"> Validity is required-->
+      <!--</small>-->
+      <!--<small-->
+        <!--*ngIf="itemForm.controls['validity'].hasError('serverValidation') && itemForm.controls['validity'].touched"-->
+        <!--class="form-error-msg"> {{itemForm.controls['validity'].errors.serverValidation}}-->
+      <!--</small>-->
+    <!--</div>-->
     <div fxFlex="100" class="pr-1">
       <mat-form-field class="full-width">
         <textarea rows="3"
@@ -64,6 +116,14 @@
                   [formControl]="itemForm.controls['info']"
                   placeholder="Info"></textarea>
       </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['info'].hasError('required') && itemForm.controls['info'].touched"
+        class="form-error-msg"> Info is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['info'].hasError('serverValidation') && itemForm.controls['info'].touched"
+        class="form-error-msg"> {{itemForm.controls['info'].errors.serverValidation}}
+      </small>
     </div>
     <div fxFlex="40" class="pr-1">
       <mat-form-field class="full-width">
