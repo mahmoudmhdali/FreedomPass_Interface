@@ -65,7 +65,6 @@ export class AuthInterceptor implements HttpInterceptor {
         }
       }, (err: any) => {
         if (err instanceof HttpErrorResponse) {
-          console.log(err);
         }
       }));
     }

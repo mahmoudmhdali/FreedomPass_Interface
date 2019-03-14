@@ -97,7 +97,6 @@ export class NgxUsersPopupComponent implements OnInit {
   submit() {
     this.disableButton = true;
     const data = this.itemForm.value;
-    console.log(data);
     if (this.data.isNew) {
       this.userService.addUser(data).subscribe(
         (responseBuilder: ResponseBuilderModel) => {

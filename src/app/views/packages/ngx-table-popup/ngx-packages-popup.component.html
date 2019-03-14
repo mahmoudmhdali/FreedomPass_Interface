@@ -1,0 +1,109 @@
+<h1 matDialogTitle>{{data.title}}</h1>
+<form [formGroup]="itemForm" (ngSubmit)="submit()">
+  <input
+    name="id"
+    [formControl]="itemForm.controls['id']"
+    type="hidden"
+    placeholder="id">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['name']"
+          placeholder="Name">
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['name'].hasError('required') && itemForm.controls['name'].touched"
+        class="form-error-msg"> Name is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['name'].hasError('serverValidation') && itemForm.controls['name'].touched"
+        class="form-error-msg"> {{itemForm.controls['name'].errors.serverValidation}}
+      </small>
+    </div>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['imageName1']"
+          [readonly]="true"
+          placeholder="Image Index 1" READONLY/>
+        <mat-icon matSuffix *ngIf="itemForm.controls['imageName1'].value !== ''" (click)="removeImage(1)"
+                  style="cursor: pointer; color: red;">clear
+        </mat-icon>
+        <mat-icon matSuffix (click)="fileInput1.click()" style="cursor: pointer; color: #247ba0;">file_upload</mat-icon>
+      </mat-form-field>
+    </div>
+    <input type="file" style="display: none" class="form-control" name="batchInput"
+           (change)="image1FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput1>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <mat-select placeholder="Offers" [formControl]="itemForm.controls['offersCollection']" multiple>
+          <mat-optgroup *ngFor="let outlet of offerOutlets" [label]="outlet.name">
+            <ng-container *ngFor="let offer of offers">
+              <ng-container *ngIf="offer.userOutletID === outlet.id">
+                <mat-option [value]="offer.id">
+                  {{offer.name}}
+                </mat-option>
+              </ng-container>
+            </ng-container>
+          </mat-optgroup>
+        </mat-select>
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['offersCollection'].hasError('required') && itemForm.controls['offersCollection'].touched"
+        class="form-error-msg"> Name is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['offersCollection'].hasError('serverValidation') && itemForm.controls['offersCollection'].touched"
+        class="form-error-msg"> {{itemForm.controls['offersCollection'].errors.serverValidation}}
+      </small>
+    </div>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <mat-select placeholder="Passes" [formControl]="itemForm.controls['passesCollection']" multiple>
+          <mat-optgroup *ngFor="let outlet of passOutlets" [label]="outlet.name">
+            <ng-container *ngFor="let pass of passes">
+              <ng-container *ngIf="pass.userOutletID === outlet.id">
+                <mat-option [value]="pass.id">
+                  {{pass.name}}
+                </mat-option>
+              </ng-container>
+            </ng-container>
+          </mat-optgroup>
+        </mat-select>
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['passesCollection'].hasError('required') && itemForm.controls['passesCollection'].touched"
+        class="form-error-msg"> Name is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['passesCollection'].hasError('serverValidation') && itemForm.controls['passesCollection'].touched"
+        class="form-error-msg"> {{itemForm.controls['passesCollection'].errors.serverValidation}}
+      </small>
+    </div>
+    <div fxFlex="100" class="pr-1">
+      <mat-form-field class="full-width">
+        <textarea rows="3"
+                  matInput
+                  style="resize: none;"
+                  [formControl]="itemForm.controls['description']"
+                  placeholder="Description"></textarea>
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['description'].hasError('required') && itemForm.controls['description'].touched"
+        class="form-error-msg"> Description is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['description'].hasError('serverValidation') && itemForm.controls['description'].touched"
+        class="form-error-msg"> {{itemForm.controls['description'].errors.serverValidation}}
+      </small>
+    </div>
+    <div fxFlex="100" class="mt-1">
+      <button mat-raised-button color="primary" [disabled]="itemForm.invalid || disableButton">Save</button>
+      <span fxFlex></span>
+      <button mat-button color="warn" type="button" (click)="closeDialog()">Cancel</button>
+    </div>
+  </div>
+</form>

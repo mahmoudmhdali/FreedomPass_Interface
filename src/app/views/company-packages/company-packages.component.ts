@@ -3,21 +3,22 @@ import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {AppConfirmService} from '../../shared/services/app-confirm/app-confirm.service';
 import {AppLoaderService} from '../../shared/services/app-loader/app-loader.service';
 import {egretAnimations} from '../../shared/animations/egret-animations';
-import {UserOutletOfferModel} from '../../shared/models/UserOutletOffer.model';
-import {UserOutletOffersService} from '../../shared/services/database-services/userOutletOffers.service';
 import {GlobalService} from '../../shared/services/global.service';
-import {UserOutletInfoService} from '../../shared/services/database-services/userOutletInfo.service';
 import {forkJoin} from 'rxjs';
 import {ResponseBuilderModel} from '../../shared/models/ResponseBuilder.model';
-import {NgxOffersPopupComponent} from './ngx-table-popup/ngx-offers-popup.component';
+import {NgxCompanyPackagesPopupComponent} from './ngx-table-popup/ngx-company-packages-popup.component';
+import {UserCompanyPassesModel} from '../../shared/models/UserCompanyPasses.model';
+import {UserCompanyPassesService} from '../../shared/services/database-services/userCompanyPasses.service';
+import {UserCompanyInfoService} from '../../shared/services/database-services/userCompanyInfo.service';
+import {AdminPassesService} from '../../shared/services/database-services/adminPasses.service';
 
 @Component({
-  selector: 'app-offers',
-  templateUrl: './offers.component.html',
+  selector: 'app-company-packages',
+  templateUrl: './company-packages.component.html',
   animations: egretAnimations
 })
-export class OffersComponent implements OnInit, OnDestroy {
-  public items: UserOutletOfferModel[];
+export class CompanyPackagesComponent implements OnInit, OnDestroy {
+  public items: UserCompanyPassesModel[];
   apiConfig;
   modelLoaded = 0;
   currentPage = 1;
@@ -29,8 +30,9 @@ export class OffersComponent implements OnInit, OnDestroy {
   constructor (
     private dialog: MatDialog,
     private snack: MatSnackBar,
-    private userOutletOffersService: UserOutletOffersService,
-    private userOutletInfoService: UserOutletInfoService,
+    private userCompanyPassesService: UserCompanyPassesService,
+    private userCompanyInfoService: UserCompanyInfoService,
+    private adminPassesService: AdminPassesService,
     private confirmService: AppConfirmService,
     private loader: AppLoaderService,
     private svcGlobal: GlobalService
@@ -39,16 +41,16 @@ export class OffersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
-    this.getOffers();
+    this.getCompanyPasses();
   }
 
-  getOffers () {
+  getCompanyPasses () {
     this.loadingIndicator = true;
-    this.userOutletOffersService.getAllOffersPaging(this.currentPage, this.itemsPerPage).subscribe(
+    this.userCompanyPassesService.getAllCompanyPassesPaging(this.currentPage, this.itemsPerPage).subscribe(
       (responseBuilder) => {
         if (responseBuilder.code === + this.apiConfig.SUCCESS) {
-          this.items = responseBuilder.data.offers.offers;
-          this.totalItems = responseBuilder.data.offers.totalResults;
+          this.items = responseBuilder.data.userCompanyPasses.userCompanyPasses;
+          this.totalItems = responseBuilder.data.userCompanyPasses.totalResults;
           this.modelLoaded ++;
           this.loadingIndicator = false;
         }
@@ -65,11 +67,11 @@ export class OffersComponent implements OnInit, OnDestroy {
   handlePageChange (event) {
     this.currentPage = event.offset + 1;
     this.loadingIndicator = true;
-    this.userOutletOffersService.getAllOffersPaging(this.currentPage, this.itemsPerPage).subscribe(
+    this.userCompanyPassesService.getAllCompanyPassesPaging(this.currentPage, this.itemsPerPage).subscribe(
       (responseBuilder) => {
         if (responseBuilder.code === + this.apiConfig.SUCCESS) {
-          this.items = responseBuilder.data.offers.offers;
-          this.totalItems = responseBuilder.data.offers.totalResults;
+          this.items = responseBuilder.data.userCompanyPasses.userCompanyPasses;
+          this.totalItems = responseBuilder.data.userCompanyPasses.totalResults;
           this.loadingIndicator = false;
         }
       }
@@ -78,23 +80,23 @@ export class OffersComponent implements OnInit, OnDestroy {
 
   openPopUp (data: any = {}, isNew?) {
     this.loader.open('Please Wait...');
-    let offerTypes = [];
-    let outlets = [];
-    forkJoin([this.userOutletOffersService.getAllTypes(), this.userOutletInfoService.getAllOutlets()])
+    let companies = [];
+    let passes = [];
+    forkJoin([this.userCompanyInfoService.getAllCompanies(), this.adminPassesService.getAllPasses()])
       .subscribe((responses: ResponseBuilderModel[]) => {
         if (responses[0].code === + this.apiConfig.SUCCESS) {
-          offerTypes = responses[0].data.outletOfferTypes;
+          companies = responses[0].data.users;
         }
         if (responses[1].code === + this.apiConfig.SUCCESS) {
-          outlets = responses[1].data.users;
+          passes = responses[1].data.adminPasses;
         }
         if (responses[0].code === + this.apiConfig.SUCCESS && responses[1].code === + this.apiConfig.SUCCESS) {
           this.loader.close();
-          const title = isNew ? 'Add new offer' : 'Update offer';
-          const dialogRef: MatDialogRef<any> = this.dialog.open(NgxOffersPopupComponent, {
+          const title = isNew ? 'Add new company package' : 'Update company package';
+          const dialogRef: MatDialogRef<any> = this.dialog.open(NgxCompanyPackagesPopupComponent, {
             width: '720px',
             disableClose: true,
-            data: {title: title, payload: data, outlets: outlets, offerTypes: offerTypes, isNew: isNew}
+            data: {title: title, payload: data, companies: companies, passes: passes, isNew: isNew}
           });
           dialogRef.afterClosed()
             .subscribe(res => {
@@ -102,7 +104,7 @@ export class OffersComponent implements OnInit, OnDestroy {
                 // If user press cancel
                 return;
               }
-              this.getOffers();
+              this.getCompanyPasses();
             });
         }
       });

@@ -1,0 +1,67 @@
+<h1 matDialogTitle>{{data.title}}</h1>
+<form [formGroup]="itemForm" (ngSubmit)="submit()">
+  <input
+    name="id"
+    [formControl]="itemForm.controls['id']"
+    type="hidden"
+    placeholder="id">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <mat-select matInput [formControl]="itemForm.controls['adminPasses']"
+                    placeholder="Package" class="full-widthmb-1">
+          <mat-option *ngFor="let pass of passes" [value]="pass.value">
+            {{pass.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['adminPasses'].hasError('required') && itemForm.controls['adminPasses'].touched"
+        class="form-error-msg"> Type Of Usage is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['adminPasses'].hasError('serverValidation') && itemForm.controls['adminPasses'].touched"
+        class="form-error-msg"> {{itemForm.controls['adminPasses'].errors.serverValidation}}
+      </small>
+    </div>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <mat-select matInput [formControl]="itemForm.controls['userCompanyInfo']"
+                    placeholder="Package" class="full-widthmb-1">
+          <mat-option *ngFor="let company of companies" [value]="company.value">
+            {{company.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['userCompanyInfo'].hasError('required') && itemForm.controls['userCompanyInfo'].touched"
+        class="form-error-msg"> Company is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['userCompanyInfo'].hasError('serverValidation') && itemForm.controls['userCompanyInfo'].touched"
+        class="form-error-msg"> {{itemForm.controls['userCompanyInfo'].errors.serverValidation}}
+      </small>
+    </div>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['numberOfUsers']"
+          placeholder="Number Of Users">
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['numberOfUsers'].hasError('required') && itemForm.controls['numberOfUsers'].touched"
+        class="form-error-msg"> Number Of Users is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['numberOfUsers'].hasError('serverValidation') && itemForm.controls['numberOfUsers'].touched"
+        class="form-error-msg"> {{itemForm.controls['numberOfUsers'].errors.serverValidation}}
+      </small>
+    </div>
+    <div fxFlex="100" class="mt-1">
+      <button mat-raised-button color="primary" [disabled]="itemForm.invalid || disableButton">Save</button>
+      <span fxFlex></span>
+      <button mat-button color="warn" type="button" (click)="closeDialog()">Cancel</button>
+    </div>
+  </div>
+</form>

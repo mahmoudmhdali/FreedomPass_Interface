@@ -4,57 +4,43 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ResponseBuilderModel} from '../../models/ResponseBuilder.model';
 
 @Injectable()
-export class UserOutletOffersService {
+export class AdminPassesService {
   apiConfig;
 
   constructor (private svcGlobal: GlobalService, private httpClient: HttpClient) {
     this.apiConfig = this.svcGlobal.getSession('API_CONFIG');
   }
 
-  getAllOffers () {
+  getAllPasses () {
     return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/userOutletOffer');
+      + this.apiConfig.API_PATH + '/adminPasses');
   }
 
-  getAllTypes () {
+  getAllPassesPaging (pageNumber, maxResult) {
     return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/outletOfferType');
+      + this.apiConfig.API_PATH + '/adminPasses/' + pageNumber + '/' + maxResult);
   }
 
-  getAllOffersPaging (pageNumber, maxResult) {
-    return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
-      this.apiConfig.API_IP
-      + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/userOutletOffer/' + pageNumber + '/' + maxResult);
-  }
-
-  addOffer (formData) {
+  addPass (formData) {
     const headers = new HttpHeaders({'Accept': 'application/json'});
     return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/userOutletOffer/add', formData, {headers});
+      + this.apiConfig.API_PATH + '/adminPasses/add', formData, {headers});
 
   }
 
-  editOffer (formData) {
+  editPass (formData) {
     const headers = new HttpHeaders({'Accept': 'application/json'});
     return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/userOutletOffer/edit', formData, {headers});
+      + this.apiConfig.API_PATH + '/adminPasses/edit', formData, {headers});
 
-  }
-
-  getAllOffersByType (typeId) {
-    return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
-      this.apiConfig.API_IP
-      + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/userOutletOffer/type/' + typeId);
   }
 
 }

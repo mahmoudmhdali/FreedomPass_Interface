@@ -25,7 +25,6 @@ export class ForgotPasswordComponent implements OnInit {
   submitEmail () {
     this.submitButton.disabled = true;
     this.progressBar.mode = 'indeterminate';
-    console.log('{"email": "' + this.userEmail + '"}');
     this.userService.resetPassword(JSON.parse('{"email": "' + this.userEmail + '"}')).subscribe(
       (response: ResponseBuilderModel) => {
         this.snack.dismiss();

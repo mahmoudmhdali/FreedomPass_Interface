@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ResponseBuilderModel} from '../../../shared/models/ResponseBuilder.model';
@@ -10,6 +10,14 @@ import {GlobalService} from '../../../shared/services/global.service';
   templateUrl: './ngx-offers-popup.component.html'
 })
 export class NgxOffersPopupComponent implements OnInit {
+  @ViewChild('fileInput1')
+  fileInput1: ElementRef;
+  @ViewChild('fileInput2')
+  fileInput2: ElementRef;
+  @ViewChild('fileInput3')
+  fileInput3: ElementRef;
+  @ViewChild('fileInput4')
+  fileInput4: ElementRef;
   public itemForm: FormGroup;
   disableButton = false;
   apiConfig;
@@ -48,7 +56,6 @@ export class NgxOffersPopupComponent implements OnInit {
     for (const outlet of this.data.outlets) {
       this.outlets.push({value: outlet.userOutletInfo.id.toString(), viewValue: outlet.name});
     }
-    console.log(this.data.isNew);
   }
 
   buildItemForm (item) {
@@ -106,7 +113,6 @@ export class NgxOffersPopupComponent implements OnInit {
       const file: File = this.fileList4[0];
       formData.append('uploadFile4', file, file.name);
     }
-    console.log(data);
     formData.append('info', new Blob([JSON.stringify(data)], {type: 'application/json'}));
     formData.append('outlet', new Blob([JSON.stringify(data.userOutletInfo)], {type: 'application/json'}));
     if (this.data.isNew) {
@@ -207,6 +213,19 @@ export class NgxOffersPopupComponent implements OnInit {
     } else {
       this.itemForm.controls['imageName4'].setValue(e.target.files[0].name);
       this.imageName4 = e.target.files[0].name;
+    }
+  }
+
+  removeImage (imageIndex) {
+    this.itemForm.controls['imageName' + imageIndex].setValue('');
+    if (imageIndex === 1) {
+      this.fileInput1.nativeElement.value = '';
+    } else if (imageIndex === 2) {
+      this.fileInput2.nativeElement.value = '';
+    } else if (imageIndex === 3) {
+      this.fileInput3.nativeElement.value = '';
+    } else if (imageIndex === 4) {
+      this.fileInput4.nativeElement.value = '';
     }
   }
 

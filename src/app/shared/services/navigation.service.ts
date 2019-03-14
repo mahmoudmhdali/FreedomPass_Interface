@@ -59,8 +59,22 @@ export class NavigationService {
       name: 'Offers',
       type: 'link',
       tooltip: 'Offers',
-      icon: 'account_box',
+      icon: 'local_offer',
       state: 'offers',
+      roles: ['SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
+      name: 'Packages',
+      type: 'link',
+      tooltip: 'Packages',
+      icon: 'redeem',
+      state: 'packages',
+      roles: ['SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
+      name: 'Companies Packages',
+      type: 'link',
+      tooltip: 'Companies Packages',
+      icon: 'account_balance',
+      state: 'companiesPackages',
       roles: ['SYSTEM', 'OUR_SYSTEM_USER']
     },
     {
@@ -282,8 +296,22 @@ export class NavigationService {
       name: 'Offers',
       type: 'link',
       tooltip: 'Offers',
-      icon: 'account_box',
+      icon: 'local_offer',
       state: 'offers',
+      roles: ['SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
+      name: 'Packages',
+      type: 'link',
+      tooltip: 'Packages',
+      icon: 'redeem',
+      state: 'packages',
+      roles: ['SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
+      name: 'Companies Packages',
+      type: 'link',
+      tooltip: 'Companies Packages',
+      icon: 'account_balance',
+      state: 'companiesPackages',
       roles: ['SYSTEM', 'OUR_SYSTEM_USER']
     },
     {
@@ -513,8 +541,22 @@ export class NavigationService {
       name: 'Offers',
       type: 'link',
       tooltip: 'Offers',
-      icon: 'account_box',
+      icon: 'local_offer',
       state: 'offers',
+      roles: ['SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
+      name: 'Packages',
+      type: 'link',
+      tooltip: 'Packages',
+      icon: 'redeem',
+      state: 'packages',
+      roles: ['SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
+      name: 'Companies Packages',
+      type: 'link',
+      tooltip: 'Companies Packages',
+      icon: 'account_balance',
+      state: 'companiesPackages',
       roles: ['SYSTEM', 'OUR_SYSTEM_USER']
     },
     {

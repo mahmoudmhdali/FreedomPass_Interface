@@ -93,20 +93,20 @@
       </small>
     </div>
     <!--<div fxFlex="50" class="pr-1">-->
-      <!--<mat-form-field class="full-width">-->
-        <!--<input-->
-          <!--matInput-->
-          <!--[formControl]="itemForm.controls['validity']"-->
-          <!--placeholder="Validity">-->
-      <!--</mat-form-field>-->
-      <!--<small-->
-        <!--*ngIf="itemForm.controls['validity'].hasError('required') && itemForm.controls['validity'].touched"-->
-        <!--class="form-error-msg"> Validity is required-->
-      <!--</small>-->
-      <!--<small-->
-        <!--*ngIf="itemForm.controls['validity'].hasError('serverValidation') && itemForm.controls['validity'].touched"-->
-        <!--class="form-error-msg"> {{itemForm.controls['validity'].errors.serverValidation}}-->
-      <!--</small>-->
+    <!--<mat-form-field class="full-width">-->
+    <!--<input-->
+    <!--matInput-->
+    <!--[formControl]="itemForm.controls['validity']"-->
+    <!--placeholder="Validity">-->
+    <!--</mat-form-field>-->
+    <!--<small-->
+    <!--*ngIf="itemForm.controls['validity'].hasError('required') && itemForm.controls['validity'].touched"-->
+    <!--class="form-error-msg"> Validity is required-->
+    <!--</small>-->
+    <!--<small-->
+    <!--*ngIf="itemForm.controls['validity'].hasError('serverValidation') && itemForm.controls['validity'].touched"-->
+    <!--class="form-error-msg"> {{itemForm.controls['validity'].errors.serverValidation}}-->
+    <!--</small>-->
     <!--</div>-->
     <div fxFlex="100" class="pr-1">
       <mat-form-field class="full-width">
@@ -125,82 +125,72 @@
         class="form-error-msg"> {{itemForm.controls['info'].errors.serverValidation}}
       </small>
     </div>
-    <div fxFlex="40" class="pr-1">
+
+
+    <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
         <input
           matInput
           [formControl]="itemForm.controls['imageName1']"
           [readonly]="true"
           placeholder="Image Index 1" READONLY/>
+        <mat-icon matSuffix *ngIf="itemForm.controls['imageName1'].value !== ''" (click)="removeImage(1)"
+                  style="cursor: pointer; color: red;">clear
+        </mat-icon>
+        <mat-icon matSuffix (click)="fileInput1.click()" style="cursor: pointer; color: #247ba0;">file_upload</mat-icon>
       </mat-form-field>
-    </div>
-    <div fxFlex="1">
-    </div>
-    <div fxFlex="9">
-      <button mat-mini-fab color="primary" type="button" (click)="fileInput1.click()">
-        <mat-icon>file_upload</mat-icon>
-      </button>
     </div>
     <input type="file" style="display: none" class="form-control" name="batchInput"
            (change)="image1FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput1>
-    <div fxFlex="40" class="pr-1">
+    <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
         <input
           matInput
           [formControl]="itemForm.controls['imageName2']"
           [readonly]="true"
           placeholder="Image Index 2" READONLY/>
+        <mat-icon matSuffix *ngIf="itemForm.controls['imageName2'].value !== ''" (click)="removeImage(2)"
+                  style="cursor: pointer; color: red;">clear
+        </mat-icon>
+        <mat-icon matSuffix (click)="fileInput2.click()" style="cursor: pointer; color: #247ba0;">file_upload</mat-icon>
       </mat-form-field>
-    </div>
-    <div fxFlex="1">
-    </div>
-    <div fxFlex="9">
-      <button mat-mini-fab color="primary" type="button" (click)="fileInput2.click()">
-        <mat-icon>file_upload</mat-icon>
-      </button>
     </div>
     <input type="file" style="display: none" class="form-control" name="batchInput"
            (change)="image2FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput2>
-    <div fxFlex="40" class="pr-1">
+    <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
         <input
           matInput
           [formControl]="itemForm.controls['imageName3']"
           [readonly]="true"
           placeholder="Image Index 3" READONLY/>
+        <mat-icon matSuffix *ngIf="itemForm.controls['imageName3'].value !== ''" (click)="removeImage(3)"
+                  style="cursor: pointer; color: red;">clear
+        </mat-icon>
+        <mat-icon matSuffix (click)="fileInput3.click()" style="cursor: pointer; color: #247ba0;">file_upload</mat-icon>
       </mat-form-field>
-    </div>
-    <div fxFlex="1">
-    </div>
-    <div fxFlex="9">
-      <button mat-mini-fab color="primary" type="button" (click)="fileInput3.click()">
-        <mat-icon>file_upload</mat-icon>
-      </button>
     </div>
     <input type="file" style="display: none" class="form-control" name="batchInput"
            (change)="image3FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput3>
-    <div fxFlex="40" class="pr-1">
+    <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
         <input
           matInput
           [formControl]="itemForm.controls['imageName4']"
           [readonly]="true"
           placeholder="Image Index 4" READONLY/>
+        <mat-icon matSuffix *ngIf="itemForm.controls['imageName4'].value !== ''" (click)="removeImage(4)"
+                  style="cursor: pointer; color: red;">clear
+        </mat-icon>
+        <mat-icon matSuffix (click)="fileInput4.click()" style="cursor: pointer; color: #247ba0;">file_upload</mat-icon>
       </mat-form-field>
-    </div>
-    <div fxFlex="1">
-    </div>
-    <div fxFlex="9">
-      <button mat-mini-fab color="primary" type="button" (click)="fileInput4.click()">
-        <mat-icon>file_upload</mat-icon>
-      </button>
     </div>
     <input type="file" style="display: none" class="form-control" name="batchInput"
            (change)="image4FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput4>
     <div fxFlex="100" class="mt-1">
       <button mat-raised-button color="primary" [disabled]="itemForm.invalid || disableButton">Save</button>
       <span fxFlex></span>
-      <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+      <button mat-button color="warn" type="button" (click)="closeDialog()">Cancel</button>
     </div>
   </div>
 </form>

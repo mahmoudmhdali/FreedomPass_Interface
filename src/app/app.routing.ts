@@ -141,6 +141,28 @@ export const rootRouterConfig: Routes = [
         }
       },
       {
+        path: 'packages',
+        canActivate: [NgxPermissionsGuard],
+        loadChildren: './views/packages/packages.module#PackagesModule',
+        data: {
+          title: 'Packages', breadcrumb: 'Packages', permissions: {
+            only: ['SYSTEM', 'OUR_SYSTEM_USER'],
+            redirectTo: '/sessions/accessDenied'
+          }
+        }
+      },
+      {
+        path: 'companiesPackages',
+        canActivate: [NgxPermissionsGuard],
+        loadChildren: './views/company-packages/company-packages.module#CompanyPackagesModule',
+        data: {
+          title: 'Companies Packages', breadcrumb: 'Companies Packages', permissions: {
+            only: ['SYSTEM', 'OUR_SYSTEM_USER'],
+            redirectTo: '/sessions/accessDenied'
+          }
+        }
+      },
+      {
         path: 'manageReports',
         canActivate: [NgxPermissionsGuard],
         loadChildren: './views/manage-reports/manage-report.module#ManageReportModule',

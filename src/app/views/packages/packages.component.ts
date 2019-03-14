@@ -3,21 +3,21 @@ import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {AppConfirmService} from '../../shared/services/app-confirm/app-confirm.service';
 import {AppLoaderService} from '../../shared/services/app-loader/app-loader.service';
 import {egretAnimations} from '../../shared/animations/egret-animations';
-import {UserOutletOfferModel} from '../../shared/models/UserOutletOffer.model';
-import {UserOutletOffersService} from '../../shared/services/database-services/userOutletOffers.service';
 import {GlobalService} from '../../shared/services/global.service';
-import {UserOutletInfoService} from '../../shared/services/database-services/userOutletInfo.service';
+import {AdminPassesModel} from '../../shared/models/AdminPasses.model';
+import {AdminPassesService} from '../../shared/services/database-services/adminPasses.service';
+import {UserOutletOffersService} from '../../shared/services/database-services/userOutletOffers.service';
 import {forkJoin} from 'rxjs';
 import {ResponseBuilderModel} from '../../shared/models/ResponseBuilder.model';
-import {NgxOffersPopupComponent} from './ngx-table-popup/ngx-offers-popup.component';
+import {NgxPackagesPopupComponent} from './ngx-table-popup/ngx-packages-popup.component';
 
 @Component({
-  selector: 'app-offers',
-  templateUrl: './offers.component.html',
+  selector: 'app-packages',
+  templateUrl: './packages.component.html',
   animations: egretAnimations
 })
-export class OffersComponent implements OnInit, OnDestroy {
-  public items: UserOutletOfferModel[];
+export class PackagesComponent implements OnInit, OnDestroy {
+  public items: AdminPassesModel[];
   apiConfig;
   modelLoaded = 0;
   currentPage = 1;
@@ -29,8 +29,8 @@ export class OffersComponent implements OnInit, OnDestroy {
   constructor (
     private dialog: MatDialog,
     private snack: MatSnackBar,
+    private adminPassesService: AdminPassesService,
     private userOutletOffersService: UserOutletOffersService,
-    private userOutletInfoService: UserOutletInfoService,
     private confirmService: AppConfirmService,
     private loader: AppLoaderService,
     private svcGlobal: GlobalService
@@ -39,16 +39,27 @@ export class OffersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
-    this.getOffers();
+    this.getPackages();
   }
 
-  getOffers () {
+  getPackages () {
     this.loadingIndicator = true;
-    this.userOutletOffersService.getAllOffersPaging(this.currentPage, this.itemsPerPage).subscribe(
+    this.adminPassesService.getAllPassesPaging(this.currentPage, this.itemsPerPage).subscribe(
       (responseBuilder) => {
         if (responseBuilder.code === + this.apiConfig.SUCCESS) {
-          this.items = responseBuilder.data.offers.offers;
-          this.totalItems = responseBuilder.data.offers.totalResults;
+          this.items = responseBuilder.data.passes.passes;
+          for (const item of this.items) {
+            item.numberOfOffers = 0;
+            item.numberOfPasses = 0;
+            for (const offer of item.userOutletOfferCollection) {
+              if (offer.outletOfferType.id === 1) {
+                item.numberOfOffers = item.numberOfOffers + 1;
+              } else if (offer.outletOfferType.id === 2) {
+                item.numberOfPasses = item.numberOfPasses + 1;
+              }
+            }
+          }
+          this.totalItems = responseBuilder.data.passes.totalResults;
           this.modelLoaded ++;
           this.loadingIndicator = false;
         }
@@ -65,11 +76,22 @@ export class OffersComponent implements OnInit, OnDestroy {
   handlePageChange (event) {
     this.currentPage = event.offset + 1;
     this.loadingIndicator = true;
-    this.userOutletOffersService.getAllOffersPaging(this.currentPage, this.itemsPerPage).subscribe(
+    this.adminPassesService.getAllPassesPaging(this.currentPage, this.itemsPerPage).subscribe(
       (responseBuilder) => {
         if (responseBuilder.code === + this.apiConfig.SUCCESS) {
-          this.items = responseBuilder.data.offers.offers;
-          this.totalItems = responseBuilder.data.offers.totalResults;
+          this.items = responseBuilder.data.passes.passes;
+          for (const item of this.items) {
+            item.numberOfOffers = 0;
+            item.numberOfPasses = 0;
+            for (const offer of item.userOutletOfferCollection) {
+              if (offer.outletOfferType.id === 1) {
+                item.numberOfOffers = item.numberOfOffers + 1;
+              } else if (offer.outletOfferType.id === 2) {
+                item.numberOfPasses = item.numberOfPasses + 1;
+              }
+            }
+          }
+          this.totalItems = responseBuilder.data.passes.totalResults;
           this.loadingIndicator = false;
         }
       }
@@ -78,31 +100,30 @@ export class OffersComponent implements OnInit, OnDestroy {
 
   openPopUp (data: any = {}, isNew?) {
     this.loader.open('Please Wait...');
-    let offerTypes = [];
-    let outlets = [];
-    forkJoin([this.userOutletOffersService.getAllTypes(), this.userOutletInfoService.getAllOutlets()])
+    let offers = [];
+    let passes = [];
+    forkJoin([this.userOutletOffersService.getAllOffersByType(1), this.userOutletOffersService.getAllOffersByType(2)])
       .subscribe((responses: ResponseBuilderModel[]) => {
         if (responses[0].code === + this.apiConfig.SUCCESS) {
-          offerTypes = responses[0].data.outletOfferTypes;
+          offers = responses[0].data.userOutletOffer;
         }
         if (responses[1].code === + this.apiConfig.SUCCESS) {
-          outlets = responses[1].data.users;
+          passes = responses[1].data.userOutletOffer;
         }
         if (responses[0].code === + this.apiConfig.SUCCESS && responses[1].code === + this.apiConfig.SUCCESS) {
           this.loader.close();
-          const title = isNew ? 'Add new offer' : 'Update offer';
-          const dialogRef: MatDialogRef<any> = this.dialog.open(NgxOffersPopupComponent, {
+          const title = isNew ? 'Add new package' : 'Update package';
+          const dialogRef: MatDialogRef<any> = this.dialog.open(NgxPackagesPopupComponent, {
             width: '720px',
             disableClose: true,
-            data: {title: title, payload: data, outlets: outlets, offerTypes: offerTypes, isNew: isNew}
+            data: {title: title, payload: data, offers: offers, passes: passes, isNew: isNew}
           });
           dialogRef.afterClosed()
             .subscribe(res => {
               if (! res) {
-                // If user press cancel
                 return;
               }
-              this.getOffers();
+              this.getPackages();
             });
         }
       });

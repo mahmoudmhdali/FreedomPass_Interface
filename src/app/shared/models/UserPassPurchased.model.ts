@@ -1,5 +1,5 @@
 import {UserProfileModel} from './UserProfile.model';
-import {UserCompanyPassesModel} from './UserCompanyPasses.model';
+import {AdminPassesModel} from './AdminPasses.model';
 
 export class UserPassPurchasedModel {
   public id: number;
@@ -7,15 +7,15 @@ export class UserPassPurchasedModel {
   public status: number;
   public validTill: Date;
   public userProfileId: UserProfileModel;
-  public userCompanyPasses: UserCompanyPassesModel;
+  public adminPasses: AdminPassesModel;
 
   constructor(id: number, isPaid: boolean, status: number, validTill: Date, userProfileId: UserProfileModel,
-              userCompanyPasses: UserCompanyPassesModel) {
+              adminPasses: AdminPassesModel) {
     this.id = id;
     this.isPaid = isPaid;
     this.status = status;
     this.validTill = validTill;
     this.userProfileId = userProfileId;
-    this.userCompanyPasses = userCompanyPasses;
+    this.adminPasses = adminPasses;
   }
 }
