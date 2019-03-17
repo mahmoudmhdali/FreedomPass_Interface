@@ -29,15 +29,15 @@
           <a href="" class="toolbar-avatar md mr-1"><img src="assets/images/user.png" alt=""/></a>
           <span>{{user.name}}</span>
           <span fxFlex></span>
-          <button mat-icon-button [matMenuTriggerFor]="userMenu">
+          <button *ngxPermissionsOnly="['SYSTEM, OUR_SYSTEM_USER']" mat-icon-button [matMenuTriggerFor]="userMenu">
             <mat-icon class="">more_vert</mat-icon>
           </button>
-          <mat-menu #userMenu="matMenu">
+          <mat-menu *ngxPermissionsOnly="['SYSTEM, OUR_SYSTEM_USER']" #userMenu="matMenu">
             <button (click)="openPopUp(user, false, true)" mat-menu-item>{{'VIEW' | translate}}
             </button>
-            <button (click)="openPopUp(user, false, false)" *ngxPermissionsOnly="['EDIT_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']" mat-menu-item>{{'EDIT' | translate}}
+            <button (click)="openPopUp(user, false, false)" *ngxPermissionsOnly="['SYSTEM', 'OUR_SYSTEM_USER']" mat-menu-item>{{'EDIT' | translate}}
             </button>
-            <button (click)="removeUser(user)" *ngxPermissionsOnly="['DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']" mat-menu-item>{{'DELETE' | translate}}
+            <button (click)="removeUser(user)" *ngxPermissionsOnly="['SYSTEM', 'OUR_SYSTEM_USER']" mat-menu-item>{{'DELETE' | translate}}
             </button>
           </mat-menu>
         </div>

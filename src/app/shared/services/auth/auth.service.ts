@@ -60,7 +60,12 @@ export class AuthService {
   }
 
   navigationBasedOnRoles() {
-    this.router.navigate(['/users']);
+
+    if (typeof this.ngxPermissionsService.getPermission('OUTLET') !== 'undefined') {
+      this.router.navigate(['/profile']);
+    } else {
+      this.router.navigate(['/users']);
+    }
     this.logsService.setLog('AuthService', 'navigationBasedOnRoles', this.ngxPermissionsService.getPermissions());
     // if (typeof this.ngxPermissionsService.getPermission('VIEW_DASHBOARD') !== 'undefined') {
     //   this.router.navigate(['/dashboard']);

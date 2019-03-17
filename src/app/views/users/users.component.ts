@@ -12,6 +12,7 @@ import {animate, group, state, style, transition, trigger} from '@angular/animat
 import {LogsService} from '../../shared/services/logs.service';
 import {TranslatePipe} from '@ngx-translate/core';
 import {NgxPermissionsService} from 'ngx-permissions';
+import {UserCompanyPassesService} from '../../shared/services/database-services/userCompanyPasses.service';
 
 @Component({
   selector: 'app-users',
@@ -61,6 +62,7 @@ export class AppUsersComponent implements OnInit {
               private translatePipe: TranslatePipe,
               private logsService: LogsService,
               public confirmService: AppConfirmService,
+              private userCompanyPassesService: UserCompanyPassesService,
               private ngxPermissionsService: NgxPermissionsService,
               private loader: AppLoaderService,
               private svcGlobal: GlobalService) {
@@ -81,33 +83,74 @@ export class AppUsersComponent implements OnInit {
   }
 
   openPopUp(data: UserProfileModel, isNew, viewOnly) {
-    let title = isNew === true ? this.translatePipe.transform('ADDNEWMEMBER') : this.translatePipe.transform('UPDATEMEMBER');
-    if (viewOnly) {
-      title = this.translatePipe.transform('VIEWMEMBER');
+    if (typeof this.ngxPermissionsService.getPermission('COMPANY') !== 'undefined') {
+      this.loader.open('Please Wait...');
+      this.userCompanyPassesService.getLoggedInCompanyPasses().subscribe(
+        (responseBuilder) => {
+          this.logsService.setLog('AppUsersComponent', 'ngOnInit(getUsers)', responseBuilder);
+          if (responseBuilder.code === +this.apiConfig.SUCCESS) {
+            this.loader.close();
+            let title = isNew === true ? this.translatePipe.transform('ADDNEWMEMBER') : this.translatePipe.transform('UPDATEMEMBER');
+            if (viewOnly) {
+              title = this.translatePipe.transform('VIEWMEMBER');
+            }
+            const dialogRef: MatDialogRef<any> = this.dialog.open(NgxUsersPopupComponent, {
+              width: '720px',
+              disableClose: true,
+              data: {
+                title: title,
+                payload: data,
+                isNew: isNew,
+                viewOnly: viewOnly,
+                packages: responseBuilder.data.userCompanyPasses
+              }
+            });
+            dialogRef.afterClosed().subscribe(res => {
+              // If user press cancel
+              if (!res) {
+                return;
+              }
+              if (!isNew) {
+                const index: number = this.users.indexOf(this.users.find(user => user.id === res.id));
+                this.users.splice(index, 1);
+              }
+              this.users.unshift(res);
+            });
+
+
+
+
+
+          }
+        }
+      );
+    } else {
+      let title = isNew === true ? this.translatePipe.transform('ADDNEWMEMBER') : this.translatePipe.transform('UPDATEMEMBER');
+      if (viewOnly) {
+        title = this.translatePipe.transform('VIEWMEMBER');
+      }
+      const dialogRef: MatDialogRef<any> = this.dialog.open(NgxUsersPopupComponent, {
+        width: '720px',
+        disableClose: true,
+        data: {
+          title: title,
+          payload: data,
+          isNew: isNew,
+          viewOnly: viewOnly
+        }
+      });
+      dialogRef.afterClosed().subscribe(res => {
+        // If user press cancel
+        if (!res) {
+          return;
+        }
+        if (!isNew) {
+          const index: number = this.users.indexOf(this.users.find(user => user.id === res.id));
+          this.users.splice(index, 1);
+        }
+        this.users.unshift(res);
+      });
     }
-    const dialogRef: MatDialogRef<any> = this.dialog.open(NgxUsersPopupComponent, {
-      width: '720px',
-      disableClose: true,
-      data: {
-        title: title,
-        payload: data,
-        isNew: isNew,
-        viewOnly: viewOnly
-      }
-    });
-    dialogRef.afterClosed().subscribe(res => {
-      // If user press cancel
-      if (!res) {
-        return;
-      }
-      if (!isNew) {
-        const index: number = this.users.indexOf(this.users.find(user => user.id === res.id));
-        this.users.splice(index, 1);
-      }
-      this.users.unshift(res);
-    });
-
-
   }
 
   removeUser(data: UserProfileModel) {

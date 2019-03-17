@@ -77,22 +77,6 @@
                     class="form-error-msg"> {{itemForm.controls['name'].errors.serverValidation}}
                   </small>
                 </div>
-                <div fxFlex="100" class="pr-1">
-                  <mat-form-field class="full-width">
-                    <input
-                      matInput
-                      [formControl]="itemForm.controls['lastName']"
-                      placeholder="{{'Last Name' | translate}}">
-                  </mat-form-field>
-                  <small
-                    *ngIf="itemForm.controls['lastName'].hasError('required') && itemForm.controls['lastName'].touched"
-                    class="form-error-msg"> {{'NAMEREQUIRED' | translate}}
-                  </small>
-                  <small
-                    *ngIf="itemForm.controls['lastName'].hasError('serverValidation') && itemForm.controls['lastName'].touched"
-                    class="form-error-msg"> {{itemForm.controls['lastName'].errors.serverValidation}}
-                  </small>
-                </div>
                 <div fxFlex="100" class="mt-1">
                   <button mat-raised-button color="primary"
                           [disabled]="itemForm.invalid || disableButton || !itemForm.dirty">
@@ -192,12 +176,11 @@
             </form>
           </mat-card-content>
         </mat-tab>
-        // *ngxPermissionsOnly="['COMPANY', 'OUTLET']"
-        <mat-tab label="{{'Account Images' | translate}}">
+        <mat-tab label="{{'Account Images' | translate}}" *ngxPermissionsOnly="['COMPANY', 'OUTLET']">
           <mat-card-content class="mt-1">
-            <form #form="ngForm" [formGroup]="imagesForm" (ngSubmit)="submitPassword()">
+            <form #form="ngForm" [formGroup]="imagesForm" (ngSubmit)="updateImages()">
               <div fxLayout="row wrap" fxLayout.lt-sm="column">
-                <div fxFlex="50" class="pr-1">
+                <div fxFlex="100" class="pr-1">
                   <mat-form-field class="full-width">
                     <input
                       matInput
@@ -214,7 +197,7 @@
                 </div>
                 <input type="file" style="display: none" class="form-control" name="batchInput"
                        (change)="image1FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput1>
-                <div fxFlex="50" class="pr-1">
+                <div fxFlex="100" class="pr-1">
                   <mat-form-field class="full-width">
                     <input
                       matInput
@@ -231,7 +214,7 @@
                 </div>
                 <input type="file" style="display: none" class="form-control" name="batchInput"
                        (change)="image2FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput2>
-                <div fxFlex="50" class="pr-1">
+                <div fxFlex="100" class="pr-1">
                   <mat-form-field class="full-width">
                     <input
                       matInput
@@ -248,7 +231,7 @@
                 </div>
                 <input type="file" style="display: none" class="form-control" name="batchInput"
                        (change)="image3FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput3>
-                <div fxFlex="50" class="pr-1">
+                <div fxFlex="100" class="pr-1">
                   <mat-form-field class="full-width">
                     <input
                       matInput
@@ -271,7 +254,113 @@
                     {{'SAVE' | translate}}
                   </button>
                   <span fxFlex></span>
-                  <button mat-button color="warn" type="button" (click)="cancelClickPassword()">
+                  <button mat-button color="warn" type="button" (click)="cancelClickImages()">
+                    {{'CANCEL' | translate}}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-tab>
+        <mat-tab label="{{'Account Locations' | translate}}" *ngxPermissionsOnly="['COMPANY', 'OUTLET']">
+          <mat-card-content class="mt-1">
+            <form #form="ngForm" [formGroup]="locationsForm" (ngSubmit)="updateLocations()">
+              <div fxLayout="row wrap" fxLayout.lt-sm="column">
+                <div fxFlex="50" class="pr-1">
+                  <mat-form-field class="full-width">
+                    <input
+                      matInput
+                      [formControl]="locationsForm.controls['longitude1']"
+                      placeholder="Longitude 1"/>
+                    <!--<mat-icon matSuffix (click)="fileInput1.click()" style="cursor: pointer; color: #247ba0;">-->
+                    <!--file_upload-->
+                    <!--</mat-icon>-->
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50" class="pr-1">
+                  <mat-form-field class="full-width">
+                    <input
+                      matInput
+                      [formControl]="locationsForm.controls['latitude1']"
+                      placeholder="Latitude 1"/>
+                    <!--<mat-icon matSuffix (click)="fileInput1.click()" style="cursor: pointer; color: #247ba0;">-->
+                    <!--file_upload-->
+                    <!--</mat-icon>-->
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50" class="pr-1">
+                  <mat-form-field class="full-width">
+                    <input
+                      matInput
+                      [formControl]="locationsForm.controls['longitude2']"
+                      placeholder="Longitude 2"/>
+                    <!--<mat-icon matSuffix (click)="fileInput1.click()" style="cursor: pointer; color: #247ba0;">-->
+                    <!--file_upload-->
+                    <!--</mat-icon>-->
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50" class="pr-1">
+                  <mat-form-field class="full-width">
+                    <input
+                      matInput
+                      [formControl]="locationsForm.controls['latitude2']"
+                      placeholder="Latitude 2"/>
+                    <!--<mat-icon matSuffix (click)="fileInput1.click()" style="cursor: pointer; color: #247ba0;">-->
+                    <!--file_upload-->
+                    <!--</mat-icon>-->
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50" class="pr-1">
+                  <mat-form-field class="full-width">
+                    <input
+                      matInput
+                      [formControl]="locationsForm.controls['longitude3']"
+                      placeholder="Longitude 3"/>
+                    <!--<mat-icon matSuffix (click)="fileInput1.click()" style="cursor: pointer; color: #247ba0;">-->
+                    <!--file_upload-->
+                    <!--</mat-icon>-->
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50" class="pr-1">
+                  <mat-form-field class="full-width">
+                    <input
+                      matInput
+                      [formControl]="locationsForm.controls['latitude3']"
+                      placeholder="Latitude 3"/>
+                    <!--<mat-icon matSuffix (click)="fileInput1.click()" style="cursor: pointer; color: #247ba0;">-->
+                    <!--file_upload-->
+                    <!--</mat-icon>-->
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50" class="pr-1">
+                  <mat-form-field class="full-width">
+                    <input
+                      matInput
+                      [formControl]="locationsForm.controls['longitude4']"
+                      placeholder="Longitude 4"/>
+                    <!--<mat-icon matSuffix (click)="fileInput1.click()" style="cursor: pointer; color: #247ba0;">-->
+                    <!--file_upload-->
+                    <!--</mat-icon>-->
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50" class="pr-1">
+                  <mat-form-field class="full-width">
+                    <input
+                      matInput
+                      [formControl]="locationsForm.controls['latitude4']"
+                      placeholder="Latitude 4"/>
+                    <!--<mat-icon matSuffix (click)="fileInput1.click()" style="cursor: pointer; color: #247ba0;">-->
+                    <!--file_upload-->
+                    <!--</mat-icon>-->
+                  </mat-form-field>
+                </div>
+                <div fxFlex="100" class="mt-1">
+                  <button mat-raised-button color="primary"
+                          [disabled]="locationsForm.invalid || disableButton || !locationsForm.dirty">
+                    {{'SAVE' | translate}}
+                  </button>
+                  <span fxFlex></span>
+                  <button mat-button color="warn" type="button" (click)="cancelClickLocations()">
                     {{'CANCEL' | translate}}
                   </button>
                 </div>

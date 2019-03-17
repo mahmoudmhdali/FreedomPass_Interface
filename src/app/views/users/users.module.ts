@@ -32,6 +32,7 @@ import {NgxPermissionsModule} from 'ngx-permissions';
 import {TranslateModule} from '@ngx-translate/core';
 import {NgxUsersPopupComponent} from './ngx-users-popup/ngx-users-popup.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {UserCompanyPassesService} from '../../shared/services/database-services/userCompanyPasses.service';
 
 @NgModule({
   imports: [
@@ -67,6 +68,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
   ],
   declarations: [AppUsersComponent, NgxUsersPopupComponent],
   entryComponents: [NgxUsersPopupComponent],
+  providers: [UserCompanyPassesService],
   exports: []
 })
 export class AppUsersModule {

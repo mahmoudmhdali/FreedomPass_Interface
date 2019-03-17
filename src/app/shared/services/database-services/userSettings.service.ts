@@ -45,4 +45,40 @@ export class UserSettingsService {
       + this.apiConfig.API_PATH + '/userSettings/updatePassword', this.svcGlobal.getFormUrlEncoded(user), {headers});
   }
 
+  editCompanyImages (formData) {
+    const headers = new HttpHeaders({'Accept': 'application/json'});
+    return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/userCompanyInfo/editImages', formData, {headers});
+
+  }
+
+  editOutletImages (formData) {
+    const headers = new HttpHeaders({'Accept': 'application/json'});
+    return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/userOutletInfo/editImages', formData, {headers});
+
+  }
+
+  editCompanyLocations(locations) {
+    // if we need the full response we should add {headers, observe: 'response'}
+    const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
+    return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/userCompanyInfo/editLocations', this.svcGlobal.getFormUrlEncoded(locations), {headers});
+  }
+
+  editOutletLocations(locations) {
+    // if we need the full response we should add {headers, observe: 'response'}
+    const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
+    return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/userOutletInfo/editLocations', this.svcGlobal.getFormUrlEncoded(locations), {headers});
+  }
+
 }

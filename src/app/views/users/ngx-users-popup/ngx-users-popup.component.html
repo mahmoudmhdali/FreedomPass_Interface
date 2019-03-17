@@ -34,23 +34,6 @@
       <mat-form-field class="full-width">
         <input
           matInput
-          name="lastName"
-          [formControl]="itemForm.controls['lastName']"
-          placeholder="{{'Last Name' | translate}}">
-      </mat-form-field>
-      <small
-        *ngIf="itemForm.controls['lastName'].hasError('required') && itemForm.controls['lastName'].touched"
-        class="form-error-msg"> {{'Last Name is required' | translate}}
-      </small>
-      <small
-        *ngIf="itemForm.controls['lastName'].hasError('serverValidation') && itemForm.controls['lastName'].touched"
-        class="form-error-msg"> {{itemForm.controls['lastName'].errors.serverValidation}}
-      </small>
-    </div>
-    <div fxFlex="50" class="pr-1">
-      <mat-form-field class="full-width">
-        <input
-          matInput
           type="email"
           name="email"
           [formControl]="itemForm.controls['email']"
@@ -86,10 +69,34 @@
         class="form-error-msg"> {{itemForm.controls['mobileNumber'].errors.serverValidation}}
       </small>
     </div>
+
+
+    <ng-container *ngIf="data.isNew">
+      <div fxFlex="50" class="pr-1" *ngxPermissionsOnly="['COMPANY']">
+        <mat-form-field class="full-width">
+          <mat-select matInput placeholder="Package" [formControl]="itemForm.controls['packageId']">
+            <mat-option *ngFor="let package of packages" [value]="package.id" ngDefaultControl>
+              {{package.adminPasses.name}} (Remain {{package.remainingUsers}} users)
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <small
+          *ngIf="itemForm.controls['packageId'].hasError('required') && itemForm.controls['packageId'].touched"
+          class="form-error-msg"> {{'Package is required' | translate}}
+        </small>
+        <small
+          *ngIf="itemForm.controls['packageId'].hasError('serverValidation') && itemForm.controls['packageId'].touched"
+          class="form-error-msg"> {{itemForm.controls['packageId'].errors.serverValidation}}
+        </small>
+      </div>
+    </ng-container>
+
+
     <ng-container *ngIf="data.isNew || data.viewOnly">
       <div fxFlex="50" class="pr-1" *ngxPermissionsOnly="['SYSTEM']">
         <mat-form-field class="full-width">
-          <mat-select matInput (selectionChange)="typeChange($event.value, '')" [formControl]="itemForm.controls['type']"
+          <mat-select matInput (selectionChange)="typeChange($event.value, '')"
+                      [formControl]="itemForm.controls['type']"
                       placeholder="{{'Type' | translate}}" class="full-widthmb-1">
             <mat-option *ngFor="let type of types" [value]="type.value" ngDefaultControl>
               {{type.viewValue}}

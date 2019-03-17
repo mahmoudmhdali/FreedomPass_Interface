@@ -20,7 +20,7 @@
       [rowHeight]="'auto'">
       <ngx-datatable-column name="Company Name" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          {{ row?.userCompanyInfo.userCompanyName }}
+          {{ row?.userCompanyName }}
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Package Name" [flexGrow]="1">
@@ -35,7 +35,7 @@
       </ngx-datatable-column>
       <ngx-datatable-column name="Remaining Users" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          {{ row?.numberOfUsers }} {{ row?.numberOfUsers > 1 ? 'Users' : 'User' }}
+          {{ row?.remainingUsers }} {{ row?.remainingUsers > 1 ? 'Users' : 'User' }}
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Purchase Date" [flexGrow]="1">

@@ -8,7 +8,6 @@ import {UserOutletOfferPurchasedModel} from './UserOutletOfferPurchased.model';
 export class UserProfileModel {
   public id: number;
   public name: string;
-  public lastName: string;
   public qrCodePath: string;
   public country: number;
   public parentId: number;
@@ -32,7 +31,7 @@ export class UserProfileModel {
   public groupCollection: GroupModel[];
   public language: LanguageModel;
 
-  constructor(id: number, name: string, lastName: string, qrCodePath: string, country: number, parentId: number, type: number,
+  constructor(id: number, name: string, qrCodePath: string, country: number, parentId: number, type: number,
               userCompanyInfo: UserCompanyInfoModel, userOutletInfo: UserOutletInfoModel, userPassPurchased: UserPassPurchasedModel[],
               userOutletOfferPurchased: UserOutletOfferPurchasedModel[], credentialNonExpired: boolean, resetPasswordToken: string,
               resetPasswordTokenValidity: Date, createdDate: Date, updatedDate: Date, enabled: boolean, accountNonExpired: boolean,
@@ -40,7 +39,6 @@ export class UserProfileModel {
               language: LanguageModel) {
     this.id = id;
     this.name = name;
-    this.lastName = lastName;
     this.qrCodePath = qrCodePath;
     this.country = country;
     this.parentId = parentId;

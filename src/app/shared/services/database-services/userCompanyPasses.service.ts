@@ -34,4 +34,11 @@ export class UserCompanyPassesService {
       + this.apiConfig.API_PATH + '/userCompanyPasses/add', this.svcGlobal.getFormUrlEncoded(companyPass), {headers});
   }
 
+  getLoggedInCompanyPasses () {
+    return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/userCompanyPasses/myPackages');
+  }
+
 }

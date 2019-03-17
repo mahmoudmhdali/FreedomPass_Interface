@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {GlobalService} from '../global.service';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ResponseBuilderModel} from '../../models/ResponseBuilder.model';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 

@@ -80,14 +80,14 @@ export class GlobalService {
   }
 
   getLanguage() {
-    const user: UserProfileModel = this.getSession('loggedInUser');
-    const lang = user.language.prefix;
-    if (lang != null) {
-      // fa is for Persian language (Iran language)
-      if (lang === 'en' || lang === 'ar' || lang === 'fr' || lang === 'fa') {
-        return lang;
-      }
-    }
+    // const user: UserProfileModel = this.getSession('loggedInUser');
+    // const lang = user.language.prefix;
+    // if (lang != null) {
+    //   // fa is for Persian language (Iran language)
+    //   if (lang === 'en' || lang === 'ar' || lang === 'fr' || lang === 'fa') {
+    //     return lang;
+    //   }
+    // }
     return 'en';
   }
 

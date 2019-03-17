@@ -25,4 +25,8 @@ export class ErrorComponent implements OnInit {
     this.authService.navigationBasedOnRoles();
   }
 
+  signOut() {
+    this.authService.signOut();
+  }
+
 }
