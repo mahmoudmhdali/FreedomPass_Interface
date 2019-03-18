@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Router} from '@angular/router';
-import {getQueryParam} from '../helpers/url.helper';
 import {GlobalService} from './global.service';
+import {NgxPermissionsService} from 'ngx-permissions';
 
 interface ILayoutConf {
   navigationPos?: string;   // side, top
@@ -33,13 +33,14 @@ export class LayoutService {
   currentLang = this.globalService.getLanguage();
   public isMobile: boolean;
   public currentRoute: string;
-  public fullWidthRoutes = ['shop'];
+  public fullWidthRoutes = ['shop', 'profile'];
 
-  constructor(private router: Router, private globalService: GlobalService) {
+  constructor (private router: Router, private globalService: GlobalService,
+               private ngxPermissionsService: NgxPermissionsService) {
     this.setAppLayout();
   }
 
-  setAppLayout() {
+  setAppLayout () {
     let dir = 'ltr';
     if (this.currentLang === 'ar' || this.currentLang === 'fa') {
       dir = 'rtl';
@@ -60,9 +61,9 @@ export class LayoutService {
     // **********************
   }
 
-  publishLayoutChange(lc: ILayoutConf, opt: ILayoutChangeOptions = {}) {
+  publishLayoutChange (lc: ILayoutConf, opt: ILayoutChangeOptions = {}) {
     const duration = opt.duration || 250;
-    if (!opt.transitionClass) {
+    if (! opt.transitionClass) {
       this.layoutConf = Object.assign(this.layoutConf, lc);
       return this.layoutConfSubject.next(this.layoutConf);
     }
@@ -85,8 +86,7 @@ export class LayoutService {
   // }
 
 
-
-  adjustLayout(options: IAdjustScreenOptions = {}) {
+  adjustLayout (options: IAdjustScreenOptions = {}) {
     let sidebarStyle: string;
     this.isMobile = this.isSm();
     this.currentRoute = options.route || this.currentRoute;
@@ -94,9 +94,14 @@ export class LayoutService {
 
     if (this.currentRoute) {
       this.fullWidthRoutes.forEach(route => {
-        if (this.currentRoute.indexOf(route) !== -1) {
+        if (this.currentRoute.indexOf(route) !== - 1 && typeof this.ngxPermissionsService.getPermission('OUTLET') !== 'undefined') {
           sidebarStyle = 'closed';
+        } else {
+          sidebarStyle = 'full';
         }
+        // if (this.currentRoute.indexOf(route) !== - 1) {
+        //   sidebarStyle = 'closed';
+        // }
       });
     }
 
@@ -106,7 +111,7 @@ export class LayoutService {
     });
   }
 
-  isSm() {
+  isSm () {
     return window.matchMedia(`(max-width: 959px)`).matches;
   }
 }

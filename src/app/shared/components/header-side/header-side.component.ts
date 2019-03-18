@@ -10,6 +10,7 @@ import {WebNotificationsService} from '../../services/database-services/webNotif
 import {Subscription} from 'rxjs/Rx';
 import {LanguageModel} from '../../models/Language.model';
 import {ResponseBuilderModel} from '../../models/ResponseBuilder.model';
+import {NgxPermissionsService} from 'ngx-permissions';
 
 @Component({
   selector: 'app-header-side',
@@ -22,6 +23,7 @@ export class HeaderSideComponent implements OnInit, OnDestroy {
   public egretThemes;
   public layoutConf: any;
   apiConfig;
+  showToggle = true;
   public languages: LanguageModel[];
   currentLangSubscription: Subscription;
 
@@ -30,6 +32,7 @@ export class HeaderSideComponent implements OnInit, OnDestroy {
               private globalService: GlobalService,
               private languageService: LanguageService,
               public userSettingsService: UserSettingsService,
+              private ngxPermissionsService: NgxPermissionsService,
               public translate: TranslateService,
               public authService: AuthService,
               public webNotificationsService: WebNotificationsService,
@@ -38,6 +41,9 @@ export class HeaderSideComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if(typeof this.ngxPermissionsService.getPermission('OUTLET') !== 'undefined'){
+      this.showToggle = false;
+    }
     this.currentLangSubscription = this.languageService.getCurrentLang().subscribe((value: string) => {
         if (value !== 'none') {
           this.currentLang = value;

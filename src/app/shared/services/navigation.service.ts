@@ -82,28 +82,32 @@ export class NavigationService {
       type: 'link',
       tooltip: 'Dashboard',
       icon: 'dashboard',
-      state: 'templateDashboard'
+      state: 'templateDashboard',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'INBOX',
       type: 'link',
       tooltip: 'Inbox',
       icon: 'inbox',
-      state: 'inbox'
+      state: 'inbox',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'CHAT',
       type: 'link',
       tooltip: 'Chat',
       icon: 'chat',
-      state: 'chat'
+      state: 'chat',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'CRUD Table',
       type: 'link',
       tooltip: 'CRUD Table',
       icon: 'format_list_bulleted',
-      state: 'cruds/ngx-table'
+      state: 'cruds/ngx-table',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'ECOMMERCE',
@@ -111,6 +115,7 @@ export class NavigationService {
       tooltip: 'Shop',
       icon: 'shopping_cart',
       state: 'shop',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'PRODUCTS', state: ''},
         {name: 'PRODUCT DETAILS', state: 'products/5a9ae2106f155194e5c95d67'},
@@ -123,7 +128,8 @@ export class NavigationService {
       type: 'link',
       tooltip: 'Calendar',
       icon: 'date_range',
-      state: 'calendar'
+      state: 'calendar',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'DIALOGS',
@@ -131,6 +137,7 @@ export class NavigationService {
       tooltip: 'Dialogs',
       icon: 'filter_none',
       state: 'dialogs',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'CONFIRM', state: 'confirm'},
         {name: 'LOADER', state: 'loader'},
@@ -142,6 +149,7 @@ export class NavigationService {
       tooltip: 'Material',
       icon: 'favorite',
       state: 'material',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'BUTTONS', state: 'buttons'},
         {name: 'CARDS', state: 'cards'},
@@ -163,6 +171,7 @@ export class NavigationService {
       tooltip: 'Forms',
       icon: 'description',
       state: 'forms',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'BASIC', state: 'basic'},
         {name: 'EDITOR', state: 'editor'},
@@ -176,6 +185,7 @@ export class NavigationService {
       tooltip: 'Tables',
       icon: 'format_line_spacing',
       state: 'tables',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'FULLSCREEN', state: 'fullscreen'},
         {name: 'PAGING', state: 'paging'},
@@ -188,6 +198,7 @@ export class NavigationService {
       tooltip: 'Profile',
       icon: 'person',
       state: 'templateProfile',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'OVERVIEW', state: 'overview'},
         {name: 'SETTINGS', state: 'settings'},
@@ -199,28 +210,32 @@ export class NavigationService {
       type: 'link',
       tooltip: 'Tour',
       icon: 'flight_takeoff',
-      state: 'tour'
+      state: 'tour',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'MAP',
       type: 'link',
       tooltip: 'Map',
       icon: 'add_location',
-      state: 'map'
+      state: 'map',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'CHARTS',
       type: 'link',
       tooltip: 'Charts',
       icon: 'show_chart',
-      state: 'charts'
+      state: 'charts',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'DND',
       type: 'link',
       tooltip: 'Drag and Drop',
       icon: 'adjust',
-      state: 'dragndrop'
+      state: 'dragndrop',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'SESSIONS',
@@ -228,6 +243,7 @@ export class NavigationService {
       tooltip: 'Pages',
       icon: 'view_carousel',
       state: 'sessions',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'SIGNUP', state: 'signup'},
         {name: 'SIGNIN', state: 'signin'},
@@ -243,6 +259,7 @@ export class NavigationService {
       tooltip: 'Others',
       icon: 'blur_on',
       state: 'others',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'GALLERY', state: 'gallery'},
         {name: 'PRICINGS', state: 'pricing'},
@@ -255,20 +272,22 @@ export class NavigationService {
       type: 'link',
       tooltip: 'Material Icons',
       icon: 'store',
-      state: 'icons'
+      state: 'icons',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'DOC',
       type: 'extLink',
       tooltip: 'Documentation',
       icon: 'library_books',
-      state: 'http://egret-doc.mhrafi.com/'
+      state: 'http://egret-doc.mhrafi.com/',
+      roles: ['OUR_SYSTEM_USER']
     }
   ];
   separatorMenu: IMenuItem[] = [
     {
       type: 'separator',
-      name: 'Freedom Pass components'
+      name: 'Freedom Pass'
     },
     {
       name: 'REPORT',
@@ -314,37 +333,42 @@ export class NavigationService {
       state: 'companiesPackages',
       roles: ['SYSTEM', 'OUR_SYSTEM_USER']
     },
-    {
-      type: 'separator',
-      name: 'Freedom Pass components'
-    },
+    // {
+    //   type: 'separator',
+    //   name: 'Freedom Pass components',
+    //   roles: ['OUR_SYSTEM_USER']
+    // },
     {
       name: 'DASHBOARD',
       type: 'link',
       tooltip: 'Dashboard',
       icon: 'dashboard',
-      state: 'templateDashboard'
+      state: 'templateDashboard',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'INBOX',
       type: 'link',
       tooltip: 'Inbox',
       icon: 'inbox',
-      state: 'inbox'
+      state: 'inbox',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'CHAT',
       type: 'link',
       tooltip: 'Chat',
       icon: 'chat',
-      state: 'chat'
+      state: 'chat',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'CRUD Table',
       type: 'link',
       tooltip: 'CRUD Table',
       icon: 'format_list_bulleted',
-      state: 'cruds/ngx-table'
+      state: 'cruds/ngx-table',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'ECOMMERCE',
@@ -352,6 +376,7 @@ export class NavigationService {
       tooltip: 'Shop',
       icon: 'shopping_cart',
       state: 'shop',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'PRODUCTS', state: ''},
         {name: 'PRODUCT DETAILS', state: 'products/5a9ae2106f155194e5c95d67'},
@@ -365,6 +390,7 @@ export class NavigationService {
       tooltip: 'Dialogs',
       icon: 'filter_none',
       state: 'dialogs',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'CONFIRM', state: 'confirm'},
         {name: 'LOADER', state: 'loader'},
@@ -376,6 +402,7 @@ export class NavigationService {
       tooltip: 'Profile',
       icon: 'person',
       state: 'templateProfile',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'OVERVIEW', state: 'overview'},
         {name: 'SETTINGS', state: 'settings'},
@@ -387,18 +414,20 @@ export class NavigationService {
       type: 'link',
       tooltip: 'Tour',
       icon: 'flight_takeoff',
-      state: 'tour'
+      state: 'tour',
+      roles: ['OUR_SYSTEM_USER']
     },
-    {
-      type: 'separator',
-      name: 'Integrated components'
-    },
+    // {
+    //   type: 'separator',
+    //   name: 'Integrated components'
+    // },
     {
       name: 'CALENDAR',
       type: 'link',
       tooltip: 'Calendar',
       icon: 'date_range',
-      state: 'calendar'
+      state: 'calendar',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'MATERIAL',
@@ -406,6 +435,7 @@ export class NavigationService {
       tooltip: 'Material',
       icon: 'favorite',
       state: 'material',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'BUTTONS', state: 'buttons'},
         {name: 'CARDS', state: 'cards'},
@@ -427,6 +457,7 @@ export class NavigationService {
       tooltip: 'Forms',
       icon: 'description',
       state: 'forms',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'BASIC', state: 'basic'},
         {name: 'EDITOR', state: 'editor'},
@@ -440,6 +471,7 @@ export class NavigationService {
       tooltip: 'Tables',
       icon: 'format_line_spacing',
       state: 'tables',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'FULLSCREEN', state: 'fullscreen'},
         {name: 'PAGING', state: 'paging'},
@@ -451,32 +483,37 @@ export class NavigationService {
       type: 'link',
       tooltip: 'Map',
       icon: 'add_location',
-      state: 'map'
+      state: 'map',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'CHARTS',
       type: 'link',
       tooltip: 'Charts',
       icon: 'show_chart',
-      state: 'charts'
+      state: 'charts',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'DND',
       type: 'link',
       tooltip: 'Drag and Drop',
       icon: 'adjust',
-      state: 'dragndrop'
+      state: 'dragndrop',
+      roles: ['OUR_SYSTEM_USER']
     },
-    {
-      type: 'separator',
-      name: 'Other components'
-    },
+    // {
+    //   type: 'separator',
+    //   name: 'Other components',
+    //   roles: ['OUR_SYSTEM_USER']
+    // },
     {
       name: 'SESSIONS',
       type: 'dropDown',
       tooltip: 'Pages',
       icon: 'view_carousel',
       state: 'sessions',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'SIGNUP', state: 'signup'},
         {name: 'SIGNIN', state: 'signin'},
@@ -492,6 +529,7 @@ export class NavigationService {
       tooltip: 'Others',
       icon: 'blur_on',
       state: 'others',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'GALLERY', state: 'gallery'},
         {name: 'PRICINGS', state: 'pricing'},
@@ -504,14 +542,16 @@ export class NavigationService {
       type: 'link',
       tooltip: 'Material Icons',
       icon: 'store',
-      state: 'icons'
+      state: 'icons',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'DOC',
       type: 'extLink',
       tooltip: 'Documentation',
       icon: 'library_books',
-      state: 'http://egret-doc.mhrafi.com/'
+      state: 'http://egret-doc.mhrafi.com/',
+      roles: ['OUR_SYSTEM_USER']
     }
   ];
   iconMenu: IMenuItem[] = [
@@ -564,25 +604,29 @@ export class NavigationService {
       type: 'icon',
       tooltip: 'Home',
       icon: 'home',
-      state: 'home'
+      state: 'home',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'PROFILE',
       type: 'icon',
       tooltip: 'Profile',
       icon: 'person',
-      state: 'templateProfile/overview'
+      state: 'templateProfile/overview',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'TOUR',
       type: 'icon',
       tooltip: 'Tour',
       icon: 'flight_takeoff',
-      state: 'tour'
+      state: 'tour',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       type: 'separator',
-      name: 'Main Items'
+      name: 'Main Items',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'DASHBOARD',
@@ -590,6 +634,7 @@ export class NavigationService {
       tooltip: 'Dashboard',
       icon: 'dashboard',
       state: 'templateDashboard',
+      roles: ['OUR_SYSTEM_USER'],
       badges: [{color: 'accent', value: '100+'}],
     },
     {
@@ -597,7 +642,8 @@ export class NavigationService {
       type: 'link',
       tooltip: 'CRUD Table',
       icon: 'format_list_bulleted',
-      state: 'cruds/ngx-table'
+      state: 'cruds/ngx-table',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'ECOMMERCE',
@@ -605,6 +651,7 @@ export class NavigationService {
       tooltip: 'Shop',
       icon: 'shopping_cart',
       state: 'shop',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'PRODUCTS', state: ''},
         {name: 'PRODUCT DETAILS', state: 'products/5a9ae2106f155194e5c95d67'},
@@ -618,6 +665,7 @@ export class NavigationService {
       tooltip: 'Inbox',
       icon: 'inbox',
       state: 'inbox',
+      roles: ['OUR_SYSTEM_USER'],
       badges: [{color: 'primary', value: '4'}],
     },
     {
@@ -626,6 +674,7 @@ export class NavigationService {
       tooltip: 'Chat',
       icon: 'chat',
       state: 'chat',
+      roles: ['OUR_SYSTEM_USER'],
       badges: [{color: 'warn', value: '1'}]
     },
     {
@@ -633,7 +682,8 @@ export class NavigationService {
       type: 'link',
       tooltip: 'Calendar',
       icon: 'date_range',
-      state: 'calendar'
+      state: 'calendar',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'DIALOGS',
@@ -641,6 +691,7 @@ export class NavigationService {
       tooltip: 'Dialogs',
       icon: 'filter_none',
       state: 'dialogs',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'CONFIRM', state: 'confirm'},
         {name: 'LOADER', state: 'loader'},
@@ -652,6 +703,7 @@ export class NavigationService {
       tooltip: 'Material',
       icon: 'favorite',
       state: 'material',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'BUTTONS', state: 'buttons'},
         {name: 'CARDS', state: 'cards'},
@@ -673,6 +725,7 @@ export class NavigationService {
       tooltip: 'Forms',
       icon: 'description',
       state: 'forms',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'BASIC', state: 'basic'},
         {name: 'EDITOR', state: 'editor'},
@@ -686,6 +739,7 @@ export class NavigationService {
       tooltip: 'Tables',
       icon: 'format_line_spacing',
       state: 'tables',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'FULLSCREEN', state: 'fullscreen'},
         {name: 'PAGING', state: 'paging'},
@@ -698,6 +752,7 @@ export class NavigationService {
       tooltip: 'Profile',
       icon: 'person',
       state: 'templateProfile',
+      roles: ['OUR_SYSTEM_USER'],
       badges: [{color: 'primary', value: '2'}],
       sub: [
         {name: 'OVERVIEW', state: 'overview'},
@@ -710,28 +765,32 @@ export class NavigationService {
       type: 'link',
       tooltip: 'Tour',
       icon: 'flight_takeoff',
-      state: 'tour'
+      state: 'tour',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'MAP',
       type: 'link',
       tooltip: 'Map',
       icon: 'add_location',
-      state: 'map'
+      state: 'map',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'CHARTS',
       type: 'link',
       tooltip: 'Charts',
       icon: 'show_chart',
-      state: 'charts'
+      state: 'charts',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'DND',
       type: 'link',
       tooltip: 'Drag and Drop',
       icon: 'adjust',
-      state: 'dragndrop'
+      state: 'dragndrop',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'SESSIONS',
@@ -739,6 +798,7 @@ export class NavigationService {
       tooltip: 'Pages',
       icon: 'view_carousel',
       state: 'sessions',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'SIGNUP', state: 'signup'},
         {name: 'SIGNIN', state: 'signin'},
@@ -754,6 +814,7 @@ export class NavigationService {
       tooltip: 'Others',
       icon: 'blur_on',
       state: 'others',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {name: 'GALLERY', state: 'gallery'},
         {name: 'PRICINGS', state: 'pricing'},
@@ -766,7 +827,8 @@ export class NavigationService {
       type: 'link',
       tooltip: 'Material Icons',
       icon: 'store',
-      state: 'icons'
+      state: 'icons',
+      roles: ['OUR_SYSTEM_USER']
     },
     {
       name: 'Multi Level',
@@ -774,6 +836,7 @@ export class NavigationService {
       tooltip: 'Multi Level',
       icon: 'format_align_center',
       state: '',
+      roles: ['OUR_SYSTEM_USER'],
       sub: [
         {
           name: 'Level Two', type: 'dropDown', state: 'fake-1', sub: [
@@ -790,7 +853,8 @@ export class NavigationService {
       type: 'extLink',
       tooltip: 'Documentation',
       icon: 'library_books',
-      state: 'http://egret-doc.mhrafi.com/'
+      state: 'http://egret-doc.mhrafi.com/',
+      roles: ['OUR_SYSTEM_USER']
     }
   ];
   // sets iconMenu as default;

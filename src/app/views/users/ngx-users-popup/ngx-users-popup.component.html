@@ -93,7 +93,7 @@
 
 
     <ng-container *ngIf="data.isNew || data.viewOnly">
-      <div fxFlex="50" class="pr-1" *ngxPermissionsOnly="['SYSTEM']">
+      <div fxFlex="50" class="pr-1" *ngxPermissionsOnly="['SYSTEM', 'OUR_SYSTEM_USER']">
         <mat-form-field class="full-width">
           <mat-select matInput (selectionChange)="typeChange($event.value, '')"
                       [formControl]="itemForm.controls['type']"

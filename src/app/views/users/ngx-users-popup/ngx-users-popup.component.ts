@@ -55,10 +55,12 @@ export class NgxUsersPopupComponent implements OnInit {
     this.itemForm = this.fb.group({
       id: [item.id || ''],
       name: [item.name || '', Validators.required],
-      packageId: ['', Validators.required],
       email: [item.email || '', [Validators.email, Validators.required]],
       mobileNumber: [item.mobileNumber || '', Validators.required]
     });
+    if (typeof this.ngxPermissionsService.getPermission('COMPANY') !== 'undefined') {
+      this.itemForm.addControl('packageId', new FormControl('', Validators.required));
+    }
     if (typeof this.data.viewOnly !== 'undefined' && this.data.viewOnly) {
       let info = '';
       if (item.type.toString() === '1') {
@@ -67,13 +69,15 @@ export class NgxUsersPopupComponent implements OnInit {
         info = item.userOutletInfo.info;
       }
       this.typeChange(item.type.toString(), info);
-      if (typeof this.ngxPermissionsService.getPermission('SYSTEM') !== 'undefined') {
+      if (typeof this.ngxPermissionsService.getPermission('SYSTEM') !== 'undefined' ||
+        typeof this.ngxPermissionsService.getPermission('OUR_SYSTEM_USER') !== 'undefined') {
         this.itemForm.addControl('type', new FormControl(item.type.toString() || '', Validators.required));
       }
       this.itemForm.disable();
     }
     if (this.data.isNew) {
-      if (typeof this.ngxPermissionsService.getPermission('SYSTEM') !== 'undefined') {
+      if (typeof this.ngxPermissionsService.getPermission('SYSTEM') !== 'undefined' ||
+        typeof this.ngxPermissionsService.getPermission('OUR_SYSTEM_USER') !== 'undefined') {
         this.itemForm.addControl('type', new FormControl('0', Validators.required));
       }
     } else {
