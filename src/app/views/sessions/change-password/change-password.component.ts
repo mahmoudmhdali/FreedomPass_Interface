@@ -6,7 +6,6 @@ import {ResponseBuilderModel} from '../../../shared/models/ResponseBuilder.model
 import {GlobalService} from '../../../shared/services/global.service';
 import {LogsService} from '../../../shared/services/logs.service';
 import {NavigationService} from '../../../shared/services/navigation.service';
-import {CountdownService} from '../../../shared/services/countdown.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../shared/services/database-services/user.service';
 import {CustomValidators} from 'ng2-validation';
@@ -34,8 +33,7 @@ export class ChangePasswordComponent implements OnInit {
                private navService: NavigationService,
                private snack: MatSnackBar,
                private userService: UserService,
-               private activatedRoute: ActivatedRoute,
-               private countdown: CountdownService) {
+               private activatedRoute: ActivatedRoute) {
     this.responseCodeConfig = this.svcGlobal.getSession('RESPONSE_CODE');
   }
 
@@ -93,28 +91,6 @@ export class ChangePasswordComponent implements OnInit {
         this.submitButton.disabled = false;
       }
     );
-  }
-
-}
-
-@Component({
-  selector: 'app-countdown-snackbar',
-  template: '<div class="mat-simple-snackbar ng-tns-c8-10 ng-trigger ng-trigger-contentFade ng-star-inserted">' +
-    'Your account has been locked for {{ lockedFor }} ' +
-    'minutes due to multiple failed login attempts ' +
-    '(Try after {{ timeLeft$ | async }} seconds) ' +
-    '<button class="mat-simple-snackbar-action ng-tns-c8-13 ng-star-inserted" (click)="close()" style="">OK</button></div>'
-})
-export class CountdownSnackbarComponent {
-
-  timeLeft$ = this.countdown.timeLeft();
-  lockedFor = this.countdown.getLockedFor();
-
-  constructor (private countdown: CountdownService, private snackBarRef: MatSnackBarRef<CountdownSnackbarComponent>) {
-  }
-
-  close () {
-    this.snackBarRef.dismiss();
   }
 
 }
