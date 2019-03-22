@@ -17,7 +17,7 @@
       </mat-form-field>
       <small
         *ngIf="itemForm.controls['adminPasses'].hasError('required') && itemForm.controls['adminPasses'].touched"
-        class="form-error-msg"> Type Of Usage is required
+        class="form-error-msg"> Package is required
       </small>
       <small
         *ngIf="itemForm.controls['adminPasses'].hasError('serverValidation') && itemForm.controls['adminPasses'].touched"
@@ -27,7 +27,7 @@
     <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
         <mat-select matInput [formControl]="itemForm.controls['userCompanyInfo']"
-                    placeholder="Package" class="full-widthmb-1">
+                    placeholder="Company" class="full-widthmb-1">
           <mat-option *ngFor="let company of companies" [value]="company.value">
             {{company.viewValue}}
           </mat-option>
