@@ -48,13 +48,42 @@ export class NavigationService {
       icon: 'find_replace',
       state: 'manageReports',
       roles: ['INSTALLER']
+    },
+    {
+      name: 'Manage Reports',
+      type: 'link',
+      tooltip: 'Dialogs',
+      icon: 'find_replace',
+      state: 'manageReports',
+      roles: ['INSTALLER']
+    }, {
+      name: 'System Users',
+      type: 'link',
+      tooltip: 'users',
+      icon: 'account_box',
+      state: 'systemUsers',
+      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER']
     }, {
       name: 'USERS',
       type: 'link',
       tooltip: 'users',
       icon: 'account_box',
       state: 'users',
-      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']
+      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'OUR_SYSTEM_USER', 'COMPANY']
+    }, {
+      name: 'Outlet Users',
+      type: 'link',
+      tooltip: 'Outlet Users',
+      icon: 'account_box',
+      state: 'outletUsers',
+      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
+      name: 'Company Users',
+      type: 'link',
+      tooltip: 'Company Users',
+      icon: 'account_box',
+      state: 'companyUsers',
+      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER']
     }, {
       name: 'Offers',
       type: 'link',
@@ -305,12 +334,33 @@ export class NavigationService {
       state: 'manageReports',
       roles: ['INSTALLER']
     }, {
+      name: 'System Users',
+      type: 'link',
+      tooltip: 'users',
+      icon: 'account_box',
+      state: 'systemUsers',
+      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
       name: 'USERS',
       type: 'link',
       tooltip: 'users',
       icon: 'account_box',
       state: 'users',
-      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']
+      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'OUR_SYSTEM_USER', 'COMPANY']
+    }, {
+      name: 'Outlet Users',
+      type: 'link',
+      tooltip: 'Outlet Users',
+      icon: 'account_box',
+      state: 'outletUsers',
+      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
+      name: 'Company Users',
+      type: 'link',
+      tooltip: 'Company Users',
+      icon: 'account_box',
+      state: 'companyUsers',
+      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER']
     }, {
       name: 'Offers',
       type: 'link',
@@ -570,13 +620,42 @@ export class NavigationService {
       icon: 'find_replace',
       state: 'manageReports',
       roles: ['INSTALLER']
+    },
+    {
+      name: 'Manage Reports',
+      type: 'link',
+      tooltip: 'Dialogs',
+      icon: 'find_replace',
+      state: 'manageReports',
+      roles: ['INSTALLER']
+    }, {
+      name: 'System Users',
+      type: 'link',
+      tooltip: 'users',
+      icon: 'account_box',
+      state: 'systemUsers',
+      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER']
     }, {
       name: 'USERS',
       type: 'link',
       tooltip: 'users',
       icon: 'account_box',
       state: 'users',
-      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']
+      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'OUR_SYSTEM_USER', 'COMPANY']
+    }, {
+      name: 'Outlet Users',
+      type: 'link',
+      tooltip: 'Outlet Users',
+      icon: 'account_box',
+      state: 'outletUsers',
+      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
+      name: 'Company Users',
+      type: 'link',
+      tooltip: 'Company Users',
+      icon: 'account_box',
+      state: 'companyUsers',
+      roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER']
     }, {
       name: 'Offers',
       type: 'link',

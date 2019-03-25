@@ -176,7 +176,8 @@
             </form>
           </mat-card-content>
         </mat-tab>
-        <mat-tab label="{{'Account Images' | translate}}" *ngxPermissionsOnly="['COMPANY', 'OUTLET']">
+        <!--<mat-tab label="{{'Account Images' | translate}}" *ngxPermissionsOnly="['COMPANY', 'OUTLET']">-->
+          <mat-tab label="{{'Account Images' | translate}}" *ngxPermissionsOnly="['COMPANYYYYYYY']">
           <mat-card-content class="mt-1">
             <form #form="ngForm" [formGroup]="imagesForm" (ngSubmit)="updateImages()">
               <div fxLayout="row wrap" fxLayout.lt-sm="column">
@@ -262,7 +263,8 @@
             </form>
           </mat-card-content>
         </mat-tab>
-        <mat-tab label="{{'Account Locations' | translate}}" *ngxPermissionsOnly="['COMPANY', 'OUTLET']">
+        <!--<mat-tab label="{{'Account Locations' | translate}}" *ngxPermissionsOnly="['COMPANY', 'OUTLET']">-->
+          <mat-tab label="{{'Account Locations' | translate}}" *ngxPermissionsOnly="['OUTLET']">
           <mat-card-content class="mt-1">
             <form #form="ngForm" [formGroup]="locationsForm" (ngSubmit)="updateLocations()">
               <div fxLayout="row wrap" fxLayout.lt-sm="column">

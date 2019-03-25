@@ -1,6 +1,6 @@
 import {Component, HostListener, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GlobalService} from '../../../shared/services/global.service';
 import {UserService} from '../../../shared/services/database-services/user.service';
 import {ResponseBuilderModel} from '../../../shared/models/ResponseBuilder.model';
@@ -10,26 +10,20 @@ import {NgxPermissionsService} from 'ngx-permissions';
 import {UserCompanyPassesModel} from '../../../shared/models/UserCompanyPasses.model';
 
 @Component({
-  selector: 'app-ngx-users-popup',
-  templateUrl: './ngx-users-popup.component.html',
+  selector: 'app-ngx-outlet-users-popup',
+  templateUrl: './ngx-outlet-users-popup.component.html',
   providers: [TranslatePipe]
 })
-export class NgxUsersPopupComponent implements OnInit {
+export class NgxOutletUsersPopupComponent implements OnInit {
   public itemForm: FormGroup;
   apiConfig;
   disableButton = false;
   disableBoxes = false;
   formIsSubmitted = false;
-  types = [
-    {value: '0', viewValue: 'Admin'},
-    {value: '1', viewValue: 'Company'},
-    {value: '2', viewValue: 'Outlet'}
-  ];
-  typeSelected = '0';
   packages: UserCompanyPassesModel[] = [];
 
   constructor (@Inject(MAT_DIALOG_DATA) public data: any,
-               public dialogRef: MatDialogRef<NgxUsersPopupComponent>,
+               public dialogRef: MatDialogRef<NgxOutletUsersPopupComponent>,
                private userService: UserService,
                private logsService: LogsService,
                private ngxPermissionsService: NgxPermissionsService,
@@ -56,50 +50,11 @@ export class NgxUsersPopupComponent implements OnInit {
       id: [item.id || ''],
       name: [item.name || '', Validators.required],
       email: [item.email || '', [Validators.email, Validators.required]],
-      mobileNumber: [item.mobileNumber || '', Validators.required]
+      mobileNumber: [item.mobileNumber || '', Validators.required],
+      info: [item.userOutletInfo ? item.userOutletInfo.info : '' || '', Validators.required]
     });
-    if (typeof this.ngxPermissionsService.getPermission('COMPANY') !== 'undefined') {
-      this.itemForm.addControl('packageId', new FormControl('', Validators.required));
-    }
     if (typeof this.data.viewOnly !== 'undefined' && this.data.viewOnly) {
-      let info = '';
-      if (item.type.toString() === '1') {
-        info = item.userCompanyInfo.info;
-      } else if (item.type.toString() === '2') {
-        info = item.userOutletInfo.info;
-      }
-      this.typeChange(item.type.toString(), info);
-      if (typeof this.ngxPermissionsService.getPermission('SYSTEM') !== 'undefined' ||
-        typeof this.ngxPermissionsService.getPermission('OUR_SYSTEM_USER') !== 'undefined') {
-        this.itemForm.addControl('type', new FormControl(item.type.toString() || '', Validators.required));
-      }
       this.itemForm.disable();
-    }
-    if (this.data.isNew) {
-      if (typeof this.ngxPermissionsService.getPermission('SYSTEM') !== 'undefined' ||
-        typeof this.ngxPermissionsService.getPermission('OUR_SYSTEM_USER') !== 'undefined') {
-        this.itemForm.addControl('type', new FormControl('0', Validators.required));
-      }
-    } else {
-      let info = '';
-      if (item && item.type) {
-        if (item.type.toString() === '1') {
-          info = item.userCompanyInfo.info;
-          this.typeChange(item.type.toString(), info);
-        } else if (item.type.toString() === '2') {
-          info = item.userOutletInfo.info;
-          this.typeChange(item.type.toString(), info);
-        }
-      }
-    }
-  }
-
-  typeChange (type, info) {
-    this.typeSelected = type;
-    if (type === '0') {
-      this.itemForm.removeControl('info');
-    } else if (type === '1' || type === '2') {
-      this.itemForm.addControl('info', new FormControl(info, Validators.required));
     }
   }
 
@@ -122,7 +77,7 @@ export class NgxUsersPopupComponent implements OnInit {
           }
         );
       } else {
-        this.userService.addUser(data, 3).subscribe(
+        this.userService.addUser(data, 2).subscribe(
           (responseBuilder: ResponseBuilderModel) => {
             this.logsService.setLog('NgxSystemUsersPopupComponent', 'submit(addUser)', responseBuilder);
             this.disableButton = false;

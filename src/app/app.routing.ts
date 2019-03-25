@@ -130,6 +130,39 @@ export const rootRouterConfig: Routes = [
         }
       },
       {
+        path: 'systemUsers',
+        canActivate: [NgxPermissionsGuard],
+        loadChildren: './views/system-users/system-users.module#SystemUsersModule',
+        data: {
+          title: 'System Users', breadcrumb: 'System Users', permissions: {
+            only: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER'],
+            redirectTo: '/sessions/accessDenied'
+          }
+        }
+      },
+      {
+        path: 'companyUsers',
+        canActivate: [NgxPermissionsGuard],
+        loadChildren: './views/company-users/company-users.module#CompanyUsersModule',
+        data: {
+          title: 'Company Users', breadcrumb: 'Company Users', permissions: {
+            only: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER'],
+            redirectTo: '/sessions/accessDenied'
+          }
+        }
+      },
+      {
+        path: 'outletUsers',
+        canActivate: [NgxPermissionsGuard],
+        loadChildren: './views/outlet-users/outlet-users.module#OutletUsersModule',
+        data: {
+          title: 'Outlet Users', breadcrumb: 'Outlet Users', permissions: {
+            only: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER'],
+            redirectTo: '/sessions/accessDenied'
+          }
+        }
+      },
+      {
         path: 'offers',
         canActivate: [NgxPermissionsGuard],
         loadChildren: './views/offers/offers.module#OffersModule',

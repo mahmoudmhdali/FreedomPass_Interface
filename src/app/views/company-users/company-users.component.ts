@@ -3,7 +3,7 @@ import {UserService} from '../../shared/services/database-services/user.service'
 import {UserProfileModel} from '../../shared/models/UserProfile.model';
 import 'rxjs/Rx';
 import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
-import {NgxUsersPopupComponent} from './ngx-users-popup/ngx-users-popup.component';
+import {NgxCompanyUsersPopupComponent} from './ngx-company-users-popup/ngx-company-users-popup.component';
 import {GlobalService} from '../../shared/services/global.service';
 import {ResponseBuilderModel} from '../../shared/models/ResponseBuilder.model';
 import {AppConfirmService} from '../../shared/services/app-confirm/app-confirm.service';
@@ -15,9 +15,9 @@ import {NgxPermissionsService} from 'ngx-permissions';
 import {UserCompanyPassesService} from '../../shared/services/database-services/userCompanyPasses.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css'],
+  selector: 'app-company-users',
+  templateUrl: './company-users.component.html',
+  styleUrls: ['./company-users.component.css'],
   providers: [TranslatePipe],
   animations: [
     trigger('user1', [
@@ -47,7 +47,7 @@ import {UserCompanyPassesService} from '../../shared/services/database-services/
     ])
   ]
 })
-export class AppUsersComponent implements OnInit {
+export class CompanyUsersComponent implements OnInit {
   users: UserProfileModel[];
   user: UserProfileModel;
   apiConfig;
@@ -70,7 +70,7 @@ export class AppUsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getUsersPagination(1, this.itemsPerPage, 3).subscribe(
+    this.userService.getUsersPagination(1, this.itemsPerPage, 1).subscribe(
       (responseBuilder) => {
         this.logsService.setLog('AppUsersComponent', 'ngOnInit(getUsers)', responseBuilder);
         if (responseBuilder.code === +this.apiConfig.SUCCESS) {
@@ -90,11 +90,12 @@ export class AppUsersComponent implements OnInit {
           this.logsService.setLog('AppUsersComponent', 'ngOnInit(getUsers)', responseBuilder);
           if (responseBuilder.code === +this.apiConfig.SUCCESS) {
             this.loader.close();
-            let title = isNew === true ? this.translatePipe.transform('ADDNEWMEMBER') : this.translatePipe.transform('UPDATEMEMBER');
+            let title = isNew === true ? this.translatePipe.transform('Add New Company User') :
+              this.translatePipe.transform('Update Company User');
             if (viewOnly) {
-              title = this.translatePipe.transform('VIEWMEMBER');
+              title = this.translatePipe.transform('View Company User');
             }
-            const dialogRef: MatDialogRef<any> = this.dialog.open(NgxUsersPopupComponent, {
+            const dialogRef: MatDialogRef<any> = this.dialog.open(NgxCompanyUsersPopupComponent, {
               width: '720px',
               disableClose: true,
               data: {
@@ -125,11 +126,12 @@ export class AppUsersComponent implements OnInit {
         }
       );
     } else {
-      let title = isNew === true ? this.translatePipe.transform('ADDNEWMEMBER') : this.translatePipe.transform('UPDATEMEMBER');
+      let title = isNew === true ? this.translatePipe.transform('Add New Company User') :
+        this.translatePipe.transform('Update Company User');
       if (viewOnly) {
-        title = this.translatePipe.transform('VIEWMEMBER');
+        title = this.translatePipe.transform('View Company User');
       }
-      const dialogRef: MatDialogRef<any> = this.dialog.open(NgxUsersPopupComponent, {
+      const dialogRef: MatDialogRef<any> = this.dialog.open(NgxCompanyUsersPopupComponent, {
         width: '720px',
         disableClose: true,
         data: {
@@ -179,7 +181,7 @@ export class AppUsersComponent implements OnInit {
 
   setPage(event) {
     this.modelLoaded--;
-    this.userService.getUsersPagination(event, this.itemsPerPage, 3).subscribe(
+    this.userService.getUsersPagination(event, this.itemsPerPage, 1).subscribe(
       (responseBuilder) => {
         this.logsService.setLog('AppUsersComponent', 'ngOnInit(getUsers)', responseBuilder);
         if (responseBuilder.code === +this.apiConfig.SUCCESS) {

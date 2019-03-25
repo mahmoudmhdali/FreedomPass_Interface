@@ -18,20 +18,20 @@ export class UserService {
       + this.apiConfig.API_PATH + '/users');
   }
 
-  getUsersPagination (pageNumber, maxResult) {
+  getUsersPagination (pageNumber, maxResult, type) {
     return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/users/' + pageNumber + '/' + maxResult);
+      + this.apiConfig.API_PATH + '/users/' + type + '/' + pageNumber + '/' + maxResult);
   }
 
-  addUser (user) {
+  addUser (user, type) {
     // if we need the full response we should add {headers, observe: 'response'}
     const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
     return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/users/add', this.svcGlobal.getFormUrlEncoded(user), {headers});
+      + this.apiConfig.API_PATH + '/users/add/' + type, this.svcGlobal.getFormUrlEncoded(user), {headers});
   }
 
   addUserUnderCompany (user, packageId) {

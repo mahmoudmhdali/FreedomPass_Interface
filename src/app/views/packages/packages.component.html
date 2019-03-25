@@ -23,9 +23,9 @@
           {{ row?.name }}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Number Of Offers" [flexGrow]="1">
+      <ngx-datatable-column name="Number Of Vouchers" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          {{ row?.numberOfOffers }} Offer{{row?.numberOfOffers > 1 ? 's':''}}
+          {{ row?.numberOfOffers }} Voucher{{row?.numberOfOffers > 1 ? 's':''}}
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Number Of Passes" [flexGrow]="1">

@@ -13,21 +13,21 @@ export class AuthService {
   responseCodeConfig;
   tokensConfig;
 
-  constructor(private router: Router,
-              private httpClient: HttpClient,
-              private ngxPermissionsService: NgxPermissionsService,
-              private svcGlobal: GlobalService,
-              private logsService: LogsService,
-              private tokensService: TokensService) {
+  constructor (private router: Router,
+               private httpClient: HttpClient,
+               private ngxPermissionsService: NgxPermissionsService,
+               private svcGlobal: GlobalService,
+               private logsService: LogsService,
+               private tokensService: TokensService) {
     this.apiConfig = this.svcGlobal.getSession('API_CONFIG');
     this.responseCodeConfig = this.svcGlobal.getSession('RESPONSE_CODE');
     this.tokensConfig = this.svcGlobal.getSession('TOKENS_CONFIG');
   }
 
-  signUpUser(email: string, password: string) {
+  signUpUser (email: string, password: string) {
   }
 
-  signInUser(email: string, password: string, rememberMe: boolean) {
+  signInUser (email: string, password: string, rememberMe: boolean) {
     const userCredentials = {'email': email, 'password': password, 'rememberMe': rememberMe};
     return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
@@ -35,34 +35,38 @@ export class AuthService {
       + this.apiConfig.API_PATH + '/login', JSON.stringify(userCredentials));
   }
 
-  signOut() {
+  signOut () {
     this.tokensService.clearTokens();
     this.router.navigate(['/sessions/signin']);
   }
 
-  isAuthenticated() {
+  isAuthenticated () {
     return this.tokensService.isTokentExpired();
   }
 
-  loadPermissionsBasedOnLoggedInUser(userProfile: UserProfileModel) {
+  loadPermissionsBasedOnLoggedInUser (userProfile: UserProfileModel) {
     const permissions = [];
     for (const group of userProfile.groupCollection) {
       for (const role of group.roleCollection) {
-        if (!permissions.includes(role.role)) {
+        if (! permissions.includes(role.role)) {
           permissions.push(role.role);
         }
       }
     }
     this.logsService.setLog('AuthService', 'loadPermissionsBasedOnLoggedInUser', userProfile);
     this.ngxPermissionsService.loadPermissions(permissions, (permissionName, permissionStore) => {
-      return !!permissionStore[permissionName];
+      return ! ! permissionStore[permissionName];
     });
   }
 
-  navigationBasedOnRoles() {
+  navigationBasedOnRoles () {
 
     if (typeof this.ngxPermissionsService.getPermission('OUTLET') !== 'undefined') {
       this.router.navigate(['/profile']);
+    } else if (typeof this.ngxPermissionsService.getPermission('SYSTEM') !== 'undefined') {
+      this.router.navigate(['/systemUsers']);
+    } else if (typeof this.ngxPermissionsService.getPermission('OUR_SYSTEM_USER') !== 'undefined') {
+      this.router.navigate(['/systemUsers']);
     } else {
       this.router.navigate(['/users']);
     }

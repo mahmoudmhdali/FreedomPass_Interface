@@ -3,7 +3,7 @@ import {UserService} from '../../shared/services/database-services/user.service'
 import {UserProfileModel} from '../../shared/models/UserProfile.model';
 import 'rxjs/Rx';
 import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
-import {NgxUsersPopupComponent} from './ngx-users-popup/ngx-users-popup.component';
+import {NgxOutletUsersPopupComponent} from './ngx-outlet-users-popup/ngx-outlet-users-popup.component';
 import {GlobalService} from '../../shared/services/global.service';
 import {ResponseBuilderModel} from '../../shared/models/ResponseBuilder.model';
 import {AppConfirmService} from '../../shared/services/app-confirm/app-confirm.service';
@@ -15,9 +15,9 @@ import {NgxPermissionsService} from 'ngx-permissions';
 import {UserCompanyPassesService} from '../../shared/services/database-services/userCompanyPasses.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css'],
+  selector: 'app-outlet-users',
+  templateUrl: './outlet-users.component.html',
+  styleUrls: ['./outlet-users.component.css'],
   providers: [TranslatePipe],
   animations: [
     trigger('user1', [
@@ -47,7 +47,7 @@ import {UserCompanyPassesService} from '../../shared/services/database-services/
     ])
   ]
 })
-export class AppUsersComponent implements OnInit {
+export class OutletUsersComponent implements OnInit {
   users: UserProfileModel[];
   user: UserProfileModel;
   apiConfig;
@@ -56,45 +56,46 @@ export class AppUsersComponent implements OnInit {
   itemsPerPage = 9;
   totalItems = 0;
 
-  constructor(private dialog: MatDialog,
-              private userService: UserService,
-              private snack: MatSnackBar,
-              private translatePipe: TranslatePipe,
-              private logsService: LogsService,
-              public confirmService: AppConfirmService,
-              private userCompanyPassesService: UserCompanyPassesService,
-              private ngxPermissionsService: NgxPermissionsService,
-              private loader: AppLoaderService,
-              private svcGlobal: GlobalService) {
+  constructor (private dialog: MatDialog,
+               private userService: UserService,
+               private snack: MatSnackBar,
+               private translatePipe: TranslatePipe,
+               private logsService: LogsService,
+               public confirmService: AppConfirmService,
+               private userCompanyPassesService: UserCompanyPassesService,
+               private ngxPermissionsService: NgxPermissionsService,
+               private loader: AppLoaderService,
+               private svcGlobal: GlobalService) {
     this.apiConfig = this.svcGlobal.getSession('RESPONSE_CODE');
   }
 
-  ngOnInit() {
-    this.userService.getUsersPagination(1, this.itemsPerPage, 3).subscribe(
+  ngOnInit () {
+    this.userService.getUsersPagination(1, this.itemsPerPage, 2).subscribe(
       (responseBuilder) => {
         this.logsService.setLog('AppUsersComponent', 'ngOnInit(getUsers)', responseBuilder);
-        if (responseBuilder.code === +this.apiConfig.SUCCESS) {
+        if (responseBuilder.code === + this.apiConfig.SUCCESS) {
           this.users = responseBuilder.data.users.userProfiles;
           this.totalItems = responseBuilder.data.users.totalResults;
-          this.modelLoaded++;
+          this.modelLoaded ++;
         }
       }
     );
   }
 
-  openPopUp(data: UserProfileModel, isNew, viewOnly) {
+  openPopUp (data: UserProfileModel, isNew, viewOnly) {
     if (typeof this.ngxPermissionsService.getPermission('COMPANY') !== 'undefined') {
       this.loader.open('Please Wait...');
       this.userCompanyPassesService.getLoggedInCompanyPasses().subscribe(
         (responseBuilder) => {
           this.logsService.setLog('AppUsersComponent', 'ngOnInit(getUsers)', responseBuilder);
-          if (responseBuilder.code === +this.apiConfig.SUCCESS) {
+          if (responseBuilder.code === + this.apiConfig.SUCCESS) {
             this.loader.close();
-            let title = isNew === true ? this.translatePipe.transform('ADDNEWMEMBER') : this.translatePipe.transform('UPDATEMEMBER');
+            let title = isNew === true ? this.translatePipe.transform('Add New Outlet User') :
+              this.translatePipe.transform('Update Outlet User');
             if (viewOnly) {
-              title = this.translatePipe.transform('VIEWMEMBER');
+              title = this.translatePipe.transform('View Outlet User');
             }
-            const dialogRef: MatDialogRef<any> = this.dialog.open(NgxUsersPopupComponent, {
+            const dialogRef: MatDialogRef<any> = this.dialog.open(NgxOutletUsersPopupComponent, {
               width: '720px',
               disableClose: true,
               data: {
@@ -107,29 +108,25 @@ export class AppUsersComponent implements OnInit {
             });
             dialogRef.afterClosed().subscribe(res => {
               // If user press cancel
-              if (!res) {
+              if (! res) {
                 return;
               }
-              if (!isNew) {
+              if (! isNew) {
                 const index: number = this.users.indexOf(this.users.find(user => user.id === res.id));
                 this.users.splice(index, 1);
               }
               this.users.unshift(res);
             });
-
-
-
-
-
           }
         }
       );
     } else {
-      let title = isNew === true ? this.translatePipe.transform('ADDNEWMEMBER') : this.translatePipe.transform('UPDATEMEMBER');
+      let title = isNew === true ? this.translatePipe.transform('Add New Outlet User') :
+        this.translatePipe.transform('Update Outlet User');
       if (viewOnly) {
-        title = this.translatePipe.transform('VIEWMEMBER');
+        title = this.translatePipe.transform('View Outlet User');
       }
-      const dialogRef: MatDialogRef<any> = this.dialog.open(NgxUsersPopupComponent, {
+      const dialogRef: MatDialogRef<any> = this.dialog.open(NgxOutletUsersPopupComponent, {
         width: '720px',
         disableClose: true,
         data: {
@@ -141,10 +138,10 @@ export class AppUsersComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(res => {
         // If user press cancel
-        if (!res) {
+        if (! res) {
           return;
         }
-        if (!isNew) {
+        if (! isNew) {
           const index: number = this.users.indexOf(this.users.find(user => user.id === res.id));
           this.users.splice(index, 1);
         }
@@ -153,7 +150,7 @@ export class AppUsersComponent implements OnInit {
     }
   }
 
-  removeUser(data: UserProfileModel) {
+  removeUser (data: UserProfileModel) {
     this.confirmService.confirm({
       title: this.translatePipe.transform('CONFIRMDIALOG'),
       message: this.translatePipe.transform('DELETECONFIRMATION') + ` \"${data.name}\"?`
@@ -163,11 +160,11 @@ export class AppUsersComponent implements OnInit {
         this.userService.removeUser(data).subscribe(
           (responseBuilder: ResponseBuilderModel) => {
             this.logsService.setLog('AppUsersComponent', 'removeUser', responseBuilder);
-            if (responseBuilder.code === +this.apiConfig.SUCCESS) {
+            if (responseBuilder.code === + this.apiConfig.SUCCESS) {
               const index: number = this.users.indexOf(this.users.find(user => user.id === data.id));
               this.users.splice(index, 1);
               this.snack.open(this.translatePipe.transform('USERDELETESUCCESS'), this.translatePipe.transform('OK'), {duration: 4000});
-            } else if (responseBuilder.code === +this.apiConfig.ENTITY_NOT_FOUND) {
+            } else if (responseBuilder.code === + this.apiConfig.ENTITY_NOT_FOUND) {
               this.snack.open(responseBuilder.description, this.translatePipe.transform('OK'), {duration: 4000});
             }
             this.loader.close();
@@ -177,16 +174,16 @@ export class AppUsersComponent implements OnInit {
     });
   }
 
-  setPage(event) {
-    this.modelLoaded--;
-    this.userService.getUsersPagination(event, this.itemsPerPage, 3).subscribe(
+  setPage (event) {
+    this.modelLoaded --;
+    this.userService.getUsersPagination(event, this.itemsPerPage, 2).subscribe(
       (responseBuilder) => {
         this.logsService.setLog('AppUsersComponent', 'ngOnInit(getUsers)', responseBuilder);
-        if (responseBuilder.code === +this.apiConfig.SUCCESS) {
+        if (responseBuilder.code === + this.apiConfig.SUCCESS) {
           this.currentPage = event;
           this.users = responseBuilder.data.users.userProfiles;
           this.totalItems = responseBuilder.data.users.totalResults;
-          this.modelLoaded++;
+          this.modelLoaded ++;
         }
       }
     );

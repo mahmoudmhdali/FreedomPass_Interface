@@ -39,7 +39,7 @@
            (change)="image1FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput1>
     <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
-        <mat-select placeholder="Offers" [formControl]="itemForm.controls['offersCollection']" multiple>
+        <mat-select placeholder="Vouchers" [formControl]="itemForm.controls['offersCollection']" multiple>
           <mat-optgroup *ngFor="let outlet of offerOutlets" [label]="outlet.name">
             <ng-container *ngFor="let offer of offers">
               <ng-container *ngIf="offer.userOutletID === outlet.id">

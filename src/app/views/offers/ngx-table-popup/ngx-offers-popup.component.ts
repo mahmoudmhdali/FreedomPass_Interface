@@ -65,7 +65,7 @@ export class NgxOffersPopupComponent implements OnInit {
       numberOfUsage: [item.numberOfUsage || '', Validators.required],
       typeOfUsage: [item.typeOfUsage ? item.typeOfUsage.toString() : '1' || '1', Validators.required],
       outletOfferType: [item.outletOfferType ? item.outletOfferType.id.toString() : '1' || '1', Validators.required],
-      userOutletInfo: [item.userOutletID ? item.userOutletID.toString() : '' || '', Validators.required],
+      userOutletInfo: [item.userSubOutletID ? item.userSubOutletID.toString() : '' || '', Validators.required],
       // validity: [item.validity || '', Validators.required],
       info: [item.info || '', Validators.required]
     });

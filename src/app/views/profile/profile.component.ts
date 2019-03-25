@@ -346,7 +346,7 @@ export class ProfileComponent extends FormCanDeactivate implements OnInit {
     this.disableButton = true;
     this.userSettingsService.updateUser(this.itemForm.value).subscribe(
       (responseBuilder: ResponseBuilderModel) => {
-        this.logsService.setLog('NgxUsersPopupComponent', 'submit(updateUser)', responseBuilder);
+        this.logsService.setLog('NgxSystemUsersPopupComponent', 'submit(updateUser)', responseBuilder);
         if (responseBuilder.code === + this.apiConfig.SUCCESS) {
           this.user = responseBuilder.data.user;
           this.svcGlobal.setSession('loggedInUser', this.user);
@@ -366,7 +366,7 @@ export class ProfileComponent extends FormCanDeactivate implements OnInit {
     this.disableButton = true;
     this.userSettingsService.updatePassword(this.passwordForm.value).subscribe(
       (responseBuilder: ResponseBuilderModel) => {
-        this.logsService.setLog('NgxUsersPopupComponent', 'submit(updateUser)', responseBuilder);
+        this.logsService.setLog('NgxSystemUsersPopupComponent', 'submit(updateUser)', responseBuilder);
         if (responseBuilder.code === + this.apiConfig.SUCCESS) {
           this.snack.open(this.translatePipe.transform('USERUPDATEDSUCCESS'), this.translatePipe.transform('OK'), {duration: 4000});
         } else if (responseBuilder.code === + this.apiConfig.PARAMETERS_VALIDATION_ERROR) {
