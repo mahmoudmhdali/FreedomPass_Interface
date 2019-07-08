@@ -35,6 +35,7 @@ import {UserService} from './shared/services/database-services/user.service';
 import {LogsService} from './shared/services/logs.service';
 import {RoleService} from './shared/services/database-services/role.service';
 import {ComParentChildService} from './shared/services/ComParentChildService';
+import {UserPassPurchasedService} from './shared/services/database-services/userPassPurchased.service';
 
 
 // AoT requires an exported function for factories
@@ -80,6 +81,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AuthService,
     TokensService,
     UserService,
+    UserPassPurchasedService,
     LogsService,
     RoleService,
     ReportsService,

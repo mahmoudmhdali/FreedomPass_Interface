@@ -33,6 +33,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {NgxUsersPopupComponent} from './ngx-users-popup/ngx-users-popup.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {UserCompanyPassesService} from '../../shared/services/database-services/userCompanyPasses.service';
+import {NgxUsersTransferPopupComponent} from './ngx-users-transfer-popup/ngx-users-transfer-popup.component';
 
 @NgModule({
   imports: [
@@ -66,8 +67,8 @@ import {UserCompanyPassesService} from '../../shared/services/database-services/
     MatSelectModule,
     RouterModule.forChild(AppUsersRoutes)
   ],
-  declarations: [AppUsersComponent, NgxUsersPopupComponent],
-  entryComponents: [NgxUsersPopupComponent],
+  declarations: [AppUsersComponent, NgxUsersPopupComponent, NgxUsersTransferPopupComponent],
+  entryComponents: [NgxUsersPopupComponent, NgxUsersTransferPopupComponent],
   providers: [UserCompanyPassesService],
   exports: []
 })

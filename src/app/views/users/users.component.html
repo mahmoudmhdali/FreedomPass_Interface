@@ -1,6 +1,9 @@
 <div class="m-333">
-  <button mat-raised-button class="mb-05" color="primary" (click)="openPopUp({}, true, false)"
+  <button mat-raised-button class="mb-05 mr-1" color="primary" (click)="openPopUp({}, true, false)"
           *ngxPermissionsOnly="['ADD_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']">{{'ADDUSER' | translate}}
+  </button>
+  <button mat-raised-button class="mb-05" color="primary" (click)="openTransferPopUp({}, true, false)"
+          *ngxPermissionsOnly="['COMPANY']">{{'Transfer User Package' | translate}}
   </button>
 </div>
 

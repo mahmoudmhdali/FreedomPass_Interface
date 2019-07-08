@@ -1,0 +1,98 @@
+<div *ngIf="disableBoxes" fxFlex="50" class="pr-1">
+  <a mat-list-avatar
+     class="app-user-photo"
+     [ngClass]="{online: true}">
+    <img src="assets/images/user.png" alt="">
+  </a>
+</div>
+<h1 matDialogTitle *ngIf="!disableBoxes">Transfe User Package</h1>
+<form [formGroup]="itemForm" (ngSubmit)="submit()">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <mat-select (selectionChange)="userChange($event.value)" matInput placeholder="From User"
+                    [formControl]="itemForm.controls['user']">
+          <mat-option *ngFor="let user of users" [value]="user.id" ngDefaultControl>
+            {{user.email}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['user'].hasError('required') && itemForm.controls['user'].touched"
+        class="form-error-msg"> {{'User is required' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['user'].hasError('serverValidation') && itemForm.controls['user'].touched"
+        class="form-error-msg"> {{itemForm.controls['user'].errors.serverValidation}}
+      </small>
+    </div>
+
+    <div fxFlex="50" class="pr-1" *ngIf="loadingPackages === 1">
+      <mat-card-content>
+        <div class="pb-1 text-center">
+          <p class="text-muted pt-1">{{'Loading Packages' | translate}}</p>
+          <mat-progress-spinner
+            [diameter]="40"
+            [color]="'primary'"
+            style="margin:0 auto;"
+            [mode]="'indeterminate'">
+          </mat-progress-spinner>
+        </div>
+      </mat-card-content>
+    </div>
+
+    <div fxFlex="50" class="pr-1" *ngIf="loadingPackages === 2 && packages.length == 0">
+      <mat-card-content>
+        <div class="pb-1 text-center">
+          <p class="text-muted pt-1">{{'No packages available to transfer' | translate}}</p>
+        </div>
+      </mat-card-content>
+    </div>
+
+    <div fxFlex="50" class="pr-1" *ngIf="loadingPackages === 2 && packages.length > 0">
+      <mat-form-field class="full-width">
+        <mat-select matInput placeholder="Package" [formControl]="itemForm.controls['package']">
+          <mat-option *ngFor="let packagee of packages" [value]="packagee.id" ngDefaultControl>
+            {{packagee.adminPasses.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['package'].hasError('required') && itemForm.controls['package'].touched"
+        class="form-error-msg"> {{'Package is required' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['package'].hasError('serverValidation') && itemForm.controls['package'].touched"
+        class="form-error-msg"> {{itemForm.controls['package'].errors.serverValidation}}
+      </small>
+    </div>
+    <div fxFlex="50" class="pr-1" *ngIf="loadingPackages === 2 && packages.length > 0">
+      <mat-form-field class="full-width">
+        <mat-select matInput placeholder="To User"
+                    [formControl]="itemForm.controls['userTo']">
+          <mat-option *ngFor="let user of users" [value]="user.id" ngDefaultControl>
+            {{user.email}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['userTo'].hasError('required') && itemForm.controls['userTo'].touched"
+        class="form-error-msg"> {{'User is required' | translate}}
+      </small>
+      <small
+        *ngIf="itemForm.controls['userTo'].hasError('serverValidation') && itemForm.controls['userTo'].touched"
+        class="form-error-msg"> {{itemForm.controls['userTo'].errors.serverValidation}}
+      </small>
+    </div>
+
+    <div fxFlex="100" class="mt-1">
+      <button mat-raised-button color="primary" [disabled]="itemForm.invalid || disableButton">
+        {{'SAVE' | translate}}
+      </button>
+      <span fxFlex></span>
+      <button mat-button color="warn" type="button" (click)="closeDialog()">
+        {{'CANCEL' | translate}}
+      </button>
+    </div>
+  </div>
+</form>

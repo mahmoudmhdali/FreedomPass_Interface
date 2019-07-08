@@ -13,6 +13,7 @@ import {LogsService} from '../../shared/services/logs.service';
 import {TranslatePipe} from '@ngx-translate/core';
 import {NgxPermissionsService} from 'ngx-permissions';
 import {UserCompanyPassesService} from '../../shared/services/database-services/userCompanyPasses.service';
+import {NgxUsersTransferPopupComponent} from './ngx-users-transfer-popup/ngx-users-transfer-popup.component';
 
 @Component({
   selector: 'app-users',
@@ -82,6 +83,37 @@ export class AppUsersComponent implements OnInit {
     );
   }
 
+  openTransferPopUp() {
+    this.loader.open('Please Wait...');
+    this.userService.getUsers().subscribe(
+      (responseBuilder) => {
+        this.logsService.setLog('AppUsersComponent', 'ngOnInit(getUsers)', responseBuilder);
+        if (responseBuilder.code === +this.apiConfig.SUCCESS) {
+          this.loader.close();
+          const companyUsers = responseBuilder.data.users;
+          const dialogRef: MatDialogRef<any> = this.dialog.open(NgxUsersTransferPopupComponent, {
+            width: '720px',
+            disableClose: true,
+            data: {
+              companyUsers: companyUsers
+            }
+          });
+          dialogRef.afterClosed().subscribe(res => {
+            // If user press cancel
+            if (!res) {
+              return;
+            }
+            if (!isNew) {
+              const index: number = this.users.indexOf(this.users.find(user => user.id === res.id));
+              this.users.splice(index, 1);
+            }
+            this.users.unshift(res);
+          });
+        }
+      }
+    );
+  }
+
   openPopUp(data: UserProfileModel, isNew, viewOnly) {
     if (typeof this.ngxPermissionsService.getPermission('COMPANY') !== 'undefined') {
       this.loader.open('Please Wait...');
@@ -116,9 +148,6 @@ export class AppUsersComponent implements OnInit {
               }
               this.users.unshift(res);
             });
-
-
-
 
 
           }
