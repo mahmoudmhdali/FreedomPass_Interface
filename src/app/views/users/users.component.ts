@@ -103,11 +103,6 @@ export class AppUsersComponent implements OnInit {
             if (!res) {
               return;
             }
-            if (!isNew) {
-              const index: number = this.users.indexOf(this.users.find(user => user.id === res.id));
-              this.users.splice(index, 1);
-            }
-            this.users.unshift(res);
           });
         }
       }

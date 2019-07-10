@@ -39,6 +39,38 @@
            (change)="image1FileChange($event)" accept=".jpg, .jpeg, .png" #fileInput1>
     <div fxFlex="50" class="pr-1">
       <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['price']"
+          placeholder="Price">
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['price'].hasError('required') && itemForm.controls['price'].touched"
+        class="form-error-msg"> Price is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['price'].hasError('serverValidation') && itemForm.controls['price'].touched"
+        class="form-error-msg"> {{itemForm.controls['price'].errors.serverValidation}}
+      </small>
+    </div>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [formControl]="itemForm.controls['validity']"
+          placeholder="Validity in days">
+      </mat-form-field>
+      <small
+        *ngIf="itemForm.controls['validity'].hasError('required') && itemForm.controls['validity'].touched"
+        class="form-error-msg"> Validity is required
+      </small>
+      <small
+        *ngIf="itemForm.controls['validity'].hasError('serverValidation') && itemForm.controls['validity'].touched"
+        class="form-error-msg"> {{itemForm.controls['validity'].errors.serverValidation}}
+      </small>
+    </div>
+    <div fxFlex="50" class="pr-1">
+      <mat-form-field class="full-width">
         <mat-select placeholder="Vouchers" [formControl]="itemForm.controls['offersCollection']" multiple>
           <mat-optgroup *ngFor="let outlet of offerOutlets" [label]="outlet.name">
             <ng-container *ngFor="let offer of offers">
@@ -83,7 +115,24 @@
         class="form-error-msg"> {{itemForm.controls['passesCollection'].errors.serverValidation}}
       </small>
     </div>
-    <div fxFlex="100" class="pr-1">
+
+
+
+    <div fxFlex="50" class="pr-1 pt-1">
+      <mat-checkbox [formControl]="itemForm.controls['corporateOnly']"
+                    color="primary" class="mb-1">
+        Corporate Only
+      </mat-checkbox>
+    </div>
+
+
+
+
+
+
+
+
+    <div fxFlex="100" class="pr-1 pt-1">
       <mat-form-field class="full-width">
         <textarea rows="3"
                   matInput

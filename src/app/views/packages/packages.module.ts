@@ -5,12 +5,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {
   MatButtonModule,
   MatCardModule,
+  MatCheckboxModule,
   MatChipsModule,
   MatDialogModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatMenuModule, MatSelectModule,
+  MatMenuModule,
+  MatSelectModule,
   MatSlideToggleModule,
   MatSnackBarModule,
   MatTooltipModule
@@ -40,6 +42,7 @@ import {UserOutletOffersService} from '../../shared/services/database-services/u
     MatTooltipModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatCheckboxModule,
     MatSelectModule,
     MatSlideToggleModule,
     SharedModule,

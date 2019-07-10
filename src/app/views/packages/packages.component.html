@@ -23,6 +23,16 @@
           {{ row?.name }}
         </ng-template>
       </ngx-datatable-column>
+      <ngx-datatable-column name="Price" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.price }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Validity (days)" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.validity }} Days
+        </ng-template>
+      </ngx-datatable-column>
       <ngx-datatable-column name="Number Of Vouchers" [flexGrow]="1">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{ row?.numberOfOffers }} Voucher{{row?.numberOfOffers > 1 ? 's':''}}

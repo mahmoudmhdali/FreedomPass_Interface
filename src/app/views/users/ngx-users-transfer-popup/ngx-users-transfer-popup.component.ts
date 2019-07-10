@@ -69,6 +69,7 @@ export class NgxUsersTransferPopupComponent implements OnInit {
   }
 
   userChange(userID) {
+    this.disableButton = true;
     this.loadingPackages = 1;
     this.userPassPurchasedService.getUserPassPurchased(userID).subscribe(
       (responseBuilder) => {
@@ -78,6 +79,7 @@ export class NgxUsersTransferPopupComponent implements OnInit {
           this.packages = responseBuilder.data.userPassPurchaseds;
           console.log(this.packages);
           if (this.packages.length > 0) {
+            this.disableButton = false;
             this.itemForm.addControl('package', new FormControl('', Validators.required));
             this.itemForm.addControl('userTo', new FormControl('', Validators.required));
           }

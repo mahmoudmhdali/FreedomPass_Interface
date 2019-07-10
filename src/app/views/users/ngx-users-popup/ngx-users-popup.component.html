@@ -75,7 +75,10 @@
       <div fxFlex="50" class="pr-1" *ngxPermissionsOnly="['COMPANY']">
         <mat-form-field class="full-width">
           <mat-select matInput placeholder="Package" [formControl]="itemForm.controls['packageId']">
-            <mat-option *ngFor="let packagee of packages" [value]="packagee.id" ngDefaultControl>
+            <mat-option value="99999999" ngDefaultControl>
+              N/A
+            </mat-option>
+            <mat-option *ngFor="let packagee of packages" [value]="packagee.id">
               {{packagee.adminPasses.name}} (Remain {{packagee.remainingUsers}} users)
             </mat-option>
           </mat-select>

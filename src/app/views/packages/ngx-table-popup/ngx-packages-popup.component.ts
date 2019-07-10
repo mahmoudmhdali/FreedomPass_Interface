@@ -58,7 +58,10 @@ export class NgxPackagesPopupComponent implements OnInit {
     this.itemForm = this.fb.group({
       id: [item.id || ''],
       name: [item.name || '', Validators.required],
+      price: [item.price || '', Validators.required],
+      validity: [item.validity || '', Validators.required],
       imageName1: [item.fileName || ''],
+      corporateOnly: [item.corporateOnly || false],
       description: [item.description || '', Validators.required]
     });
 
