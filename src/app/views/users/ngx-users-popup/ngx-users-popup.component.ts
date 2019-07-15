@@ -60,6 +60,7 @@ export class NgxUsersPopupComponent implements OnInit {
     });
     if (typeof this.ngxPermissionsService.getPermission('COMPANY') !== 'undefined') {
       this.itemForm.addControl('packageId', new FormControl('', Validators.required));
+      this.itemForm.addControl('isPaid', new FormControl(false, Validators.required));
     }
     if (typeof this.data.viewOnly !== 'undefined' && this.data.viewOnly) {
       let info = '';
@@ -108,7 +109,7 @@ export class NgxUsersPopupComponent implements OnInit {
     const data = this.itemForm.value;
     if (this.data.isNew) {
       if (typeof this.ngxPermissionsService.getPermission('COMPANY') !== 'undefined') {
-        this.userService.addUserUnderCompany(data, this.itemForm.value.packageId).subscribe(
+        this.userService.addUserUnderCompany(data, this.itemForm.value.packageId, this.itemForm.value.isPaid).subscribe(
           (responseBuilder: ResponseBuilderModel) => {
             this.logsService.setLog('NgxSystemUsersPopupComponent', 'submit(addUser)', responseBuilder);
             this.disableButton = false;

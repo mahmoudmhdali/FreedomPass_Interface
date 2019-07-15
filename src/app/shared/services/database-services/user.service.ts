@@ -34,13 +34,13 @@ export class UserService {
       + this.apiConfig.API_PATH + '/users/add/' + type, this.svcGlobal.getFormUrlEncoded(user), {headers});
   }
 
-  addUserUnderCompany (user, packageId) {
+  addUserUnderCompany (user, packageId, isPaid) {
     // if we need the full response we should add {headers, observe: 'response'}
     const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
     return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/users/addCompanyUser/' + packageId, this.svcGlobal.getFormUrlEncoded(user), {headers});
+      + this.apiConfig.API_PATH + '/users/addCompanyUser/' + packageId + '/' + isPaid, this.svcGlobal.getFormUrlEncoded(user), {headers});
   }
 
   updateUser (user) {

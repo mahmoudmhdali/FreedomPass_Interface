@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatCheckboxModule,
   MatChipsModule,
   MatDialogModule,
   MatGridListModule,
@@ -65,6 +65,7 @@ import {NgxUsersTransferPopupComponent} from './ngx-users-transfer-popup/ngx-use
     MatSelectModule,
     FormsModule,
     MatSelectModule,
+    MatCheckboxModule,
     RouterModule.forChild(AppUsersRoutes)
   ],
   declarations: [AppUsersComponent, NgxUsersPopupComponent, NgxUsersTransferPopupComponent],

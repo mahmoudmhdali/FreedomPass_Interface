@@ -92,6 +92,12 @@
           class="form-error-msg"> {{itemForm.controls['packageId'].errors.serverValidation}}
         </small>
       </div>
+      <div fxFlex="50" class="pr-1 pt-1" *ngxPermissionsOnly="['COMPANY']">
+        <mat-checkbox [formControl]="itemForm.controls['isPaid']"
+                      color="primary" class="mb-1">
+          Paid Package
+        </mat-checkbox>
+      </div>
     </ng-container>
 
 

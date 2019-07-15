@@ -22,19 +22,19 @@ export class NgxOutletUsersPopupComponent implements OnInit {
   formIsSubmitted = false;
   packages: UserCompanyPassesModel[] = [];
 
-  constructor (@Inject(MAT_DIALOG_DATA) public data: any,
-               public dialogRef: MatDialogRef<NgxOutletUsersPopupComponent>,
-               private userService: UserService,
-               private logsService: LogsService,
-               private ngxPermissionsService: NgxPermissionsService,
-               private svcGlobal: GlobalService,
-               private snack: MatSnackBar,
-               private translatePipe: TranslatePipe,
-               private fb: FormBuilder) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+              public dialogRef: MatDialogRef<NgxOutletUsersPopupComponent>,
+              private userService: UserService,
+              private logsService: LogsService,
+              private ngxPermissionsService: NgxPermissionsService,
+              private svcGlobal: GlobalService,
+              private snack: MatSnackBar,
+              private translatePipe: TranslatePipe,
+              private fb: FormBuilder) {
     this.apiConfig = this.svcGlobal.getSession('RESPONSE_CODE');
   }
 
-  ngOnInit () {
+  ngOnInit() {
     if (typeof this.ngxPermissionsService.getPermission('COMPANY') !== 'undefined') {
       this.packages = this.data.packages;
     }
@@ -45,7 +45,7 @@ export class NgxOutletUsersPopupComponent implements OnInit {
     console.log(this.packages);
   }
 
-  buildItemForm (item) {
+  buildItemForm(item) {
     this.itemForm = this.fb.group({
       id: [item.id || ''],
       name: [item.name || '', Validators.required],
@@ -58,20 +58,20 @@ export class NgxOutletUsersPopupComponent implements OnInit {
     }
   }
 
-  submit () {
+  submit() {
     this.disableButton = true;
     const data = this.itemForm.value;
     if (this.data.isNew) {
       if (typeof this.ngxPermissionsService.getPermission('COMPANY') !== 'undefined') {
-        this.userService.addUserUnderCompany(data, this.itemForm.value.packageId).subscribe(
+        this.userService.addUserUnderCompany(data, this.itemForm.value.packageId, false).subscribe(
           (responseBuilder: ResponseBuilderModel) => {
             this.logsService.setLog('NgxSystemUsersPopupComponent', 'submit(addUser)', responseBuilder);
             this.disableButton = false;
-            if (responseBuilder.code === + this.apiConfig.SUCCESS) {
+            if (responseBuilder.code === +this.apiConfig.SUCCESS) {
               this.formIsSubmitted = true;
               this.dialogRef.close(responseBuilder.data.user);
               this.snack.open(this.translatePipe.transform('USERADDEDSUCCESS'), this.translatePipe.transform('OK'), {duration: 4000});
-            } else if (responseBuilder.code === + this.apiConfig.PARAMETERS_VALIDATION_ERROR) {
+            } else if (responseBuilder.code === +this.apiConfig.PARAMETERS_VALIDATION_ERROR) {
               this.svcGlobal.checkValidationResults(this.itemForm, responseBuilder.data);
             }
           }
@@ -81,11 +81,11 @@ export class NgxOutletUsersPopupComponent implements OnInit {
           (responseBuilder: ResponseBuilderModel) => {
             this.logsService.setLog('NgxSystemUsersPopupComponent', 'submit(addUser)', responseBuilder);
             this.disableButton = false;
-            if (responseBuilder.code === + this.apiConfig.SUCCESS) {
+            if (responseBuilder.code === +this.apiConfig.SUCCESS) {
               this.formIsSubmitted = true;
               this.dialogRef.close(responseBuilder.data.user);
               this.snack.open(this.translatePipe.transform('USERADDEDSUCCESS'), this.translatePipe.transform('OK'), {duration: 4000});
-            } else if (responseBuilder.code === + this.apiConfig.PARAMETERS_VALIDATION_ERROR) {
+            } else if (responseBuilder.code === +this.apiConfig.PARAMETERS_VALIDATION_ERROR) {
               this.svcGlobal.checkValidationResults(this.itemForm, responseBuilder.data);
             }
           }
@@ -96,11 +96,11 @@ export class NgxOutletUsersPopupComponent implements OnInit {
         (responseBuilder: ResponseBuilderModel) => {
           this.logsService.setLog('NgxSystemUsersPopupComponent', 'submit(updateUser)', responseBuilder);
           this.disableButton = false;
-          if (responseBuilder.code === + this.apiConfig.SUCCESS) {
+          if (responseBuilder.code === +this.apiConfig.SUCCESS) {
             this.formIsSubmitted = true;
             this.dialogRef.close(responseBuilder.data.user);
             this.snack.open(this.translatePipe.transform('USERUPDATEDSUCCESS'), this.translatePipe.transform('OK'), {duration: 4000});
-          } else if (responseBuilder.code === + this.apiConfig.PARAMETERS_VALIDATION_ERROR) {
+          } else if (responseBuilder.code === +this.apiConfig.PARAMETERS_VALIDATION_ERROR) {
             this.svcGlobal.checkValidationResults(this.itemForm, responseBuilder.data);
           }
         }
@@ -108,20 +108,20 @@ export class NgxOutletUsersPopupComponent implements OnInit {
     }
   }
 
-  canDeactivate (): boolean {
-    return this.formIsSubmitted || ! this.itemForm.dirty;
+  canDeactivate(): boolean {
+    return this.formIsSubmitted || !this.itemForm.dirty;
   }
 
   @HostListener('window:beforeunload', ['$event'])
-  unloadNotification () {
-    if (! this.canDeactivate()) {
+  unloadNotification() {
+    if (!this.canDeactivate()) {
       return confirm('You have unsaved changes! If you leave, your changes will be lost.');
     }
     return true;
   }
 
-  closeDialog () {
-    if (! this.canDeactivate()) {
+  closeDialog() {
+    if (!this.canDeactivate()) {
       const userApproval = confirm('You have unsaved changes! If you leave, your changes will be lost.');
       if (userApproval) {
         this.dialogRef.close(false);
