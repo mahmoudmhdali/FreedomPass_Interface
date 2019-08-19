@@ -1,12 +1,12 @@
 <div class="m-333">
   <button mat-raised-button class="mb-05" color="primary" (click)="openPopUp({}, true, false)"
-          *ngxPermissionsOnly="['ADD_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']">{{'Add Outlet User' | translate}}
+          *ngxPermissionsOnly="['ADD_USERS', 'SYSTEM', 'OUR_SYSTEM_USER', 'COMPANY']">{{'Add Supplier User' | translate}}
   </button>
 </div>
 
 <mat-card-content *ngIf="modelLoaded != 1">
   <div class="pb-1 text-center">
-    <p class="text-muted pt-1">{{'Fetch Outlet Users' | translate}}</p>
+    <p class="text-muted pt-1">{{'Fetch Supplier Users' | translate}}</p>
     <mat-progress-spinner
       [color]="'primary'"
       style="margin:0 auto;"
@@ -76,7 +76,7 @@
 </div>
 <mat-card-content *ngIf="modelLoaded == 1 && users.length <= 0">
   <div class="pb-1 text-center">
-    <h4 class="text-muted">{{'No Outlet Users Found' | translate}}</h4>
+    <h4 class="text-muted">{{'No Supplier Users Found' | translate}}</h4>
   </div>
 </mat-card-content>
 

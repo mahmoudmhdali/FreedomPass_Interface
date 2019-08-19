@@ -90,10 +90,10 @@ export class OutletUsersComponent implements OnInit {
           this.logsService.setLog('AppUsersComponent', 'ngOnInit(getUsers)', responseBuilder);
           if (responseBuilder.code === + this.apiConfig.SUCCESS) {
             this.loader.close();
-            let title = isNew === true ? this.translatePipe.transform('Add New Outlet User') :
-              this.translatePipe.transform('Update Outlet User');
+            let title = isNew === true ? this.translatePipe.transform('Add New Supplier User') :
+              this.translatePipe.transform('Update Supplier User');
             if (viewOnly) {
-              title = this.translatePipe.transform('View Outlet User');
+              title = this.translatePipe.transform('View Supplier User');
             }
             const dialogRef: MatDialogRef<any> = this.dialog.open(NgxOutletUsersPopupComponent, {
               width: '720px',
@@ -121,10 +121,10 @@ export class OutletUsersComponent implements OnInit {
         }
       );
     } else {
-      let title = isNew === true ? this.translatePipe.transform('Add New Outlet User') :
-        this.translatePipe.transform('Update Outlet User');
+      let title = isNew === true ? this.translatePipe.transform('Add New Supplier User') :
+        this.translatePipe.transform('Update Supplier User');
       if (viewOnly) {
-        title = this.translatePipe.transform('View Outlet User');
+        title = this.translatePipe.transform('View Supplier User');
       }
       const dialogRef: MatDialogRef<any> = this.dialog.open(NgxOutletUsersPopupComponent, {
         width: '720px',

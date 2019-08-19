@@ -185,6 +185,17 @@ export const rootRouterConfig: Routes = [
         }
       },
       {
+        path: 'subscriptions',
+        canActivate: [NgxPermissionsGuard],
+        loadChildren: './views/subscriptions/subscriptions.module#SubscriptionsModule',
+        data: {
+          title: 'Subscriptions', breadcrumb: 'Subscriptions', permissions: {
+            only: ['SYSTEM', 'OUR_SYSTEM_USER'],
+            redirectTo: '/sessions/accessDenied'
+          }
+        }
+      },
+      {
         path: 'companiesPackages',
         canActivate: [NgxPermissionsGuard],
         loadChildren: './views/company-packages/company-packages.module#CompanyPackagesModule',

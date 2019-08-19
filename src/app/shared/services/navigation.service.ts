@@ -71,9 +71,9 @@ export class NavigationService {
       state: 'users',
       roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'OUR_SYSTEM_USER', 'COMPANY']
     }, {
-      name: 'Outlet Users',
+      name: 'Supplier Users',
       type: 'link',
-      tooltip: 'Outlet Users',
+      tooltip: 'Supplier Users',
       icon: 'account_box',
       state: 'outletUsers',
       roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER']
@@ -97,6 +97,13 @@ export class NavigationService {
       tooltip: 'Packages',
       icon: 'redeem',
       state: 'packages',
+      roles: ['SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
+      name: 'Subscriptions',
+      type: 'link',
+      tooltip: 'Subscriptions',
+      icon: 'redeem',
+      state: 'subscriptions',
       roles: ['SYSTEM', 'OUR_SYSTEM_USER']
     }, {
       name: 'Companies Packages',
@@ -348,9 +355,9 @@ export class NavigationService {
       state: 'users',
       roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'OUR_SYSTEM_USER', 'COMPANY']
     }, {
-      name: 'Outlet Users',
+      name: 'Supplier Users',
       type: 'link',
-      tooltip: 'Outlet Users',
+      tooltip: 'Supplier Users',
       icon: 'account_box',
       state: 'outletUsers',
       roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER']
@@ -374,6 +381,13 @@ export class NavigationService {
       tooltip: 'Packages',
       icon: 'redeem',
       state: 'packages',
+      roles: ['SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
+      name: 'Subscriptions',
+      type: 'link',
+      tooltip: 'Subscriptions',
+      icon: 'redeem',
+      state: 'subscriptions',
       roles: ['SYSTEM', 'OUR_SYSTEM_USER']
     }, {
       name: 'Companies Packages',
@@ -643,9 +657,9 @@ export class NavigationService {
       state: 'users',
       roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'OUR_SYSTEM_USER', 'COMPANY']
     }, {
-      name: 'Outlet Users',
+      name: 'Supplier Users',
       type: 'link',
-      tooltip: 'Outlet Users',
+      tooltip: 'Supplier Users',
       icon: 'account_box',
       state: 'outletUsers',
       roles: ['VIEW_USERS', 'ADD_USERS', 'EDIT_USERS', 'DELETE_USERS', 'SYSTEM', 'OUR_SYSTEM_USER']
@@ -669,6 +683,13 @@ export class NavigationService {
       tooltip: 'Packages',
       icon: 'redeem',
       state: 'packages',
+      roles: ['SYSTEM', 'OUR_SYSTEM_USER']
+    }, {
+      name: 'Subscriptions',
+      type: 'link',
+      tooltip: 'Subscriptions',
+      icon: 'redeem',
+      state: 'subscriptions',
       roles: ['SYSTEM', 'OUR_SYSTEM_USER']
     }, {
       name: 'Companies Packages',

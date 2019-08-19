@@ -6,10 +6,10 @@ import {GlobalService} from '../../../shared/services/global.service';
 import {AdminPassesService} from '../../../shared/services/database-services/adminPasses.service';
 
 @Component({
-  selector: 'app-ngx-packages-popup',
-  templateUrl: './ngx-packages-popup.component.html'
+  selector: 'app-ngx-subsciptions-popup',
+  templateUrl: './ngx-subsciptions-popup.component.html'
 })
-export class NgxPackagesPopupComponent implements OnInit {
+export class NgxSubsciptionsPopupComponent implements OnInit {
   @ViewChild('fileInput1')
   fileInput1: ElementRef;
   public itemForm: FormGroup;
@@ -28,7 +28,7 @@ export class NgxPackagesPopupComponent implements OnInit {
 
   constructor (
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<NgxPackagesPopupComponent>,
+    public dialogRef: MatDialogRef<NgxSubsciptionsPopupComponent>,
     private fb: FormBuilder,
     private svcGlobal: GlobalService,
     private adminPassesService: AdminPassesService,
@@ -87,7 +87,7 @@ export class NgxPackagesPopupComponent implements OnInit {
   submit () {
     this.disableButton = true;
     const data = this.itemForm.value;
-    data.corporateOnly = true;
+    data.corporateOnly = false;
     data.userOutletOfferCollection = [ ...data.offersCollection, ...data.passesCollection];
     const formData: FormData = new FormData();
     if (this.fileList1.length > 0) {
@@ -102,7 +102,7 @@ export class NgxPackagesPopupComponent implements OnInit {
           if (responseBuilder.code === + this.apiConfig.SUCCESS) {
             this.formIsSubmitted = true;
             this.dialogRef.close(responseBuilder.data.package);
-            this.snack.open('Package Added Successfully', 'OK', {duration: 4000});
+            this.snack.open('Subsciptions Added Successfully', 'OK', {duration: 4000});
           } else if (responseBuilder.code === + this.apiConfig.PARAMETERS_VALIDATION_ERROR) {
             this.svcGlobal.checkValidationResults(this.itemForm, responseBuilder.data);
           } else {
@@ -117,7 +117,7 @@ export class NgxPackagesPopupComponent implements OnInit {
           if (responseBuilder.code === + this.apiConfig.SUCCESS) {
             this.formIsSubmitted = true;
             this.dialogRef.close(responseBuilder.data.Package);
-            this.snack.open('Package Updated Successfully', 'OK', {duration: 4000});
+            this.snack.open('Subsciptions Updated Successfully', 'OK', {duration: 4000});
           } else if (responseBuilder.code === + this.apiConfig.PARAMETERS_VALIDATION_ERROR) {
             this.svcGlobal.checkValidationResults(this.itemForm, responseBuilder.data);
           } else {
