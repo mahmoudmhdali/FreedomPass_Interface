@@ -18,11 +18,18 @@ export class AdminPassesService {
       + this.apiConfig.API_PATH + '/adminPasses');
   }
 
-  getAllPassesPaging (pageNumber, maxResult) {
+  getAllPassesPagingPackages (pageNumber, maxResult) {
     return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/adminPasses/' + pageNumber + '/' + maxResult);
+      + this.apiConfig.API_PATH + '/adminPasses/packages/' + pageNumber + '/' + maxResult);
+  }
+
+  getAllPassesPagingPackagesSubsc (pageNumber, maxResult) {
+    return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/adminPasses/subscriptions/' + pageNumber + '/' + maxResult);
   }
 
   addPass (formData) {

@@ -44,7 +44,7 @@ export class PackagesComponent implements OnInit, OnDestroy {
 
   getPackages () {
     this.loadingIndicator = true;
-    this.adminPassesService.getAllPassesPaging(this.currentPage, this.itemsPerPage).subscribe(
+    this.adminPassesService.getAllPassesPagingPackages(this.currentPage, this.itemsPerPage).subscribe(
       (responseBuilder) => {
         if (responseBuilder.code === + this.apiConfig.SUCCESS) {
           this.items = responseBuilder.data.passes.passes;
@@ -76,7 +76,7 @@ export class PackagesComponent implements OnInit, OnDestroy {
   handlePageChange (event) {
     this.currentPage = event.offset + 1;
     this.loadingIndicator = true;
-    this.adminPassesService.getAllPassesPaging(this.currentPage, this.itemsPerPage).subscribe(
+    this.adminPassesService.getAllPassesPagingPackages(this.currentPage, this.itemsPerPage).subscribe(
       (responseBuilder) => {
         if (responseBuilder.code === + this.apiConfig.SUCCESS) {
           this.items = responseBuilder.data.passes.passes;
