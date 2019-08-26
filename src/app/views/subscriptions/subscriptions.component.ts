@@ -10,10 +10,12 @@ import {UserOutletOffersService} from '../../shared/services/database-services/u
 import {forkJoin} from 'rxjs';
 import {ResponseBuilderModel} from '../../shared/models/ResponseBuilder.model';
 import {NgxSubsciptionsPopupComponent} from './ngx-table-popup/ngx-subsciptions-popup.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-subsciptions',
   templateUrl: './subscriptions.component.html',
+  providers: [TranslatePipe],
   animations: egretAnimations
 })
 export class SubscriptionsComponent implements OnInit, OnDestroy {
@@ -26,10 +28,11 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
   recordsPerPageValue = 10;
   loadingIndicator = false;
 
-  constructor (
+  constructor(
     private dialog: MatDialog,
     private snack: MatSnackBar,
     private adminPassesService: AdminPassesService,
+    private translatePipe: TranslatePipe,
     private userOutletOffersService: UserOutletOffersService,
     private confirmService: AppConfirmService,
     private loader: AppLoaderService,
@@ -38,15 +41,15 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
     this.apiConfig = this.svcGlobal.getSession('RESPONSE_CODE');
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.getPackages();
   }
 
-  getPackages () {
+  getPackages() {
     this.loadingIndicator = true;
     this.adminPassesService.getAllPassesPagingPackagesSubsc(this.currentPage, this.itemsPerPage).subscribe(
       (responseBuilder) => {
-        if (responseBuilder.code === + this.apiConfig.SUCCESS) {
+        if (responseBuilder.code === +this.apiConfig.SUCCESS) {
           this.items = responseBuilder.data.passes.passes;
           for (const item of this.items) {
             item.numberOfOffers = 0;
@@ -60,25 +63,25 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
             }
           }
           this.totalItems = responseBuilder.data.passes.totalResults;
-          this.modelLoaded ++;
+          this.modelLoaded++;
           this.loadingIndicator = false;
         }
       }
     );
   }
 
-  ngOnDestroy () {
+  ngOnDestroy() {
   }
 
-  onPageSorted (event) {
+  onPageSorted(event) {
   }
 
-  handlePageChange (event) {
+  handlePageChange(event) {
     this.currentPage = event.offset + 1;
     this.loadingIndicator = true;
     this.adminPassesService.getAllPassesPagingPackagesSubsc(this.currentPage, this.itemsPerPage).subscribe(
       (responseBuilder) => {
-        if (responseBuilder.code === + this.apiConfig.SUCCESS) {
+        if (responseBuilder.code === +this.apiConfig.SUCCESS) {
           this.items = responseBuilder.data.passes.passes;
           for (const item of this.items) {
             item.numberOfOffers = 0;
@@ -98,19 +101,19 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
     );
   }
 
-  openPopUp (data: any = {}, isNew?) {
+  openPopUp(data: any = {}, isNew?) {
     this.loader.open('Please Wait...');
     let offers = [];
     let passes = [];
     forkJoin([this.userOutletOffersService.getAllOffersByType(1), this.userOutletOffersService.getAllOffersByType(2)])
       .subscribe((responses: ResponseBuilderModel[]) => {
-        if (responses[0].code === + this.apiConfig.SUCCESS) {
+        if (responses[0].code === +this.apiConfig.SUCCESS) {
           offers = responses[0].data.userOutletOffer;
         }
-        if (responses[1].code === + this.apiConfig.SUCCESS) {
+        if (responses[1].code === +this.apiConfig.SUCCESS) {
           passes = responses[1].data.userOutletOffer;
         }
-        if (responses[0].code === + this.apiConfig.SUCCESS && responses[1].code === + this.apiConfig.SUCCESS) {
+        if (responses[0].code === +this.apiConfig.SUCCESS && responses[1].code === +this.apiConfig.SUCCESS) {
           this.loader.close();
           const title = isNew ? 'Add new subsciption' : 'Update subsciption';
           const dialogRef: MatDialogRef<any> = this.dialog.open(NgxSubsciptionsPopupComponent, {
@@ -120,7 +123,7 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
           });
           dialogRef.afterClosed()
             .subscribe(res => {
-              if (! res) {
+              if (!res) {
                 return;
               }
               this.getPackages();
@@ -129,18 +132,27 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
       });
   }
 
-  deleteItem (row) {
-    // this.confirmService.confirm({message: `Delete ${row.name}?`})
-    //   .subscribe(res => {
-    //     if (res) {
-    //       this.loader.open();
-    //       this.crudService.removeItem(row)
-    //         .subscribe(data => {
-    //           this.items = data;
-    //           this.loader.close();
-    //           this.snack.open('Member deleted!', 'OK', {duration: 4000});
-    //         });
-    //     }
-    //   });
+  deleteItem(data) {
+    this.confirmService.confirm({
+      title: this.translatePipe.transform('CONFIRMDIALOG'),
+      message: this.translatePipe.transform('DELETECONFIRMATION') + ` \"${data.name}\"?`
+    }).subscribe((result) => {
+      if (result === true) {
+        this.loader.open(this.translatePipe.transform('PLEASEWAIT'));
+        this.adminPassesService.removePackage(data.id).subscribe(
+          (responseBuilder: ResponseBuilderModel) => {
+            if (responseBuilder.code === +this.apiConfig.SUCCESS) {
+              const index: number = this.items.indexOf(this.items.find(item => item.id === data.id));
+              this.items.splice(index, 1);
+              this.snack.open(this.translatePipe.transform('Subscription deleted successfully'),
+                this.translatePipe.transform('OK'), {duration: 4000});
+            } else if (responseBuilder.code === +this.apiConfig.ENTITY_NOT_FOUND) {
+              this.snack.open(responseBuilder.description, this.translatePipe.transform('OK'), {duration: 4000});
+            }
+            this.loader.close();
+          }
+        );
+      }
+    });
   }
 }

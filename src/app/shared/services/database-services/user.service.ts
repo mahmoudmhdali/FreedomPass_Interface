@@ -54,10 +54,11 @@ export class UserService {
 
   removeUser (user) {
     // if we need the full response we should add {headers, observe: 'response'}
-    return this.httpClient.delete(this.apiConfig.API_PROTOCOL + '://' +
+    const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
+    return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/users/delete/' + user.id);
+      + this.apiConfig.API_PATH + '/users/delete/' + user.id, null, {headers});
   }
 
   getUserById (id) {

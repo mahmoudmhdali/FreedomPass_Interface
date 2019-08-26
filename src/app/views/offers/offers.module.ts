@@ -23,6 +23,7 @@ import {NgxOffersPopupComponent} from './ngx-table-popup/ngx-offers-popup.compon
 import {UserOutletOffersService} from '../../shared/services/database-services/userOutletOffers.service';
 import {UserOutletInfoService} from '../../shared/services/database-services/userOutletInfo.service';
 import {OffersRoutes} from './offers.routing';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import {OffersRoutes} from './offers.routing';
     MatButtonModule,
     MatChipsModule,
     MatListModule,
+    TranslateModule,
     MatTooltipModule,
     MatDialogModule,
     MatSnackBarModule,

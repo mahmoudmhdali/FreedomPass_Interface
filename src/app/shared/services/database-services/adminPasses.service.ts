@@ -15,7 +15,7 @@ export class AdminPassesService {
     return this.httpClient.get<ResponseBuilderModel>(this.apiConfig.API_PROTOCOL + '://' +
       this.apiConfig.API_IP
       + ':' + this.apiConfig.API_PORT + '/'
-      + this.apiConfig.API_PATH + '/adminPasses');
+      + this.apiConfig.API_PATH + '/adminPasses/packages');
   }
 
   getAllPassesPagingPackages (pageNumber, maxResult) {
@@ -48,6 +48,15 @@ export class AdminPassesService {
       + ':' + this.apiConfig.API_PORT + '/'
       + this.apiConfig.API_PATH + '/adminPasses/edit', formData, {headers});
 
+  }
+
+  removePackage (packageID) {
+    const headers = new HttpHeaders({'Accept': 'application/json'});
+    // if we need the full response we should add {headers, observe: 'response'}
+    return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/adminPasses/delete/' + packageID, null, {headers});
   }
 
 }

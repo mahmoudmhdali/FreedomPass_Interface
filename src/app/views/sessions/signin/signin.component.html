@@ -1,10 +1,13 @@
-<div class="page-wrap height-100 mat-bg-primary">
+<div class="page-wrap height-100 mat-bg-primary"
+     style="background-image: url(assets/images/backgroundfree.png) !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;">
   <div class="session-form-hold">
     <mat-progress-bar mode="determinate" class="session-progress"></mat-progress-bar>
     <mat-card>
       <mat-card-content>
         <div class="text-center pb-1">
-          <!--<img src="assets/images/logo-full.png" alt="" class="mb-05">-->
+          <img src="assets/images/logofree.png" alt="" class="mb-05">
           <p class="text-muted m-0">Sign in to your account</p>
         </div>
         <form [formGroup]="signinForm" (ngSubmit)="signin()">
@@ -19,7 +22,8 @@
             </mat-form-field>
             <small
               *ngIf="signinForm.controls['username'].hasError('required') && signinForm.controls['username'].touched"
-              class="form-error-msg"> Username is required </small>
+              class="form-error-msg"> Username is required
+            </small>
           </div>
 
           <div class="">
@@ -34,14 +38,16 @@
             </mat-form-field>
             <small
               *ngIf="signinForm.controls['password'].hasError('required') && signinForm.controls['password'].touched"
-              class="form-error-msg"> Password is required </small>
+              class="form-error-msg"> Password is required
+            </small>
           </div>
 
           <div class="pb-1">
             <mat-checkbox
               name="rememberMe"
               [formControl]="signinForm.controls['rememberMe']"
-              class="pb-1">Remember this computer</mat-checkbox>
+              class="pb-1">Remember this computer
+            </mat-checkbox>
           </div>
 
           <button mat-raised-button class="mat-primary full-width mb-1" [disabled]="signinForm.invalid">Sign in</button>

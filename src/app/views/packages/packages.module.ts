@@ -25,6 +25,7 @@ import {NgxPackagesPopupComponent} from './ngx-table-popup/ngx-packages-popup.co
 import {PackagesRoutes} from './packages.routing';
 import {AdminPassesService} from '../../shared/services/database-services/adminPasses.service';
 import {UserOutletOffersService} from '../../shared/services/database-services/userOutletOffers.service';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import {UserOutletOffersService} from '../../shared/services/database-services/u
     MatMenuModule,
     MatButtonModule,
     MatChipsModule,
+    TranslateModule,
     MatListModule,
     MatTooltipModule,
     MatDialogModule,

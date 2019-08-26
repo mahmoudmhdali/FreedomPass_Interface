@@ -57,4 +57,13 @@ export class UserOutletOffersService {
       + this.apiConfig.API_PATH + '/userOutletOffer/type/' + typeId);
   }
 
+  removeOffer (offerID) {
+    const headers = new HttpHeaders({'Accept': 'application/json'});
+    // if we need the full response we should add {headers, observe: 'response'}
+    return this.httpClient.post(this.apiConfig.API_PROTOCOL + '://' +
+      this.apiConfig.API_IP
+      + ':' + this.apiConfig.API_PORT + '/'
+      + this.apiConfig.API_PATH + '/userOutletOffer/delete/' + offerID, null, {headers});
+  }
+
 }

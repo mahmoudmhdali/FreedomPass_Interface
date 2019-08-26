@@ -25,6 +25,7 @@ import {NgxSubsciptionsPopupComponent} from './ngx-table-popup/ngx-subsciptions-
 import {SubscriptionsRoutes} from './subscriptions.routing';
 import {AdminPassesService} from '../../shared/services/database-services/adminPasses.service';
 import {UserOutletOffersService} from '../../shared/services/database-services/userOutletOffers.service';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import {UserOutletOffersService} from '../../shared/services/database-services/u
     MatChipsModule,
     MatListModule,
     MatTooltipModule,
+    TranslateModule,
     MatDialogModule,
     MatSnackBarModule,
     MatCheckboxModule,
