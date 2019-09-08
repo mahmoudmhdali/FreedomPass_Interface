@@ -177,7 +177,7 @@ export class AppUsersComponent implements OnInit {
     }
   }
 
-  removeUser(data: UserProfileModel) {
+  removeUser (data: UserProfileModel) {
     this.confirmService.confirm({
       title: this.translatePipe.transform('CONFIRMDIALOG'),
       message: this.translatePipe.transform('DELETECONFIRMATION') + ` \"${data.name}\"?`
@@ -187,11 +187,11 @@ export class AppUsersComponent implements OnInit {
         this.userService.removeUser(data).subscribe(
           (responseBuilder: ResponseBuilderModel) => {
             this.logsService.setLog('AppUsersComponent', 'removeUser', responseBuilder);
-            if (responseBuilder.code === +this.apiConfig.SUCCESS) {
+            if (responseBuilder.code === + this.apiConfig.SUCCESS) {
               const index: number = this.users.indexOf(this.users.find(user => user.id === data.id));
               this.users.splice(index, 1);
               this.snack.open(this.translatePipe.transform('USERDELETESUCCESS'), this.translatePipe.transform('OK'), {duration: 4000});
-            } else if (responseBuilder.code === +this.apiConfig.ENTITY_NOT_FOUND) {
+            } else if (responseBuilder.code === + this.apiConfig.ENTITY_NOT_FOUND) {
               this.snack.open(responseBuilder.description, this.translatePipe.transform('OK'), {duration: 4000});
             }
             this.loader.close();
